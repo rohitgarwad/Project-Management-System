@@ -36,7 +36,7 @@ export function IssueList({
 }) {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { issue } = useSelector((store) => store);
+  const { issue, project } = useSelector((store) => store);
 
   useEffect(() => {
     dispatch(fetchIssues(id));

@@ -22,7 +22,7 @@ const UserList = ({ issueDetails, sendRefresh }) => {
         issueId: issueDetails.id,
       })
     );
-    sendRefresh("refresh");
+    //sendRefresh("refresh");
   };
 
   return (

@@ -23,7 +23,7 @@ function App() {
   const dispatch = useDispatch();
   const { auth } = useSelector((store) => store);
 
-  const [change, setChange] = useState(false);
+  const [change, setChange] = useState(0);
   const [stompClient, setStompClient] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
 
@@ -40,9 +40,11 @@ function App() {
 
       client.connect({}, function () {
         client.subscribe(`/all/public`, (message) => {
-          console.log("to receive message: ", message);
+          console.log("Received Message: ", message.body);
           // const receivedMessage = JSON.parse(message.body);
-          setChange(change ? false : true);
+          console.log("beforechange: ", change);
+          setChange(Math.random() * 100);
+          console.log("afterchange: ", change);
         });
       });
 
@@ -64,8 +66,9 @@ function App() {
   const sendRefresh = (message) => {
     //console.log("to send message: ", message);
     if (stompClient && message.trim()) {
-      stompClient.send(`/app/refresh`, {}, JSON.stringify(message));
-      // sendMessageToServer("");
+      stompClient.send(`/app/refresh`, {}, JSON.stringify(`${message} at ${new Date().getSeconds().toFixed()}`));
+      setChange(Math.random() * 100);
+      sendRefresh("");
     }
   };
 

@@ -23,7 +23,7 @@ const formSchema = z.object({
   }),
 });
 
-export function CreateCommentForm({issueId}) {
+export function CreateCommentForm({issueId, sendRefresh}) {
   const {auth}=useSelector(store=>store);
   const dispatch = useDispatch();
     const form = useForm({
@@ -36,6 +36,7 @@ export function CreateCommentForm({issueId}) {
     //console.log("comment data ", data);
     dispatch(createComment({content:data.content,issueId}))
     form.reset();
+    sendRefresh("refresh");
   };
 
   return (
