@@ -20,9 +20,10 @@ const UserList = ({ issueDetails, sendRefresh }) => {
       assignedUserToIssue({
         userId,
         issueId: issueDetails.id,
+        sendRefresh,
       })
     );
-    //sendRefresh("refresh");
+    // sendRefresh("refresh");
   };
 
   return (

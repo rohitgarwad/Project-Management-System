@@ -40,11 +40,9 @@ function App() {
 
       client.connect({}, function () {
         client.subscribe(`/all/public`, (message) => {
-          console.log("Received Message: ", message.body);
-          // const receivedMessage = JSON.parse(message.body);
-          console.log("beforechange: ", change);
+          const receivedMessage = JSON.parse(message.body);
+          console.log("Received Message: ", receivedMessage);
           setChange(Math.random() * 100);
-          console.log("afterchange: ", change);
         });
       });
 
