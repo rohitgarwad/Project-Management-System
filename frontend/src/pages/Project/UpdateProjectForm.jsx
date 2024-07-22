@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -44,7 +45,7 @@ const formSchema = object({
   deadline: date(),
 });
 
-const UpdateProjectForm = () => {
+const UpdateProjectForm = ({ change, sendRefresh }) => {
   const navigate = useNavigate();
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -65,7 +66,7 @@ const UpdateProjectForm = () => {
 
   useEffect(() => {
     dispatch(fetchProjectById(id));
-  }, [dispatch, id]);
+  }, [dispatch, id, change]);
 
   //console.log("existing project data: ", project?.projectDetails);
 
@@ -80,7 +81,7 @@ const UpdateProjectForm = () => {
         deadline: new Date(project.projectDetails.deadline),
       });
     }
-  }, [project.projectDetails, form]);
+  }, [project.projectDetails, form, change]);
 
   const handleTagsChange = (newValue) => {
     const currentTags = form.getValues("tags");
@@ -95,244 +96,280 @@ const UpdateProjectForm = () => {
   const onSubmit = (data) => {
     dispatch(updateProject({ updatedData: data, projectId: id }));
     //console.log("update project", data);
+    sendRefresh("refresh");
     navigate("/");
   };
 
   return (
-    <div className="min-h-[85vh] flex flex-col justify-center items-center px-5 absolute mt-24 w-full bg-background">
-      {project.projectDetails ? (
-        <div className="border w-full flex flex-col justify-center lg:h-[75vh] p-10 lg:w-[30vw] bg-card">
-          <h1 className="text-center pb-9 text-lg font-semibold">
-            Update Project
-          </h1>
-          <Form className="" {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        type="text"
-                        className="border w-full border-inherit py-5 px-5"
-                        placeholder="project name..."
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="description"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        className="border w-full border-inherit py-5 px-5"
-                        placeholder="project description"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="category"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Select
-                        value={field.value}
-                        onValueChange={(value) => {
-                          field.onChange(value);
-                        }}
-                      >
-                        <SelectTrigger className="w-full border-inherit">
-                          <SelectValue placeholder="Category" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="fullstack">Full Stack</SelectItem>
-                          <SelectItem value="frontend">Frontend</SelectItem>
-                          <SelectItem value="backend">Backend</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name={"tags"}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Select
-                        onValueChange={(value) => {
-                          handleTagsChange(value);
-                        }}
-                        multiple
-                      >
-                        <SelectTrigger className="w-full border-inherit">
-                          <SelectValue placeholder="Technologies & Tools" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectGroup>
-                            <SelectLabel className="bg-red-500">
-                              Languages
-                            </SelectLabel>
-                            {languages?.map((items, index) => (
-                              <SelectItem key={items.id || index} value={items}>
-                                {items}
-                              </SelectItem>
-                            ))}
-                          </SelectGroup>
-                          <SelectGroup>
-                            <SelectLabel className="bg-red-500">
-                              Web-Technologies
-                            </SelectLabel>
-                            {webTechnologies?.map((items, index) => (
-                              <SelectItem key={items.id || index} value={items}>
-                                {items}
-                              </SelectItem>
-                            ))}
-                          </SelectGroup>
-                          <SelectGroup>
-                            <SelectLabel className="bg-red-500">
-                              Mobile-Technologies
-                            </SelectLabel>
-                            {mobileTechnologies?.map((items, index) => (
-                              <SelectItem key={items.id || index} value={items}>
-                                {items}
-                              </SelectItem>
-                            ))}
-                          </SelectGroup>
-                          <SelectGroup>
-                            <SelectLabel className="bg-red-500">
-                              Operating-System
-                            </SelectLabel>
-                            {operatingSystem?.map((items, index) => (
-                              <SelectItem key={items.id || index} value={items}>
-                                {items}
-                              </SelectItem>
-                            ))}
-                          </SelectGroup>
-                          <SelectGroup>
-                            <SelectLabel className="bg-red-500">
-                              Databases
-                            </SelectLabel>
-                            {databases?.map((items, index) => (
-                              <SelectItem key={items.id || index} value={items}>
-                                {items}
-                              </SelectItem>
-                            ))}
-                          </SelectGroup>
-                          <SelectGroup>
-                            <SelectLabel className="bg-red-500">
-                              Web-Servers
-                            </SelectLabel>
-                            {webServers?.map((items, index) => (
-                              <SelectItem key={items.id || index} value={items}>
-                                {items}
-                              </SelectItem>
-                            ))}
-                          </SelectGroup>
-                          <SelectGroup>
-                            <SelectLabel className="bg-red-500">
-                              Cloud & Deployment
-                            </SelectLabel>
-                            {cloud_deployment?.map((items, index) => (
-                              <SelectItem key={items.id || index} value={items}>
-                                {items}
-                              </SelectItem>
-                            ))}
-                          </SelectGroup>
-                          <SelectGroup>
-                            <SelectLabel className="bg-red-500">
-                              AI/ML
-                            </SelectLabel>
-                            {ai_ml?.map((items, index) => (
-                              <SelectItem key={items.id || index} value={items}>
-                                {items}
-                              </SelectItem>
-                            ))}
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
-                    <div className="flex gap-1 flex-wrap">
-                      {field.value?.map((item, index) => (
-                        <div
-                          onClick={() => handleTagsChange(item)}
-                          key={item.id || index}
-                          className="cursor-pointer flex rounded-full items-center border gap-2 px-4 py-1"
-                        >
-                          <span className="text-sm">{item}</span>
-                          <Cross1Icon className="h-3 w-3" />
-                        </div>
-                      ))}
-                    </div>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="deadline"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Popover modal={true}>
-                        <PopoverTrigger asChild>
-                          <Button
-                            variant={"outline"}
-                            className={cn(
-                              "pl-3 text-left font-normal w-full border-inherit",
-                              !field.value && "text-muted-foreground"
-                            )}
-                          >
-                            {field.value ? (
-                              format(field.value, "PPP")
-                            ) : (
-                              <span>Pick a deadline date</span>
-                            )}
-                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                          </Button>
-                        </PopoverTrigger>
-                        <PopoverContent
-                          align="start"
-                          className="flex w-auto flex-col space-y-2 p-2"
-                        >
-                          <div className="rounded-md border">
-                            <Calendar
-                              mode="single"
-                              selected={field.value}
-                              onSelect={field.onChange}
-                              disabled={(date) => addDays(date, 1) < new Date()}
-                            />
-                          </div>
-                        </PopoverContent>
-                      </Popover>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="submit" className="w-full py-5">
+    <>
+      {!project?.loading && (
+        <div className="min-h-[85vh] flex flex-col justify-center items-center px-5 absolute mt-24 w-full bg-background">
+          {project.projectDetails ? (
+            <div className="border w-full flex flex-col justify-center lg:h-[75vh] p-10 lg:w-[30vw] bg-card">
+              <h1 className="text-center pb-9 text-lg font-semibold">
                 Update Project
-              </Button>
-            </form>
-          </Form>
+              </h1>
+              <Form className="" {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-8"
+                >
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            type="text"
+                            className="border w-full border-inherit py-5 px-5"
+                            placeholder="project name..."
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="description"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            className="border w-full border-inherit py-5 px-5"
+                            placeholder="project description"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="category"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Select
+                            value={field.value}
+                            onValueChange={(value) => {
+                              field.onChange(value);
+                            }}
+                          >
+                            <SelectTrigger className="w-full border-inherit">
+                              <SelectValue placeholder="Category" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="fullstack">
+                                Full Stack
+                              </SelectItem>
+                              <SelectItem value="frontend">Frontend</SelectItem>
+                              <SelectItem value="backend">Backend</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name={"tags"}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Select
+                            onValueChange={(value) => {
+                              handleTagsChange(value);
+                            }}
+                            multiple
+                          >
+                            <SelectTrigger className="w-full border-inherit">
+                              <SelectValue placeholder="Technologies & Tools" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectGroup>
+                                <SelectLabel className="bg-red-500">
+                                  Languages
+                                </SelectLabel>
+                                {languages?.map((items, index) => (
+                                  <SelectItem
+                                    key={items.id || index}
+                                    value={items}
+                                  >
+                                    {items}
+                                  </SelectItem>
+                                ))}
+                              </SelectGroup>
+                              <SelectGroup>
+                                <SelectLabel className="bg-red-500">
+                                  Web-Technologies
+                                </SelectLabel>
+                                {webTechnologies?.map((items, index) => (
+                                  <SelectItem
+                                    key={items.id || index}
+                                    value={items}
+                                  >
+                                    {items}
+                                  </SelectItem>
+                                ))}
+                              </SelectGroup>
+                              <SelectGroup>
+                                <SelectLabel className="bg-red-500">
+                                  Mobile-Technologies
+                                </SelectLabel>
+                                {mobileTechnologies?.map((items, index) => (
+                                  <SelectItem
+                                    key={items.id || index}
+                                    value={items}
+                                  >
+                                    {items}
+                                  </SelectItem>
+                                ))}
+                              </SelectGroup>
+                              <SelectGroup>
+                                <SelectLabel className="bg-red-500">
+                                  Operating-System
+                                </SelectLabel>
+                                {operatingSystem?.map((items, index) => (
+                                  <SelectItem
+                                    key={items.id || index}
+                                    value={items}
+                                  >
+                                    {items}
+                                  </SelectItem>
+                                ))}
+                              </SelectGroup>
+                              <SelectGroup>
+                                <SelectLabel className="bg-red-500">
+                                  Databases
+                                </SelectLabel>
+                                {databases?.map((items, index) => (
+                                  <SelectItem
+                                    key={items.id || index}
+                                    value={items}
+                                  >
+                                    {items}
+                                  </SelectItem>
+                                ))}
+                              </SelectGroup>
+                              <SelectGroup>
+                                <SelectLabel className="bg-red-500">
+                                  Web-Servers
+                                </SelectLabel>
+                                {webServers?.map((items, index) => (
+                                  <SelectItem
+                                    key={items.id || index}
+                                    value={items}
+                                  >
+                                    {items}
+                                  </SelectItem>
+                                ))}
+                              </SelectGroup>
+                              <SelectGroup>
+                                <SelectLabel className="bg-red-500">
+                                  Cloud & Deployment
+                                </SelectLabel>
+                                {cloud_deployment?.map((items, index) => (
+                                  <SelectItem
+                                    key={items.id || index}
+                                    value={items}
+                                  >
+                                    {items}
+                                  </SelectItem>
+                                ))}
+                              </SelectGroup>
+                              <SelectGroup>
+                                <SelectLabel className="bg-red-500">
+                                  AI/ML
+                                </SelectLabel>
+                                {ai_ml?.map((items, index) => (
+                                  <SelectItem
+                                    key={items.id || index}
+                                    value={items}
+                                  >
+                                    {items}
+                                  </SelectItem>
+                                ))}
+                              </SelectGroup>
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <div className="flex gap-1 flex-wrap">
+                          {field.value?.map((item, index) => (
+                            <div
+                              onClick={() => handleTagsChange(item)}
+                              key={item.id || index}
+                              className="cursor-pointer flex rounded-full items-center border gap-2 px-4 py-1"
+                            >
+                              <span className="text-sm">{item}</span>
+                              <Cross1Icon className="h-3 w-3" />
+                            </div>
+                          ))}
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="deadline"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Popover modal={true}>
+                            <PopoverTrigger asChild>
+                              <Button
+                                variant={"outline"}
+                                className={cn(
+                                  "pl-3 text-left font-normal w-full border-inherit",
+                                  !field.value && "text-muted-foreground"
+                                )}
+                              >
+                                {field.value ? (
+                                  format(field.value, "PPP")
+                                ) : (
+                                  <span>Pick a deadline date</span>
+                                )}
+                                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent
+                              align="start"
+                              className="flex w-auto flex-col space-y-2 p-2"
+                            >
+                              <div className="rounded-md border">
+                                <Calendar
+                                  mode="single"
+                                  selected={field.value}
+                                  onSelect={field.onChange}
+                                  disabled={(date) =>
+                                    addDays(date, 1) < new Date()
+                                  }
+                                />
+                              </div>
+                            </PopoverContent>
+                          </Popover>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <Button type="submit" className="w-full py-5">
+                    Update Project
+                  </Button>
+                </form>
+              </Form>
+            </div>
+          ) : (
+            <p>Loading project data...</p>
+          )}
         </div>
-      ) : (
-        <p>Loading project data...</p>
       )}
-    </div>
+    </>
   );
 };
 

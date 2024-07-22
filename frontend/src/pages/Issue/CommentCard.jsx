@@ -5,12 +5,11 @@ import { deleteComment } from "@/redux/Comment/comment.action";
 import { TrashIcon } from "@radix-ui/react-icons";
 import { useDispatch, useSelector } from "react-redux";
 
-const CommentCard = ({ item, sendMessageToServer }) => {
+const CommentCard = ({ item }) => {
   const { auth, comment } = useSelector((store) => store);
   const dispatch = useDispatch();
   const handleDeleteComment = () => {
     dispatch(deleteComment(item.id));
-    sendMessageToServer("refresh");
   };
   return (
     <>

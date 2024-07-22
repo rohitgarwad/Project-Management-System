@@ -46,7 +46,7 @@ const formSchema = z.object({
   status: z.string().min(2),
 });
 
-const EditIssueForm = ({ issue, setIsEdited, isEdited, labels, deadline }) => {
+const EditIssueForm = ({ issue, setIsEdited, isEdited, labels, deadline, change, sendRefresh }) => {
   //console.log("existing issue details: ", issue);
   const dispatch = useDispatch();
 
@@ -66,7 +66,7 @@ const EditIssueForm = ({ issue, setIsEdited, isEdited, labels, deadline }) => {
         status: issue.status,
       });
     }
-  }, [issue, form]);
+  }, [issue, form, change]);
 
   const handleLabelsChange = (newValue) => {
     const currentLabels = form.getValues("labels");
@@ -89,7 +89,8 @@ const EditIssueForm = ({ issue, setIsEdited, isEdited, labels, deadline }) => {
     };
     //console.log("update issue data: ", updatedData);
     dispatch(updateIssue(issue.id, updatedData));
-    setIsEdited(!isEdited);
+    setIsEdited(isEdited ? false : true);
+    sendRefresh("refresh");
   };
 
   return (

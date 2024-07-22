@@ -82,7 +82,7 @@ public class IssueServiceImpl implements IssueService {
 
 		getUserOrThrow(userId);
 		
-		System.out.println("projid---------->"+updatedIssue.getProjectId());
+//		System.out.println("projid---------->"+updatedIssue.getProjectId());
 		
 		Optional<Issue> existingIssue = getIssueById(issueId);
 		

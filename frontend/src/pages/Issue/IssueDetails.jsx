@@ -19,61 +19,26 @@ import { useParams } from "react-router-dom";
 import { fetchComments } from "@/redux/Comment/comment.action";
 import { Badge } from "@/components/ui/badge";
 import { fetchProjectById } from "@/redux/Project/Project.Action";
-import SockJS from "sockjs-client/dist/sockjs";
-import Stomp from "stompjs";
+
 
 const IssueDetails = () => {
   const { issueId, projectId } = useParams();
   const dispatch = useDispatch();
   const { project, issue, comment } = useSelector((store) => store);
-  const [change, setChange] = useState(false);
-  const [stompClient, setStompClient] = useState(null);
-  const [isConnected, setIsConnected] = useState(false);
+
 
   useEffect(() => {
     dispatch(fetchIssueById(issueId));
     dispatch(fetchComments(issueId));
     dispatch(fetchProjectById(projectId));
-  }, [dispatch, issueId, projectId, change]);
+  }, [dispatch, issueId, projectId]);
 
   //console.log("projectDetails----------", project?.projectDetails?.owner.fullName);
   const handleUpdateIssueStatus = (value) => {
     dispatch(updateIssueStatus({ id: issueId, status: value }));
-    sendMessageToServer("refresh");
+    // sendMessageToServer("refresh");
   };
 
-  useEffect(() => {
-    const connect = () => {
-      const sock = new SockJS("http://localhost:5054/ws");
-      const client = Stomp.over(sock);
-
-      client.connect({}, function () {
-        client.subscribe(`/all/public`, (message) => {
-          console.log("to receive message: ", message);
-          const receivedMessage = JSON.parse(message.body);
-          setChange(change ? false : true);
-        });
-      });
-
-      setStompClient(client);
-      setIsConnected(true);
-
-      return () => {
-        client.disconnect();
-        setIsConnected(false);
-      };
-    };
-
-    connect();
-  }, [change]);
-
-  const sendMessageToServer = (message) => {
-    //console.log("to send message: ", message);
-    if (stompClient && message.trim()) {
-      stompClient.send(`/app/refresh`, {}, JSON.stringify(message));
-      sendMessageToServer("");
-    }
-  };
 
   return (
     <>
@@ -118,11 +83,11 @@ const IssueDetails = () => {
                       All make changes to your account here.
                     </TabsContent>
                     <TabsContent value="comments">
-                      <CreateCommentForm issueId={issueId} sendMessageToServer={sendMessageToServer} />
+                      <CreateCommentForm issueId={issueId} />
                       <ScrollArea className="w-full h-[28vh]">
                         <div className="w-[65%] mt-8 space-y-6">
                           {comment.comments.toReversed().map((item, index) => (
-                            <CommentCard item={item} key={index} sendMessageToServer={sendMessageToServer} />
+                            <CommentCard item={item} key={index} />
                           ))}
                         </div>
                       </ScrollArea>

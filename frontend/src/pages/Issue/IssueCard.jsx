@@ -18,13 +18,22 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import EditIssueForm from "./EditIssueForm";
 
-const IssueCard = ({ item, setIsEdited, isEdited, labels, deadline }) => {
+const IssueCard = ({
+  item,
+  setIsEdited,
+  isEdited,
+  labels,
+  deadline,
+  change,
+  sendRefresh,
+}) => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
   const { project, auth } = useSelector((store) => store);
   const handleDelete = () => {
     dispatch(deleteIssue(item.id));
+    sendRefresh("refresh");
   };
   return (
     <Card className="rounded-md py-2 pb-2">
@@ -56,7 +65,14 @@ const IssueCard = ({ item, setIsEdited, isEdited, labels, deadline }) => {
                     </DropdownMenuItem>
                   </DialogTrigger>
                   <DialogContent>
-                    <EditIssueForm issue={item} isEdited={isEdited} setIsEdited={setIsEdited} labels={labels} deadline={deadline} />
+                    <EditIssueForm
+                      issue={item}
+                      isEdited={isEdited}
+                      setIsEdited={setIsEdited}
+                      labels={labels}
+                      deadline={deadline}
+                      change={change} sendRefresh={sendRefresh}
+                    />
                   </DialogContent>
                 </Dialog>
                 <DropdownMenuItem onClick={handleDelete}>
@@ -69,7 +85,9 @@ const IssueCard = ({ item, setIsEdited, isEdited, labels, deadline }) => {
       </CardHeader>
       <CardContent className="py-0">
         <div className="flex gap-2 items-center justify-between">
-          <p className="text-gray-400" style={{wordBreak: 'break-word'}}>{item.description}</p>
+          <p className="text-gray-400" style={{ wordBreak: "break-word" }}>
+            {item.description}
+          </p>
 
           <DropdownMenu className="w-[30rem] border border-red-400">
             <DropdownMenuTrigger>
@@ -79,13 +97,15 @@ const IssueCard = ({ item, setIsEdited, isEdited, labels, deadline }) => {
               >
                 <Avatar>
                   <AvatarFallback>
-                    {item.assignee?.fullName[0].toUpperCase() || <PersonIcon className="text-[#ea580c]"/>}
+                    {item.assignee?.fullName[0].toUpperCase() || (
+                      <PersonIcon className="text-[#ea580c]" />
+                    )}
                   </AvatarFallback>
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <UserList issueDetails={item} />
+              <UserList issueDetails={item} change={change} sendRefresh={sendRefresh} />
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

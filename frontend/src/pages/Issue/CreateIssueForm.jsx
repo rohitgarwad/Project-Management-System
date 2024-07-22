@@ -46,7 +46,7 @@ const formSchema = z.object({
   dueDate: z.date(),
 });
 
-export function CreateIssueForm({ status, labels, deadline }) {
+export function CreateIssueForm({ status, labels, deadline, sendRefresh }) {
   const dispatch = useDispatch();
   const { id } = useParams();
 
@@ -85,6 +85,7 @@ export function CreateIssueForm({ status, labels, deadline }) {
         dueDate: data.dueDate,
       })
     );
+    sendRefresh("refresh");
   };
 
   return (

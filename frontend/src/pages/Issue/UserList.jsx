@@ -2,13 +2,13 @@
 /* eslint-disable react/prop-types */
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { assignedUserToIssue } from "@/redux/Issue/Issue.action";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Loader from "../Loader/Loader";
 import { Skeleton } from "@/components/ui/skeleton";
 
-const UserList = ({ issueDetails }) => {
+const UserList = ({ issueDetails, sendRefresh }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { project, auth, issue } = useSelector((store) => store);
@@ -22,6 +22,7 @@ const UserList = ({ issueDetails }) => {
         issueId: issueDetails.id,
       })
     );
+    sendRefresh("refresh");
   };
 
   return (

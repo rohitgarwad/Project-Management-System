@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+/* eslint-disable no-unused-vars */
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "./redux/Auth/Action";
 import { Route, Routes } from "react-router-dom";
@@ -15,15 +16,59 @@ import { getUserSubscription } from "./redux/Subscription/Action";
 import UpgradeFailure from "./pages/subscription/UpgradeFailure";
 import { fetchProjects } from "./redux/Project/Project.Action";
 import AuthPage from "./pages/Auth/AuthPage";
+import SockJS from "sockjs-client/dist/sockjs";
+import Stomp from "stompjs";
 
 function App() {
   const dispatch = useDispatch();
   const { auth } = useSelector((store) => store);
+
+  const [change, setChange] = useState(false);
+  const [stompClient, setStompClient] = useState(null);
+  const [isConnected, setIsConnected] = useState(false);
+
   useEffect(() => {
     dispatch(getUser(auth.jwt || localStorage.getItem("jwt")));
     dispatch(getUserSubscription(auth.jwt || localStorage.getItem("jwt")));
     dispatch(fetchProjects({}));
   }, [auth.jwt, dispatch]);
+
+  useEffect(() => {
+    const connect = () => {
+      const sock = new SockJS("http://localhost:5054/ws");
+      const client = Stomp.over(sock);
+
+      client.connect({}, function () {
+        client.subscribe(`/all/public`, (message) => {
+          console.log("to receive message: ", message);
+          // const receivedMessage = JSON.parse(message.body);
+          setChange(change ? false : true);
+        });
+      });
+
+      setStompClient(client);
+      setIsConnected(true);
+
+      return () => {
+        client.disconnect();
+        setIsConnected(false);
+      };
+    };
+
+    if (auth.user !== null) {
+      connect();
+    }
+    
+  }, [auth.user, change]);
+
+  const sendRefresh = (message) => {
+    //console.log("to send message: ", message);
+    if (stompClient && message.trim()) {
+      stompClient.send(`/app/refresh`, {}, JSON.stringify(message));
+      // sendMessageToServer("");
+    }
+  };
+
 
   return (
     <>
@@ -33,19 +78,19 @@ function App() {
         <>
           <Navbar />
           <Routes>
-            <Route path="/" element={<Home />}></Route>
-            <Route path="/project/:id" element={<ProjectDetails />}></Route>
+            <Route path="/" element={<Home change={change} sendRefresh={sendRefresh} />}></Route>
+            <Route path="/project/:id" element={<ProjectDetails change={change} sendRefresh={sendRefresh} />}></Route>
             <Route
               path="/project/update/:id"
-              element={<UpdateProjectForm />}
+              element={<UpdateProjectForm change={change} sendRefresh={sendRefresh} />}
             ></Route>
             <Route
               path="/project/:projectId/issue/:issueId"
-              element={<IssueDetails />}
+              element={<IssueDetails change={change} sendRefresh={sendRefresh}/>}
             ></Route>
             <Route
               path="/accept_invitation"
-              element={<AcceptInvitation />}
+              element={<AcceptInvitation change={change} sendRefresh={sendRefresh}/>}
             ></Route>
             <Route path="/upgrade_plan" element={<Subscription />}></Route>
             <Route

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { IssueList } from "../Issue/IssueList";
 import ChatBox from "./ChatBox";
@@ -46,7 +47,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-const ProjectDetails = () => {
+const ProjectDetails = ({ change, sendRefresh }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const [isEdited, setIsEdited] = useState(false);
@@ -65,9 +66,9 @@ const ProjectDetails = () => {
     // console.log("issue: ", issue);
     // console.log("project: ", project);
     // console.log("auth: ", auth);
-  }, [id, issue.issues.length, isEdited, dispatch, authUserId, isRoleUpdated]);
+  }, [id, issue.issues.length, isEdited, dispatch, authUserId, change]);
 
-  console.log("project: ", project);
+  //console.log("project: ", project);
 
   const handleRoleChange = (value, userId, oldRoleType) => {
     // console.log("newRoleType: ", value);
@@ -81,7 +82,8 @@ const ProjectDetails = () => {
     };
     // console.log("updateRoleData: ", updateRoleData);
     dispatch(updateUsersProjectRole(updateRoleData));
-    setIsRoleUpdated(!isRoleUpdated);
+    setIsRoleUpdated(isRoleUpdated ? false : true);
+    sendRefresh("refresh");
   };
 
   return (
@@ -143,7 +145,7 @@ const ProjectDetails = () => {
                             <DialogHeader>
                               <DialogTitle>Invite User</DialogTitle>
                             </DialogHeader>
-                            <InviteUserForm projectId={id} />
+                            <InviteUserForm projectId={id} change={change} sendRefresh={sendRefresh} />
                           </DialogContent>
                         </Dialog>
                       )}
@@ -206,89 +208,87 @@ const ProjectDetails = () => {
                         </CardHeader>
                         <CardContent>
                           <ScrollArea className="h-[25vh]">
-                            {!project?.loading && (
-                              <div className="p-6 pl-0 pb-0 grid gap-6">
-                                {project?.projectRoles?.map(
-                                  (projectRole, index) => (
-                                    <div
-                                      key={projectRole?.id || index}
-                                      className="flex items-center justify-between space-x-4"
-                                    >
-                                      <div className="flex items-center space-x-4">
-                                        <div className="flex items-center gap-2">
-                                          <Avatar className={`cursor-pointer`}>
-                                            <AvatarFallback>
-                                              {projectRole?.user?.fullName[0]}
-                                            </AvatarFallback>
-                                          </Avatar>
-                                        </div>
-                                        <div>
-                                          <p className="text-sm font-medium leading-none">
-                                            {projectRole?.user?.fullName}
-                                          </p>
-                                          <p className="text-sm text-muted-foreground">
-                                            {projectRole?.user?.email}
-                                          </p>
-                                        </div>
+                            <div className="p-6 pl-0 pb-0 grid gap-6">
+                              {project?.projectRoles?.map(
+                                (projectRole, index) => (
+                                  <div
+                                    key={projectRole?.id || index}
+                                    className="flex items-center justify-between space-x-4"
+                                  >
+                                    <div className="flex items-center space-x-4">
+                                      <div className="flex items-center gap-2">
+                                        <Avatar className={`cursor-pointer`}>
+                                          <AvatarFallback>
+                                            {projectRole?.user?.fullName[0]}
+                                          </AvatarFallback>
+                                        </Avatar>
                                       </div>
-                                      {auth?.user?.id ===
-                                        project?.projectDetails?.owner?.id ||
-                                      userRole === "MANAGER" ? (
-                                        <Select
-                                          defaultValue={`${projectRole?.roleType}`}
-                                          onValueChange={(value) =>
-                                            handleRoleChange(
-                                              value,
-                                              projectRole?.user?.id,
-                                              projectRole?.roleType
-                                            )
-                                          }
-                                        >
-                                          <SelectTrigger className="w-[110px]">
-                                            <SelectValue
-                                              placeholder={`${projectRole?.roleType}`}
-                                            />
-                                          </SelectTrigger>
-                                          <SelectContent>
-                                            <SelectGroup>
-                                              <SelectLabel>Role</SelectLabel>
-                                              <SelectItem value="MANAGER">
-                                                MANAGER
-                                              </SelectItem>
-                                              {projectRole?.user?.id !==
-                                                project?.projectDetails?.owner
-                                                  ?.id && (
-                                                <SelectItem value="EMPLOYEE">
-                                                  EMPLOYEE
-                                                </SelectItem>
-                                              )}
-                                            </SelectGroup>
-                                          </SelectContent>
-                                        </Select>
-                                      ) : (
-                                        <div>
-                                          <TooltipProvider>
-                                            <Tooltip>
-                                              <TooltipTrigger asChild>
-                                                <Button variant="outline">
-                                                  {projectRole?.roleType}
-                                                </Button>
-                                              </TooltipTrigger>
-                                              <TooltipContent>
-                                                <p>
-                                                  You are not Authorized to
-                                                  modify Roles
-                                                </p>
-                                              </TooltipContent>
-                                            </Tooltip>
-                                          </TooltipProvider>
-                                        </div>
-                                      )}
+                                      <div>
+                                        <p className="text-sm font-medium leading-none">
+                                          {projectRole?.user?.fullName}
+                                        </p>
+                                        <p className="text-sm text-muted-foreground">
+                                          {projectRole?.user?.email}
+                                        </p>
+                                      </div>
                                     </div>
-                                  )
-                                )}
-                              </div>
-                            )}
+                                    {auth?.user?.id ===
+                                      project?.projectDetails?.owner?.id ||
+                                    userRole === "MANAGER" ? (
+                                      <Select
+                                        value={`${projectRole?.roleType}`}
+                                        onValueChange={(value) =>
+                                          handleRoleChange(
+                                            value,
+                                            projectRole?.user?.id,
+                                            projectRole?.roleType
+                                          )
+                                        }
+                                      >
+                                        <SelectTrigger className="w-[110px]">
+                                          <SelectValue
+                                            placeholder={`${projectRole?.roleType}`}
+                                          />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                          <SelectGroup>
+                                            <SelectLabel>Role</SelectLabel>
+                                            <SelectItem value="MANAGER">
+                                              MANAGER
+                                            </SelectItem>
+                                            {projectRole?.user?.id !==
+                                              project?.projectDetails?.owner
+                                                ?.id && (
+                                              <SelectItem value="EMPLOYEE">
+                                                EMPLOYEE
+                                              </SelectItem>
+                                            )}
+                                          </SelectGroup>
+                                        </SelectContent>
+                                      </Select>
+                                    ) : (
+                                      <div>
+                                        <TooltipProvider>
+                                          <Tooltip>
+                                            <TooltipTrigger asChild>
+                                              <Button variant="outline">
+                                                {projectRole?.roleType}
+                                              </Button>
+                                            </TooltipTrigger>
+                                            <TooltipContent>
+                                              <p>
+                                                You are not Authorized to modify
+                                                Roles
+                                              </p>
+                                            </TooltipContent>
+                                          </Tooltip>
+                                        </TooltipProvider>
+                                      </div>
+                                    )}
+                                  </div>
+                                )
+                              )}
+                            </div>
                           </ScrollArea>
                         </CardContent>
                       </Card>
@@ -296,6 +296,7 @@ const ProjectDetails = () => {
                   </div>
                 </div>
 
+{/* Issues Section */}
                 <section>
                   <p className="py-5 border-b text-xl tracking-wider font-bold text-gray-200">
                     Tasks
@@ -308,6 +309,7 @@ const ProjectDetails = () => {
                       deadline={project?.projectDetails?.deadline}
                       isEdited={isEdited}
                       setIsEdited={setIsEdited}
+                      change={change} sendRefresh={sendRefresh}
                     />
 
                     <IssueList
@@ -317,6 +319,7 @@ const ProjectDetails = () => {
                       deadline={project?.projectDetails?.deadline}
                       isEdited={isEdited}
                       setIsEdited={setIsEdited}
+                      change={change} sendRefresh={sendRefresh}
                     />
 
                     <IssueList
@@ -326,6 +329,7 @@ const ProjectDetails = () => {
                       deadline={project?.projectDetails?.deadline}
                       isEdited={isEdited}
                       setIsEdited={setIsEdited}
+                      change={change} sendRefresh={sendRefresh}
                     />
                   </div>
                 </section>

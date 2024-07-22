@@ -92,21 +92,6 @@ const ChatBox = () => {
     chatContainerRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chat.messages, change]);
 
-  // setInterval(() => {
-  //   if (isConnected) {
-  //     sendMessageToServer("refresh");
-  //   }
-  // }, 10000);
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     if (isConnected) {
-  //       sendMessageToServer("refresh");
-  //     }
-  //   }, 1000);
-  //   return () => {
-  //     clearInterval(interval);
-  //   };
-  // }, []);
 
   return (
     <div className="sticky top-[100px] bg-background">

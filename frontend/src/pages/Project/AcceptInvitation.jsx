@@ -1,9 +1,10 @@
+/* eslint-disable react/prop-types */
 import { Button } from "@/components/ui/button";
 import { acceptInvitation } from "@/redux/Project/Project.Action";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const AcceptInvitation = () => {
+const AcceptInvitation = ({ sendRefresh }) => {
   const dipatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const AcceptInvitation = () => {
     const token = urlParams.get("token");
     //console.log("token ", token);
     dipatch(acceptInvitation({ invitationToken: token, navigate }));
+    sendRefresh("refresh");
   };
   return (
     <div className="h-[85vh] flex flex-col justify-center items-center absolute mt-24 w-full">

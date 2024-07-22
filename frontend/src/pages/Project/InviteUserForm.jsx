@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 const formSchema = z.object({
   email: z.string().email("Invalid email address"),
 });
-const InviteUserForm = ({ projectId }) => {
+const InviteUserForm = ({ projectId, sendRefresh }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const form = useForm({
@@ -33,6 +33,7 @@ const InviteUserForm = ({ projectId }) => {
     dispatch(inviteToProject(data));
     //console.log("sent invitation", data);
     navigate(`/project/${projectId}`);
+    sendRefresh("refresh");
   };
 
   return (
