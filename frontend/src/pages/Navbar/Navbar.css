@@ -1,0 +1,104 @@
+
+/* Create pseudo elements for both elements */
+.text-effect-wrapper,
+.text-neon {
+
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+    }
+}
+
+.text-effect-wrapper {
+    /* Can be anything light-colored */
+    --spotlight-color: orange;
+
+    overflow: hidden;
+    position: relative;
+
+    /* Shimmer animation */
+    &::before {
+        animation: shimmer 5s infinite linear;
+        background:
+            radial-gradient(circle, var(--spotlight-color), transparent 25%) 0 0 / 25% 25%,
+            radial-gradient(circle, var(--spotlight-color), black 25%) 50% 50% / 12.5% 12.5%;
+        inset-block-start: -100%;
+        inset-inline-start: -100%;
+        mix-blend-mode: color-dodge;
+        z-index: 3;
+    }
+
+    /* Extra filter to boost colors and contrast */
+    &::after {
+        z-index: 4;
+    }
+}
+
+@keyframes shimmer {
+    100% {
+        transform: translate3d(50%, 50%, 0);
+    }
+}
+
+.text-neon {
+    /* Mask colors */
+    /* Should be black and white */
+    --background-color: black;
+    --text-color: white;
+
+    /* Text color */
+    /* Can be anything */
+    --angle: 5deg;
+    --color-1: hsl(163, 100%, 51%);
+    --color-2: hsl(295, 88%, 32%);
+    --color-3: hsl(59, 100%, 50%);
+
+
+    /* Fuzzy white outline text */
+    color: transparent;
+    text-shadow:
+        0 0 0.03em var(--background-color),
+        0 0 0.03em var(--text-color);
+
+    /* Improve contrast of outline */
+    &::before {
+        z-index: 1;
+    }
+
+    /* Add text color */
+    &::after {
+        background: linear-gradient(var(--angle), var(--color-1), var(--color-2), var(--color-3));
+        mix-blend-mode: color-dodge;
+        z-index: 2;
+    }
+}
+
+/* Alternative styling */
+
+
+/* === Pen styling, ignore */
+
+.text-neon {
+    --font-size: 40px;
+    font: 700 var(--font-size)/1 "Lato", sans-serif;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 0;
+    cursor: pointer;
+    border-width:1px;
+    border-radius: 4px;
+
+    &:empty,
+    &:focus {
+        border: 2px dotted white;
+        min-width: 1ch;
+        outline-offset: 5px;
+    }
+}
+
+.text-container {
+    background: black;  
+}

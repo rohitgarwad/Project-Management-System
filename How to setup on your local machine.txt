@@ -1,0 +1,22 @@
+for backend
+
+change db creadential in application.properties file
+
+=> username
+
+=> password
+
+=> and create database
+
+=> change razorpay api & secret
+
+=> give your gmail and app password
+
+run backend
+
+for frontend 
+=> do npm i
+=> npm run dev 
+
+
+then signup
