@@ -44,7 +44,7 @@ public class ProjectServiceImpl implements ProjectService {
 		createdProject.setName(project.getName());
 		createdProject.setCategory(project.getCategory());
 		createdProject.setDescription(project.getDescription());
-		createdProject.setDeadline(project.getDeadline());
+		createdProject.setDeadline(project.getDeadline().plusDays(1));
 		createdProject.setStatus("in-progress");
 
 		// System.out.println(createdProject);
@@ -124,7 +124,7 @@ public class ProjectServiceImpl implements ProjectService {
 			}
 
 			if (updatedProject.getDeadline() != null) {
-				project.setDeadline(updatedProject.getDeadline());
+				project.setDeadline(updatedProject.getDeadline().plusDays(1));
 			}
 
 			// Save the updated project once

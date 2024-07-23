@@ -13,7 +13,6 @@ import {
 } from "@/redux/Project/Project.Action";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import Loader from "../Loader/Loader";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "@radix-ui/react-icons";
 import {
@@ -110,7 +109,7 @@ const ProjectDetails = ({ change, sendRefresh }) => {
                     </p>
                     <p>{project.projectDetails?.owner?.fullName}</p>
                   </div>
-                  <div className="flex">
+                  <div className="flex  text-gray-300">
                     <p className="w-36 font-black text-gray-300">Members </p>
                     <div className="flex items-center gap-2">
                       {project.projectDetails?.team.map((item, index) => (
@@ -135,8 +134,8 @@ const ProjectDetails = ({ change, sendRefresh }) => {
                               className="ml-2 border-inherit"
                             >
                               {" "}
-                              <span className="pr-1">invite</span>
-                              <PlusIcon className="w-3 h-3" />
+                              <span className="pr-1">Invite</span>
+                              <PlusIcon  />
                             </Button>
                           </DialogClose>
                         </DialogTrigger>
@@ -188,7 +187,7 @@ const ProjectDetails = ({ change, sendRefresh }) => {
                         <Badge
                           key={index}
                           variant="outline"
-                          className="text-gray-400"
+                          className="text-gray-300"
                         >
                           {tag}
                         </Badge>
@@ -273,15 +272,17 @@ const ProjectDetails = ({ change, sendRefresh }) => {
                                     <div>
                                       <TooltipProvider>
                                         <Tooltip>
-                                          <TooltipTrigger asChild>
-                                            <Button variant="outline">
+                                          <TooltipTrigger
+                                            asChild
+                                            className="w-[110px]"
+                                          >
+                                            <Button variant="destructive">
                                               {projectRole?.roleType}
                                             </Button>
                                           </TooltipTrigger>
                                           <TooltipContent>
                                             <p>
-                                              You are not Authorized to modify
-                                              Roles
+                                              You are not Authorized to perform this action.
                                             </p>
                                           </TooltipContent>
                                         </Tooltip>

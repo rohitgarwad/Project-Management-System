@@ -68,7 +68,7 @@ function App() {
       setChange(Math.random() * 100);
       sendRefresh("");
     }
-  };
+  };  
 
 
   return (

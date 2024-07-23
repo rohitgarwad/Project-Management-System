@@ -13,14 +13,14 @@ public class GlobelExeptions {
 	
 	
 	@ExceptionHandler(UserException.class)
-	public ResponseEntity<ErrorDetais> userEceptionHandler(UserException ue,
+	public ResponseEntity<ErrorDetais> userExceptionHandler(UserException ue,
 			WebRequest req){
 		ErrorDetais error=new ErrorDetais(ue.getMessage(),req.getDescription(false),LocalDateTime.now());
 		return new ResponseEntity<ErrorDetais>(error,HttpStatus.BAD_REQUEST);
 	}
 	
 	@ExceptionHandler(Exception.class)
-	public ResponseEntity<ErrorDetais> otherEceptionHandler(Exception ue,
+	public ResponseEntity<ErrorDetais> otherExceptionHandler(Exception ue,
 			WebRequest req){
 		ErrorDetais error=new ErrorDetais(ue.getMessage(),req.getDescription(false),LocalDateTime.now());
 		return new ResponseEntity<ErrorDetais>(error,HttpStatus.BAD_REQUEST);

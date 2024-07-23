@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-import { AvatarFallback,Avatar } from "@/components/ui/avatar";
+import { AvatarFallback, Avatar } from "@/components/ui/avatar";
 import { useDispatch, useSelector } from "react-redux";
 import { createComment } from "@/redux/Comment/comment.action";
 
@@ -23,50 +23,54 @@ const formSchema = z.object({
   }),
 });
 
-export function CreateCommentForm({issueId, sendRefresh}) {
-  const {auth}=useSelector(store=>store);
+export function CreateCommentForm({ issueId, sendRefresh }) {
+  const { auth } = useSelector((store) => store);
   const dispatch = useDispatch();
-    const form = useForm({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-          content: "",
-        },
-      })
+  const form = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      content: "",
+    },
+  });
   const onSubmit = (data) => {
     //console.log("comment data ", data);
-    dispatch(createComment({content:data.content,issueId}))
+    dispatch(createComment({ content: data.content, issueId }));
     form.reset();
     sendRefresh("refresh");
   };
 
   return (
     <Form {...form}>
-    <form 
-    onSubmit={form.handleSubmit(onSubmit)} 
-    className="flex gap-2">
-      <FormField
-        control={form.control}
-        name="content"
-        render={({ field }) => (
-          <FormItem>
-            <div className="flex gap-2">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex gap-2">
+        <FormField
+          control={form.control}
+          name="content"
+          render={({ field }) => (
+            <FormItem>
+              <div className="flex gap-2">
                 <div>
                   <Avatar>
-                    <AvatarFallback>{auth.user.fullName[0].toUpperCase()}</AvatarFallback>
-                </Avatar>  
+                    <AvatarFallback>
+                      {auth.user.fullName[0].toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
                 </div>
-                
-                 <FormControl>
-              <Input className="w-[20rem] border-inherit" placeholder="add a comment..." {...field} />
-            </FormControl>
-            </div>
-           
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <Button type="submit">comment</Button>
-    </form>
-  </Form>
+
+                <FormControl>
+                  <Input
+                    className="w-[20rem] border-inherit"
+                    placeholder="add a comment..."
+                    {...field}
+                  />
+                </FormControl>
+              </div>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">comment</Button>
+      </form>
+    </Form>
   );
 }

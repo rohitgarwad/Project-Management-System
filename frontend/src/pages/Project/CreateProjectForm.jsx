@@ -166,7 +166,9 @@ const CreateProjectForm = () => {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
-                        <SelectLabel className="bg-red-500">Languages</SelectLabel>
+                        <SelectLabel className="bg-red-500">
+                          Languages
+                        </SelectLabel>
                         {languages?.map((items, index) => (
                           <SelectItem key={items.id || index} value={items}>
                             {items}
@@ -174,7 +176,9 @@ const CreateProjectForm = () => {
                         ))}
                       </SelectGroup>
                       <SelectGroup>
-                        <SelectLabel className="bg-red-500">Web-Technologies</SelectLabel>
+                        <SelectLabel className="bg-red-500">
+                          Web-Technologies
+                        </SelectLabel>
                         {webTechnologies?.map((items, index) => (
                           <SelectItem key={items.id || index} value={items}>
                             {items}
@@ -182,7 +186,9 @@ const CreateProjectForm = () => {
                         ))}
                       </SelectGroup>
                       <SelectGroup>
-                        <SelectLabel className="bg-red-500">Mobile-Technologies</SelectLabel>
+                        <SelectLabel className="bg-red-500">
+                          Mobile-Technologies
+                        </SelectLabel>
                         {mobileTechnologies?.map((items, index) => (
                           <SelectItem key={items.id || index} value={items}>
                             {items}
@@ -190,7 +196,9 @@ const CreateProjectForm = () => {
                         ))}
                       </SelectGroup>
                       <SelectGroup>
-                        <SelectLabel className="bg-red-500">Operating-System</SelectLabel>
+                        <SelectLabel className="bg-red-500">
+                          Operating-System
+                        </SelectLabel>
                         {operatingSystem?.map((items, index) => (
                           <SelectItem key={items.id || index} value={items}>
                             {items}
@@ -198,7 +206,9 @@ const CreateProjectForm = () => {
                         ))}
                       </SelectGroup>
                       <SelectGroup>
-                        <SelectLabel className="bg-red-500">Databases</SelectLabel>
+                        <SelectLabel className="bg-red-500">
+                          Databases
+                        </SelectLabel>
                         {databases?.map((items, index) => (
                           <SelectItem key={items.id || index} value={items}>
                             {items}
@@ -206,7 +216,9 @@ const CreateProjectForm = () => {
                         ))}
                       </SelectGroup>
                       <SelectGroup>
-                        <SelectLabel className="bg-red-500">Web-Servers</SelectLabel>
+                        <SelectLabel className="bg-red-500">
+                          Web-Servers
+                        </SelectLabel>
                         {webServers?.map((items, index) => (
                           <SelectItem key={items.id || index} value={items}>
                             {items}
@@ -214,7 +226,9 @@ const CreateProjectForm = () => {
                         ))}
                       </SelectGroup>
                       <SelectGroup>
-                        <SelectLabel className="bg-red-500">Cloud & Deployment</SelectLabel>
+                        <SelectLabel className="bg-red-500">
+                          Cloud & Deployment
+                        </SelectLabel>
                         {cloud_deployment?.map((items, index) => (
                           <SelectItem key={items.id || index} value={items}>
                             {items}

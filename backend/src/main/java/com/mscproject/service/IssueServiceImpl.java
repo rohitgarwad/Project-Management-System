@@ -64,7 +64,7 @@ public class IssueServiceImpl implements IssueService {
 		issue.setStatus(issueRequest.getStatus());
 		issue.setProjectID(issueRequest.getProjectId());
 		issue.setPriority(issueRequest.getPriority());
-		issue.setDueDate(issueRequest.getDueDate());
+		issue.setDueDate(issueRequest.getDueDate().plusDays(1));
 		issue.setLabels(issueRequest.getLabels());
 
 
@@ -108,7 +108,7 @@ public class IssueServiceImpl implements IssueService {
 			}
 
 			if (updatedIssue.getDueDate() != null) {
-				issueToUpdate.setDueDate(updatedIssue.getDueDate());
+				issueToUpdate.setDueDate(updatedIssue.getDueDate().plusDays(1));
 			}
 
 			if (updatedIssue.getPriority() != null) {

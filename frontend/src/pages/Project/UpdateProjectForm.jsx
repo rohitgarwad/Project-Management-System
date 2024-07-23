@@ -95,7 +95,7 @@ const UpdateProjectForm = ({ change, sendRefresh }) => {
 
   const onSubmit = (data) => {
     dispatch(updateProject({ updatedData: data, projectId: id }));
-    //console.log("update project", data);
+    console.log("update project", data);
     sendRefresh("refresh");
     navigate("/");
   };

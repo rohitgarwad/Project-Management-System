@@ -14,29 +14,31 @@ const CommentCard = ({ item, sendRefresh }) => {
   };
   return (
     <>
-      <div className="flex justify-between border-r">
-        <div className="flex items-center gap-4">
-          <Avatar>
-            <AvatarFallback>
-              {item.user.fullName[0].toUpperCase()}
-            </AvatarFallback>
-          </Avatar>
-          <div className="space-y-1">
-            <p className="text-gray-300">{item.user.fullName}</p>
-            <p>{item.content}</p>
+      {!comment?.loading && (
+        <div className="flex justify-between border-r">
+          <div className="flex items-center gap-4">
+            <Avatar>
+              <AvatarFallback>
+                {item.user.fullName[0].toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
+            <div className="space-y-1">
+              <p className="text-gray-300">{item.user.fullName}</p>
+              <p>{item.content}</p>
+            </div>
           </div>
+          {auth?.user?.id === item?.user?.id && (
+            <Button
+              onClick={handleDeleteComment}
+              className="rounded-full"
+              variant="ghost"
+              size="icon"
+            >
+              <TrashIcon />
+            </Button>
+          )}
         </div>
-        {auth?.user?.id === item?.user?.id && (
-          <Button
-            onClick={handleDeleteComment}
-            className="rounded-full"
-            variant="ghost"
-            size="icon"
-          >
-            <TrashIcon />
-          </Button>
-        )}
-      </div>
+      )}
     </>
   );
 };
