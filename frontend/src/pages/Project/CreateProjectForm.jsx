@@ -46,13 +46,18 @@ const CreateProjectForm = () => {
   const { auth, subscription } = useSelector((store) => store);
 
   const languages = data.Languages;
-  const webTechnologies = data["Web-Technologies"];
+  const webTechnologies = data["Libraries and Frameworks"];
   const mobileTechnologies = data["Mobile-Technologies"];
   const operatingSystem = data["Operating-System"];
   const databases = data.Databases;
   const webServers = data["Web-Servers"];
   const cloud_deployment = data["Cloud & Deployment"];
   const ai_ml = data["AI/ML"];
+  const dataScience = data["Data Science"];
+  const sdlcModels = data["SDLC models"];
+  const testingTools = data["Testing-Tools"];
+  const platforms = data["Development-Platforms"];
+  const apiProtocols = data["API protocols"];
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -177,7 +182,7 @@ const CreateProjectForm = () => {
                       </SelectGroup>
                       <SelectGroup>
                         <SelectLabel className="bg-red-500">
-                          Web-Technologies
+                          Libraries and Frameworks
                         </SelectLabel>
                         {webTechnologies?.map((items, index) => (
                           <SelectItem key={items.id || index} value={items}>

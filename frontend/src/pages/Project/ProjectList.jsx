@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import ProjectCard from "./ProjectCard";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -16,10 +16,9 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProjects, searchProjects } from "@/redux/Project/Project.Action";
 import { useLocation, useNavigate } from "react-router-dom";
-import { tags } from "./filterData";
+import { filterData } from "./filterData";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import FilterSheet from "./FilterSheet";
-import { data } from "./data";
 
 const ProjectList = ({ change, sendRefresh }) => {
   const navigate = useNavigate();
@@ -30,16 +29,7 @@ const ProjectList = ({ change, sendRefresh }) => {
   const tag = searchParams.get("tag");
   const [keyword, setKeyword] = useState("");
 
-  const { project, auth } = useSelector((store) => store);
-
-  const languages = data.Languages;
-  const webTechnologies = data["Web-Technologies"];
-  const mobileTechnologies = data["Mobile-Technologies"];
-  const operatingSystem = data["Operating-System"];
-  const databases = data.Databases;
-  const webServers = data["Web-Servers"];
-  const cloud_deployment = data["Cloud & Deployment"];
-  const ai_ml = data["AI/ML"];
+  const { project } = useSelector((store) => store);
 
   useEffect(() => {
     dispatch(fetchProjects({ category, tag }));
@@ -126,118 +116,22 @@ const ProjectList = ({ change, sendRefresh }) => {
                         <RadioGroupItem value="all" id="r-all" />
                         <Label htmlFor="r-all">All</Label>
                       </div>
-                      <>
-                        <p className="text-gray-500 font-black text-base border-l-2 bg-[#c5692730]">
-                          Languages
-                        </p>
-                        {languages.sort().map((item, index) => (
-                          <div
-                            key={item?.id || index}
-                            className="flex items-center space-x-2"
-                          >
-                            <RadioGroupItem value={item} id={`r-${item}`} />
-                            <Label htmlFor={`r-${item}`}>{item}</Label>
-                          </div>
-                        ))}
-                      </>
-                      <>
-                        <p className="text-gray-500 font-black text-base border-l-2 bg-[#c5692730]">
-                          Web-Technologies
-                        </p>
-                        {webTechnologies.sort().map((item, index) => (
-                          <div
-                            key={item?.id || index}
-                            className="flex items-center space-x-2"
-                          >
-                            <RadioGroupItem value={item} id={`r-${item}`} />
-                            <Label htmlFor={`r-${item}`}>{item}</Label>
-                          </div>
-                        ))}
-                      </>
-                      <>
-                        <p className="text-gray-500 font-black text-base border-l-2 bg-[#c5692730]">
-                          Mobile-Technologies
-                        </p>
-                        {mobileTechnologies.sort().map((item, index) => (
-                          <div
-                            key={item?.id || index}
-                            className="flex items-center space-x-2"
-                          >
-                            <RadioGroupItem value={item} id={`r-${item}`} />
-                            <Label htmlFor={`r-${item}`}>{item}</Label>
-                          </div>
-                        ))}
-                      </>
-                      <>
-                        <p className="text-gray-500 font-black text-base border-l-2 bg-[#c5692730]">
-                          Operating-System
-                        </p>
-                        {operatingSystem.sort().map((item, index) => (
-                          <div
-                            key={item?.id || index}
-                            className="flex items-center space-x-2"
-                          >
-                            <RadioGroupItem value={item} id={`r-${item}`} />
-                            <Label htmlFor={`r-${item}`}>{item}</Label>
-                          </div>
-                        ))}
-                      </>
-                      <>
-                        <p className="text-gray-500 font-black text-base border-l-2 bg-[#c5692730]">
-                          Databases
-                        </p>
-                        {databases.sort().map((item, index) => (
-                          <div
-                            key={item?.id || index}
-                            className="flex items-center space-x-2"
-                          >
-                            <RadioGroupItem value={item} id={`r-${item}`} />
-                            <Label htmlFor={`r-${item}`}>{item}</Label>
-                          </div>
-                        ))}
-                      </>
-                      <>
-                        <p className="text-gray-500 font-black text-base border-l-2 bg-[#c5692730]">
-                          Web-Servers
-                        </p>
-                        {webServers.sort().map((item, index) => (
-                          <div
-                            key={item?.id || index}
-                            className="flex items-center space-x-2"
-                          >
-                            <RadioGroupItem value={item} id={`r-${item}`} />
-                            <Label htmlFor={`r-${item}`}>{item}</Label>
-                          </div>
-                        ))}
-                      </>
-                      <>
-                        <p className="text-gray-500 font-black text-base border-l-2 bg-[#c5692730]">
-                          Cloud & Deployment
-                        </p>
-                        {cloud_deployment.sort().map((item, index) => (
-                          <div
-                            key={item?.id || index}
-                            className="flex items-center space-x-2"
-                          >
-                            <RadioGroupItem value={item} id={`r-${item}`} />
-                            <Label htmlFor={`r-${item}`}>{item}</Label>
-                          </div>
-                        ))}
-                      </>
-                      <>
-                        <p className="text-gray-500 font-black text-base border-l-2 bg-[#c5692730]">
-                          AI/ML
-                        </p>
-                        {ai_ml.sort().map((item, index) => (
-                          <div
-                            key={item?.id || index}
-                            className="flex items-center space-x-2"
-                          >
-                            <RadioGroupItem value={item} id={`r-${item}`} />
-                            <Label htmlFor={`r-${item}`}>{item}</Label>
-                          </div>
-                        ))}
-                      </>
+                      {filterData.map((item, index) => (
+                        <Fragment key={item?.id || index}>
+                          <p className="text-gray-500 font-black text-base border-l-2 bg-[#c5692730]">
+                            {item.Title}
+                          </p>
+                          {item.Tags.sort().map((tag, index) => (
+                            <div
+                              key={tag?.id || index}
+                              className="flex items-center space-x-2"
+                            >
+                              <RadioGroupItem value={tag} id={`r-${tag}`} />
+                              <Label htmlFor={`r-${tag}`}>{tag}</Label>
+                            </div>
+                          ))}
+                        </Fragment>
+                      ))}
                     </RadioGroup>
                   </ScrollArea>
                 </div>
