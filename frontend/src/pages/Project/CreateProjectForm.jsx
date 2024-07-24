@@ -31,8 +31,8 @@ import {
 import { cn } from "@/lib/utils";
 import { addDays, format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
-import { data } from "./data";
 import { SelectGroup, SelectLabel } from "@/components/custome/select";
+import { filterData } from "./filterData";
 
 const formSchema = object({
   name: string().min(1),
@@ -44,20 +44,6 @@ const formSchema = object({
 const CreateProjectForm = () => {
   const dispatch = useDispatch();
   const { auth, subscription } = useSelector((store) => store);
-
-  const languages = data.Languages;
-  const webTechnologies = data["Libraries and Frameworks"];
-  const mobileTechnologies = data["Mobile-Technologies"];
-  const operatingSystem = data["Operating-System"];
-  const databases = data.Databases;
-  const webServers = data["Web-Servers"];
-  const cloud_deployment = data["Cloud & Deployment"];
-  const ai_ml = data["AI/ML"];
-  const dataScience = data["Data Science"];
-  const sdlcModels = data["SDLC models"];
-  const testingTools = data["Testing-Tools"];
-  const platforms = data["Development-Platforms"];
-  const apiProtocols = data["API protocols"];
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -170,84 +156,18 @@ const CreateProjectForm = () => {
                       <SelectValue placeholder="Technologies & Tools" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectGroup>
-                        <SelectLabel className="bg-red-500">
-                          Languages
-                        </SelectLabel>
-                        {languages?.map((items, index) => (
-                          <SelectItem key={items.id || index} value={items}>
-                            {items}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                      <SelectGroup>
-                        <SelectLabel className="bg-red-500">
-                          Libraries and Frameworks
-                        </SelectLabel>
-                        {webTechnologies?.map((items, index) => (
-                          <SelectItem key={items.id || index} value={items}>
-                            {items}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                      <SelectGroup>
-                        <SelectLabel className="bg-red-500">
-                          Mobile-Technologies
-                        </SelectLabel>
-                        {mobileTechnologies?.map((items, index) => (
-                          <SelectItem key={items.id || index} value={items}>
-                            {items}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                      <SelectGroup>
-                        <SelectLabel className="bg-red-500">
-                          Operating-System
-                        </SelectLabel>
-                        {operatingSystem?.map((items, index) => (
-                          <SelectItem key={items.id || index} value={items}>
-                            {items}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                      <SelectGroup>
-                        <SelectLabel className="bg-red-500">
-                          Databases
-                        </SelectLabel>
-                        {databases?.map((items, index) => (
-                          <SelectItem key={items.id || index} value={items}>
-                            {items}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                      <SelectGroup>
-                        <SelectLabel className="bg-red-500">
-                          Web-Servers
-                        </SelectLabel>
-                        {webServers?.map((items, index) => (
-                          <SelectItem key={items.id || index} value={items}>
-                            {items}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                      <SelectGroup>
-                        <SelectLabel className="bg-red-500">
-                          Cloud & Deployment
-                        </SelectLabel>
-                        {cloud_deployment?.map((items, index) => (
-                          <SelectItem key={items.id || index} value={items}>
-                            {items}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                      <SelectGroup>
-                        <SelectLabel className="bg-red-500">AI/ML</SelectLabel>
-                        {ai_ml?.map((items, index) => (
-                          <SelectItem key={items.id || index} value={items}>
-                            {items}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
+                      {filterData.map((item, index) => (
+                        <SelectGroup key={item?.id || index}>
+                          <SelectLabel className="bg-red-500">
+                            {item?.Title}
+                          </SelectLabel>
+                          {item?.Tags.sort().map((tag, index) => (
+                            <SelectItem key={tag?.id || index} value={tag}>
+                              {tag}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      ))}
                     </SelectContent>
                   </Select>
                 </FormControl>
