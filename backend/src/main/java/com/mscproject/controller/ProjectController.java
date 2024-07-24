@@ -74,7 +74,6 @@ public class ProjectController {
 	@PutMapping("/{projectId}")
 	public ResponseEntity<Project> updateProject(@RequestBody Project updatedProject, @PathVariable Long projectId,
 			@RequestHeader("Authorization") String token) throws UserException, ProjectException {
-		System.out.println("update project............." + updatedProject);
 		Project updated = projectService.updateProject(updatedProject, projectId);
 		return updated != null ? new ResponseEntity<>(updated, HttpStatus.OK)
 				: new ResponseEntity<>(HttpStatus.NOT_FOUND);

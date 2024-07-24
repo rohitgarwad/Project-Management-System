@@ -26,6 +26,7 @@ const IssueCard = ({
   deadline,
   change,
   sendRefresh,
+  userRole,
 }) => {
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -45,7 +46,9 @@ const IssueCard = ({
           >
             {item.title}
           </CardTitle>
-          {auth.user?.id === project.projectDetails?.owner.id && (
+          {(auth.user?.id === project.projectDetails?.owner.id ||
+            userRole === "OWNER" ||
+            userRole === "MANAGER") && (
             <DropdownMenu>
               <DropdownMenuTrigger>
                 {" "}
@@ -71,7 +74,8 @@ const IssueCard = ({
                       setIsEdited={setIsEdited}
                       labels={labels}
                       deadline={deadline}
-                      change={change} sendRefresh={sendRefresh}
+                      change={change}
+                      sendRefresh={sendRefresh}
                     />
                   </DialogContent>
                 </Dialog>
@@ -105,7 +109,11 @@ const IssueCard = ({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <UserList issueDetails={item} change={change} sendRefresh={sendRefresh} />
+              <UserList
+                issueDetails={item}
+                change={change}
+                sendRefresh={sendRefresh}
+              />
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

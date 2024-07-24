@@ -58,7 +58,7 @@ public class ProjectServiceImpl implements ProjectService {
 		savedProject.setChat(projectChat);
 		
 		//assign role to user in project
-		projectRoleService.assignRoleToUserInProject(id, RoleType.MANAGER, savedProject.getId());
+		projectRoleService.assignRoleToUserInProject(id, RoleType.OWNER, savedProject.getId());
 
 		return savedProject;
 	}

@@ -11,14 +11,24 @@ import {
 import { DotFilledIcon, DotsVerticalIcon } from "@radix-ui/react-icons";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteProject } from "@/redux/Project/Project.Action";
+import {
+  deleteProject,
+  fetchUserProjectRole,
+} from "@/redux/Project/Project.Action";
+import { useEffect } from "react";
 
-const ProjectCard = ({ item, sendRefresh }) => {
+const ProjectCard = ({ item, change, sendRefresh }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { auth, project } = useSelector((store) => store);
 
+  const userRole = project?.userProjectRole;
+
   //console.log("item---------", item);
+
+  useEffect(() => {
+    dispatch(fetchUserProjectRole(item?.id, auth?.user?.id));
+  }, [auth?.user?.id, dispatch, item?.id, change]);
 
   const handleDeleteProject = () => {
     dispatch(deleteProject({ projectId: item.id }));
@@ -46,7 +56,7 @@ const ProjectCard = ({ item, sendRefresh }) => {
                   <Badge className={`bg-orange-400`}>{item?.status}</Badge>
                 )}
               </div>
-              {auth.user?.id === item?.owner?.id && (
+              {(auth.user?.id === item?.owner?.id || userRole === "OWNER") && (
                 <div>
                   <DropdownMenu>
                     <DropdownMenuTrigger>

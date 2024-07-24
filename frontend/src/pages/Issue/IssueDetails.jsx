@@ -19,18 +19,34 @@ import { fetchIssueById, updateIssueStatus } from "@/redux/Issue/Issue.action";
 import { useParams } from "react-router-dom";
 import { fetchComments } from "@/redux/Comment/comment.action";
 import { Badge } from "@/components/ui/badge";
-import { fetchProjectById } from "@/redux/Project/Project.Action";
+import {
+  fetchAllUsersProjectRoles,
+  fetchProjectById,
+  fetchUserProjectRole,
+} from "@/redux/Project/Project.Action";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Button } from "@/components/ui/button";
 
 const IssueDetails = ({ change, sendRefresh }) => {
   const { issueId, projectId } = useParams();
   const dispatch = useDispatch();
-  const { project, issue, comment } = useSelector((store) => store);
+  const { project, issue, comment, auth } = useSelector((store) => store);
+
+  const userRole = project?.userProjectRole?.roleType;
+  const authUserId = auth?.user?.id;
 
   useEffect(() => {
     dispatch(fetchIssueById(issueId));
     dispatch(fetchComments(issueId));
     dispatch(fetchProjectById(projectId));
-  }, [dispatch, issueId, projectId, change]);
+    dispatch(fetchUserProjectRole(projectId, authUserId));
+    dispatch(fetchAllUsersProjectRoles(projectId));
+  }, [dispatch, issueId, projectId, change, authUserId]);
 
   //console.log("projectDetails----------", project?.projectDetails?.owner.fullName);
   const handleUpdateIssueStatus = (value) => {
@@ -108,19 +124,45 @@ const IssueDetails = ({ change, sendRefresh }) => {
 
           <div className="w-full lg:w-[35%] space-y-4 sticky">
             <p className="text-white text-base font-semibold">Update Status</p>
-            <Select
-              value={issue.issueDetails?.status}
-              onValueChange={handleUpdateIssueStatus}
-            >
-              <SelectTrigger className="w-[180px] border-inherit">
-                <SelectValue placeholder={issue.issueDetails?.status} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="pending">To Do</SelectItem>
-                <SelectItem value="in-progress">In Progress</SelectItem>
-                <SelectItem value="done">Done</SelectItem>
-              </SelectContent>
-            </Select>
+            {auth?.user?.id === project?.projectDetails?.owner?.id ||
+            userRole === "OWNER" ||
+            userRole === "MANAGER" ||
+            auth?.user?.id === issue?.issueDetails?.assignee?.id ? (
+              <Select
+                value={issue.issueDetails?.status}
+                onValueChange={handleUpdateIssueStatus}
+              >
+                <SelectTrigger className="w-[180px] border-inherit">
+                  <SelectValue placeholder={issue.issueDetails?.status} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="pending">To Do</SelectItem>
+                  <SelectItem value="in-progress">In Progress</SelectItem>
+                  <SelectItem value="done">Done</SelectItem>
+                </SelectContent>
+              </Select>
+            ) : (
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild className="w-[110px]">
+                    <Button
+                      className={`${
+                        issue.issueDetails?.status == "in-progress"
+                          ? "bg-orange-500"
+                          : issue.issueDetails?.status == "done"
+                          ? "bg-green-500"
+                          : "bg-yellow-500"
+                      }`}
+                    >
+                      {issue?.issueDetails?.status}
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>You are not Authorized to perform this action.</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            )}
 
             <div className="border rounded-lg">
               <p className="border-b py-3 px-5 text-base text-gray-200 font-bold">
@@ -206,18 +248,21 @@ const IssueDetails = ({ change, sendRefresh }) => {
                     <p className="w-[7rem] text-gray-300 font-semibold">
                       Report To
                     </p>
-                    {project?.projectDetails?.owner ? (
-                      <div className="flex items-center gap-3">
-                        <Avatar className="h-8 w-8 text-xs">
-                          <AvatarFallback>
-                            {project?.projectDetails?.owner.fullName[0]}
-                          </AvatarFallback>
-                        </Avatar>
-                        <p>{project?.projectDetails?.owner.fullName}</p>
-                      </div>
-                    ) : (
-                      <div>-</div>
-                    )}
+                    {project?.projectRoles
+                      ?.filter((role) => role?.roleType !== "EMPLOYEE")
+                      .map((role, index) => (
+                        <div
+                          className="flex items-center gap-3"
+                          key={role?.id || index}
+                        >
+                          <Avatar className="h-8 w-8 text-xs">
+                            <AvatarFallback>
+                              {role?.user?.fullName[0]}
+                            </AvatarFallback>
+                          </Avatar>
+                          <p>{`${role?.user?.fullName}(${role?.roleType})`}</p>
+                        </div>
+                      ))}
                   </div>
                 </div>
               </div>

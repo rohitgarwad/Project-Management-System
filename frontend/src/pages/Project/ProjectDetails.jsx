@@ -124,7 +124,9 @@ const ProjectDetails = ({ change, sendRefresh }) => {
                       ))}
                     </div>
 
-                    {auth.user?.id === project.projectDetails?.owner.id && (
+                    {(auth.user?.id === project.projectDetails?.owner.id ||
+                      userRole === "OWNER" ||
+                      userRole === "MANAGER") && (
                       <Dialog>
                         <DialogTrigger>
                           <DialogClose>
@@ -135,7 +137,7 @@ const ProjectDetails = ({ change, sendRefresh }) => {
                             >
                               {" "}
                               <span className="pr-1">Invite</span>
-                              <PlusIcon  />
+                              <PlusIcon />
                             </Button>
                           </DialogClose>
                         </DialogTrigger>
@@ -234,9 +236,8 @@ const ProjectDetails = ({ change, sendRefresh }) => {
                                       </p>
                                     </div>
                                   </div>
-                                  {auth?.user?.id ===
-                                    project?.projectDetails?.owner?.id ||
-                                  userRole === "MANAGER" ? (
+                                  {userRole === "OWNER" &&
+                                  projectRole?.roleType !== "OWNER" ? (
                                     <Select
                                       value={`${projectRole?.roleType}`}
                                       onValueChange={(value) =>
@@ -247,7 +248,7 @@ const ProjectDetails = ({ change, sendRefresh }) => {
                                         )
                                       }
                                     >
-                                      <SelectTrigger className="w-[110px]">
+                                      <SelectTrigger className={`${projectRole?.roleType === "MANAGER" ? "bg-yellow-600 w-[110px]" : "bg-blue-600 w-[110px]"}`}>
                                         <SelectValue
                                           placeholder={`${projectRole?.roleType}`}
                                         />
@@ -255,12 +256,15 @@ const ProjectDetails = ({ change, sendRefresh }) => {
                                       <SelectContent>
                                         <SelectGroup>
                                           <SelectLabel>Role</SelectLabel>
-                                          <SelectItem value="MANAGER">
-                                            MANAGER
-                                          </SelectItem>
-                                          {projectRole?.user?.id !==
-                                            project?.projectDetails?.owner
-                                              ?.id && (
+
+                                          {projectRole?.roleType !==
+                                            "OWNER" && (
+                                            <SelectItem value="MANAGER">
+                                              MANAGER
+                                            </SelectItem>
+                                          )}
+                                          {projectRole?.roleType !==
+                                            "OWNER" && (
                                             <SelectItem value="EMPLOYEE">
                                               EMPLOYEE
                                             </SelectItem>
@@ -276,14 +280,17 @@ const ProjectDetails = ({ change, sendRefresh }) => {
                                             asChild
                                             className="w-[110px]"
                                           >
-                                            <Button variant="destructive">
+                                            <Button className={`${projectRole?.roleType === "EMPLOYEE" ? "bg-blue-600" : projectRole?.roleType === "MANAGER" ? "bg-yellow-600" : "bg-orange-700"}`}>
                                               {projectRole?.roleType}
                                             </Button>
                                           </TooltipTrigger>
                                           <TooltipContent>
-                                            <p>
-                                              You are not Authorized to perform this action.
-                                            </p>
+                                            {userRole !== "OWNER" && (
+                                              <p>
+                                                You are not Authorized to
+                                                perform this action.
+                                              </p>
+                                            )}
                                           </TooltipContent>
                                         </Tooltip>
                                       </TooltipProvider>
@@ -315,6 +322,7 @@ const ProjectDetails = ({ change, sendRefresh }) => {
                     setIsEdited={setIsEdited}
                     change={change}
                     sendRefresh={sendRefresh}
+                    userRole={userRole}
                   />
 
                   <IssueList
@@ -326,6 +334,7 @@ const ProjectDetails = ({ change, sendRefresh }) => {
                     setIsEdited={setIsEdited}
                     change={change}
                     sendRefresh={sendRefresh}
+                    userRole={userRole}
                   />
 
                   <IssueList
@@ -337,6 +346,7 @@ const ProjectDetails = ({ change, sendRefresh }) => {
                     setIsEdited={setIsEdited}
                     change={change}
                     sendRefresh={sendRefresh}
+                    userRole={userRole}
                   />
                 </div>
               </section>

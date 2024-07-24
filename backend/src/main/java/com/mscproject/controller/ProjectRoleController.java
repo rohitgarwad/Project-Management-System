@@ -25,7 +25,7 @@ public class ProjectRoleController {
     @Autowired
     private ProjectRoleService projectRoleService;
 
-    @PostMapping("/{projectId}/users/{userId}/roles/{roleName}")
+    @PostMapping("/{projectId}/users/{userId}/roles/{roleType}")
     public ResponseEntity<MessageResponse> assignRole(@PathVariable Long projectId, @PathVariable Long userId, @PathVariable RoleType roleType) {
         projectRoleService.assignRoleToUserInProject(userId, roleType, projectId);
         MessageResponse messageResponse = new MessageResponse("Role Assigned Successfully.");
@@ -50,7 +50,7 @@ public class ProjectRoleController {
         return ResponseEntity.ok(updatedProjectRole);
     }
 
-    @DeleteMapping("/{projectId}/users/{userId}/roles/{roleName}")
+    @DeleteMapping("/{projectId}/users/{userId}/roles/{roleType}")
     public ResponseEntity<MessageResponse> deleteRole(@PathVariable Long projectId, @PathVariable Long userId, @PathVariable RoleType roleType) {
         projectRoleService.deleteRoleForUserInProject(userId, projectId, roleType);
         MessageResponse messageResponse = new MessageResponse("Project Role Deleted Successfully.");

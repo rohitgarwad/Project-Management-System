@@ -231,7 +231,10 @@ export function CreateIssueForm({ status, labels, deadline, sendRefresh }) {
                         mode="single"
                         selected={field.value}
                         onSelect={field.onChange}
-                        disabled={(date) => (addDays(date, 1) < new Date()) || date > new Date(deadline)}
+                        disabled={(date) =>
+                          addDays(date, 1) < new Date() ||
+                          date > new Date(deadline)
+                        }
                       />
                     </div>
                   </PopoverContent>
