@@ -14,7 +14,7 @@ import {
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { PlusIcon } from "@radix-ui/react-icons";
+import { LockClosedIcon, PlusIcon } from "@radix-ui/react-icons";
 import {
   Dialog,
   DialogClose,
@@ -51,12 +51,13 @@ const ProjectDetails = ({ change, sendRefresh }) => {
   const dispatch = useDispatch();
   const [isEdited, setIsEdited] = useState(false);
   const [isRoleUpdated, setIsRoleUpdated] = useState(false);
-  const { issue, project, auth } = useSelector((store) => store);
+  const { issue, project, auth, subscription } = useSelector((store) => store);
 
   const authUserId = auth?.user?.id;
 
   const userRole = project?.userProjectRole?.roleType;
-  //console.log("userRole: ", userRole);
+
+  const teamSize = project?.projectDetails?.team?.length;
 
   useEffect(() => {
     dispatch(fetchProjectById(id));
@@ -67,7 +68,7 @@ const ProjectDetails = ({ change, sendRefresh }) => {
     // console.log("auth: ", auth);
   }, [id, issue.issues.length, isEdited, dispatch, authUserId, change]);
 
-  //console.log("project: ", project);
+  console.log("project team size: ", project?.projectDetails?.team?.length);
 
   const handleRoleChange = (value, userId, oldRoleType) => {
     // console.log("newRoleType: ", value);
@@ -112,47 +113,69 @@ const ProjectDetails = ({ change, sendRefresh }) => {
                   <div className="flex  text-gray-300">
                     <p className="w-36 font-black text-gray-300">Members </p>
                     <div className="flex items-center gap-2">
-                      {project.projectDetails?.team.map((item, index) => (
-                        <Avatar
-                          className={`cursor-pointer`}
-                          key={item?.id || index}
-                        >
-                          <AvatarFallback>
-                            {item.fullName[0]?.toUpperCase()}
-                          </AvatarFallback>
-                        </Avatar>
-                      ))}
+                      <>
+                        {project.projectDetails?.team.map((item, index) => (
+                          <Avatar
+                            className={`cursor-pointer`}
+                            key={item?.id || index}
+                          >
+                            <AvatarFallback>
+                              {item.fullName[0]?.toUpperCase()}
+                            </AvatarFallback>
+                          </Avatar>
+                        ))}
+                      </>
+                      <>
+                        {subscription.userSubscription?.planType === "FREE" &&
+                        teamSize >= 3 ? (
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <LockClosedIcon className="text-red-400" />
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p>
+                                  you can invite only 3 members with free plan,
+                                  please upgrade your plan
+                                </p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        ) : (
+                          <>
+                            {(auth.user?.id ===
+                              project.projectDetails?.owner.id ||
+                              userRole === "OWNER" ||
+                              userRole === "MANAGER") && (
+                              <Dialog>
+                                <DialogTrigger>
+                                  <DialogClose>
+                                    <Button
+                                      size="sm"
+                                      variant="outline"
+                                      className="ml-2 border-inherit"
+                                    >
+                                      <span className="pr-1">Invite</span>
+                                      <PlusIcon />
+                                    </Button>
+                                  </DialogClose>
+                                </DialogTrigger>
+                                <DialogContent>
+                                  <DialogHeader>
+                                    <DialogTitle>Invite User</DialogTitle>
+                                  </DialogHeader>
+                                  <InviteUserForm
+                                    projectId={id}
+                                    change={change}
+                                    sendRefresh={sendRefresh}
+                                  />
+                                </DialogContent>
+                              </Dialog>
+                            )}
+                          </>
+                        )}
+                      </>
                     </div>
-
-                    {(auth.user?.id === project.projectDetails?.owner.id ||
-                      userRole === "OWNER" ||
-                      userRole === "MANAGER") && (
-                      <Dialog>
-                        <DialogTrigger>
-                          <DialogClose>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              className="ml-2 border-inherit"
-                            >
-                              {" "}
-                              <span className="pr-1">Invite</span>
-                              <PlusIcon />
-                            </Button>
-                          </DialogClose>
-                        </DialogTrigger>
-                        <DialogContent>
-                          <DialogHeader>
-                            <DialogTitle>Invite User</DialogTitle>
-                          </DialogHeader>
-                          <InviteUserForm
-                            projectId={id}
-                            change={change}
-                            sendRefresh={sendRefresh}
-                          />
-                        </DialogContent>
-                      </Dialog>
-                    )}
                   </div>
                   <div className="flex">
                     <p className="w-36 font-black text-gray-300">Category </p>
@@ -248,7 +271,13 @@ const ProjectDetails = ({ change, sendRefresh }) => {
                                         )
                                       }
                                     >
-                                      <SelectTrigger className={`${projectRole?.roleType === "MANAGER" ? "bg-yellow-600 w-[110px]" : "bg-blue-600 w-[110px]"}`}>
+                                      <SelectTrigger
+                                        className={`${
+                                          projectRole?.roleType === "MANAGER"
+                                            ? "bg-yellow-600 w-[110px]"
+                                            : "bg-blue-600 w-[110px]"
+                                        }`}
+                                      >
                                         <SelectValue
                                           placeholder={`${projectRole?.roleType}`}
                                         />
@@ -280,7 +309,17 @@ const ProjectDetails = ({ change, sendRefresh }) => {
                                             asChild
                                             className="w-[110px]"
                                           >
-                                            <Button className={`${projectRole?.roleType === "EMPLOYEE" ? "bg-blue-600" : projectRole?.roleType === "MANAGER" ? "bg-yellow-600" : "bg-orange-700"}`}>
+                                            <Button
+                                              className={`${
+                                                projectRole?.roleType ===
+                                                "EMPLOYEE"
+                                                  ? "bg-blue-600"
+                                                  : projectRole?.roleType ===
+                                                    "MANAGER"
+                                                  ? "bg-yellow-600"
+                                                  : "bg-orange-700"
+                                              }`}
+                                            >
                                               {projectRole?.roleType}
                                             </Button>
                                           </TooltipTrigger>
@@ -354,7 +393,7 @@ const ProjectDetails = ({ change, sendRefresh }) => {
           </ScrollArea>
 
           <div className="xl:w-[30%] rounded-md relative">
-            <ChatBox />
+            <ChatBox userRole={userRole} />
           </div>
         </div>
       </div>

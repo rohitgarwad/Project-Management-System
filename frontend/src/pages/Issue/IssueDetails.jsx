@@ -31,11 +31,14 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
+import { LockClosedIcon } from "@radix-ui/react-icons";
 
 const IssueDetails = ({ change, sendRefresh }) => {
   const { issueId, projectId } = useParams();
   const dispatch = useDispatch();
-  const { project, issue, comment, auth } = useSelector((store) => store);
+  const { project, issue, comment, auth, subscription } = useSelector(
+    (store) => store
+  );
 
   const userRole = project?.userProjectRole?.roleType;
   const authUserId = auth?.user?.id;
@@ -192,17 +195,34 @@ const IssueDetails = ({ change, sendRefresh }) => {
                     <p className="w-[7rem] text-gray-300 font-semibold">
                       Priority
                     </p>
-                    <span
-                      className={`${
-                        issue.issueDetails?.priority == "low"
-                          ? "text-yellow-500"
-                          : issue.issueDetails?.priority == "medium"
-                          ? "text-orange-500"
-                          : "text-red-500"
-                      }`}
-                    >
-                      {issue.issueDetails?.priority}
-                    </span>
+                    {subscription.userSubscription?.planType === "PAID" ||
+                    userRole === "OWNER" ||
+                    userRole === "MANAGER" ? (
+                      <span
+                        className={`${
+                          issue.issueDetails?.priority == "low"
+                            ? "text-yellow-500"
+                            : issue.issueDetails?.priority == "medium"
+                            ? "text-orange-500"
+                            : "text-red-500"
+                        }`}
+                      >
+                        {issue.issueDetails?.priority}
+                      </span>
+                    ) : (
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <LockClosedIcon className="text-red-400" />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>
+                              upgrade your plan to unlock priority support
+                            </p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    )}
                   </div>
                   <div className="flex gap-10 items-center">
                     <p className="w-[7rem] text-gray-300 font-semibold">

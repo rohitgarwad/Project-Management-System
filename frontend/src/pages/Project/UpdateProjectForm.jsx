@@ -153,11 +153,20 @@ const UpdateProjectForm = ({ change, sendRefresh }) => {
                             <SelectValue placeholder="Category" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="fullstack">
+                            <SelectItem value="Fullstack">
                               Full Stack
                             </SelectItem>
-                            <SelectItem value="frontend">Frontend</SelectItem>
-                            <SelectItem value="backend">Backend</SelectItem>
+                            <SelectItem value="Frontend">Frontend</SelectItem>
+                            <SelectItem value="Backend">Backend</SelectItem>
+                            <SelectItem value="Desktop Application">
+                              Desktop Application
+                            </SelectItem>
+                            <SelectItem value="Mobile Application">
+                              Mobile Application
+                            </SelectItem>
+                            <SelectItem value="Cloud Computing">
+                              Cloud Computing
+                            </SelectItem>
                           </SelectContent>
                         </Select>
                       </FormControl>
@@ -181,22 +190,21 @@ const UpdateProjectForm = ({ change, sendRefresh }) => {
                             <SelectValue placeholder="Technologies & Tools" />
                           </SelectTrigger>
                           <SelectContent>
-                            {
-                              filterData.map((item, index) => (
-                                <SelectGroup key={item?.id || index}>
-                                  <SelectLabel className="bg-red-500">
-                                    {item?.Title}
-                                  </SelectLabel>
-                                  {
-                                    item?.Tags.sort().map((tag, index) => (
-                                      <SelectItem key={tag?.id || index} value={tag}>
-                                        {tag}
-                                      </SelectItem>
-                                    ))
-                                  }
-                                </SelectGroup>
-                              ))
-                            }
+                            {filterData.map((item, index) => (
+                              <SelectGroup key={item?.id || index}>
+                                <SelectLabel className="bg-red-500">
+                                  {item?.Title}
+                                </SelectLabel>
+                                {item?.Tags.sort().map((tag, index) => (
+                                  <SelectItem
+                                    key={tag?.id || index}
+                                    value={tag}
+                                  >
+                                    {tag}
+                                  </SelectItem>
+                                ))}
+                              </SelectGroup>
+                            ))}
                           </SelectContent>
                         </Select>
                       </FormControl>

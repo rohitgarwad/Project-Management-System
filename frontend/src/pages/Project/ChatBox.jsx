@@ -7,14 +7,14 @@ import {
   fetchChatMessages,
   sendMessage,
 } from "@/redux/Chat/Action";
-import { PaperPlaneIcon } from "@radix-ui/react-icons";
+import { LockClosedIcon, PaperPlaneIcon } from "@radix-ui/react-icons";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import SockJS from "sockjs-client/dist/sockjs";
 import Stomp from "stompjs";
 
-const ChatBox = () => {
+const ChatBox = ({ userRole}) => {
   const [messages, setMessages] = useState("");
   const [change, setChange] = useState([]);
   const [stompClient, setStompClient] = useState(null);
@@ -22,7 +22,7 @@ const ChatBox = () => {
 
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { chat, auth } = useSelector((store) => store);
+  const { chat, auth, subscription } = useSelector((store) => store);
   const chatContainerRef = useRef(null);
 
   const handleMessageChange = (e) => setMessages(e.target.value);
@@ -92,7 +92,6 @@ const ChatBox = () => {
     chatContainerRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chat.messages, change]);
 
-
   return (
     <div className="sticky top-[100px] bg-background">
       <div className="border rounded-lg">
@@ -132,25 +131,34 @@ const ChatBox = () => {
           <div ref={chatContainerRef}></div>
         </ScrollArea>
         <div className="relative p-0">
-          <Input
-            value={messages}
-            onChange={handleMessageChange}
-            onKeyUp={(e) => {
-              if (e.key == "Enter" || e.key == 13) {
-                handleSendMessage();
-              }
-            }}
-            placeholder="type message..."
-            className="py-7 border-t outline-none border-inherit focus:outline-none focus:ring-0 rounded-none border-b-0 border-x-0"
-          />
-          <Button
-            onClick={handleSendMessage}
-            className="absolute right-2 top-3 rounded-full"
-            size="icon"
-            variant="ghost"
-          >
-            <PaperPlaneIcon />
-          </Button>
+          {(subscription.userSubscription?.planType === "PAID" || userRole === "OWNER" || userRole === "MANAGER") ? (
+            <>
+              <Input
+                value={messages}
+                onChange={handleMessageChange}
+                onKeyUp={(e) => {
+                  if (e.key == "Enter" || e.key == 13) {
+                    handleSendMessage();
+                  }
+                }}
+                placeholder="type message..."
+                className="py-7 border-t outline-none border-inherit focus:outline-none focus:ring-0 rounded-none border-b-0 border-x-0"
+              />
+              <Button
+                onClick={handleSendMessage}
+                className="absolute right-2 top-3 rounded-full"
+                size="icon"
+                variant="ghost"
+              >
+                <PaperPlaneIcon />
+              </Button>
+            </>
+          ) : (
+            <div className="flex gap-2 items-center justify-center text-red-400 py-7 border-t border-inherit">
+              <span>please upgrade your plan to start chatting</span>
+              <LockClosedIcon />
+            </div>
+          )}
         </div>
       </div>
     </div>

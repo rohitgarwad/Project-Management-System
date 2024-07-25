@@ -84,16 +84,28 @@ const ProjectList = ({ change, sendRefresh }) => {
                         <Label htmlFor="r1">All</Label>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="fullstack" id="r1" />
-                        <Label htmlFor="r1">Full Stack</Label>
+                        <RadioGroupItem value="Fullstack" id="r1" />
+                        <Label htmlFor="r1">Fullstack</Label>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="frontend" id="r2" />
+                        <RadioGroupItem value="Frontend" id="r2" />
                         <Label htmlFor="r2">Frontend</Label>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="backend" id="r3" />
+                        <RadioGroupItem value="Backend" id="r3" />
                         <Label htmlFor="r3">Backend</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="Desktop Application" id="r4" />
+                        <Label htmlFor="r4">Desktop Application</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="Mobile Application" id="r5" />
+                        <Label htmlFor="r5">Mobile Application</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="Cloud Computing" id="r6" />
+                        <Label htmlFor="r6">Cloud Computing</Label>
                       </div>
                     </RadioGroup>
                   </div>
@@ -104,7 +116,7 @@ const ProjectList = ({ change, sendRefresh }) => {
                     Technologies & Tools
                   </h1>
 
-                  <ScrollArea className="h-[40vh]">
+                  <ScrollArea className="h-[30vh]">
                     <RadioGroup
                       onValueChange={(value) =>
                         handleFilterChange("tag", value)
