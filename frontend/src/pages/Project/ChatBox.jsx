@@ -154,7 +154,7 @@ const ChatBox = ({ userRole}) => {
               </Button>
             </>
           ) : (
-            <div className="flex gap-2 items-center justify-center text-red-400 py-7 border-t border-inherit">
+            <div className="flex gap-2 items-center justify-center text-red-400 py-5 border-t border-inherit">
               <span>please upgrade your plan to start chatting</span>
               <LockClosedIcon />
             </div>

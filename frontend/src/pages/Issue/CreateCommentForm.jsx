@@ -36,7 +36,7 @@ export function CreateCommentForm({ issueId, sendRefresh }) {
     //console.log("comment data ", data);
     dispatch(createComment({ content: data.content, issueId }));
     form.reset();
-    sendRefresh("refresh");
+    sendRefresh("Comment Created !");
   };
 
   return (

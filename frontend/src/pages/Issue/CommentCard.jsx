@@ -10,7 +10,7 @@ const CommentCard = ({ item, sendRefresh }) => {
   const dispatch = useDispatch();
   const handleDeleteComment = () => {
     dispatch(deleteComment(item.id));
-    sendRefresh("refresh");
+    sendRefresh("Comment Deleted !");
   };
   return (
     <>

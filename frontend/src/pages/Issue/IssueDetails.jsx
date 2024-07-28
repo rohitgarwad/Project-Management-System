@@ -14,9 +14,9 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import CommentCard from "./CommentCard";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { fetchIssueById, updateIssueStatus } from "@/redux/Issue/Issue.action";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { fetchComments } from "@/redux/Comment/comment.action";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -31,7 +31,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
-import { LockClosedIcon } from "@radix-ui/react-icons";
+import { InfoCircledIcon, LockClosedIcon } from "@radix-ui/react-icons";
+import { resourceLinks } from "./resourceLinks";
 
 const IssueDetails = ({ change, sendRefresh }) => {
   const { issueId, projectId } = useParams();
@@ -54,7 +55,7 @@ const IssueDetails = ({ change, sendRefresh }) => {
   //console.log("projectDetails----------", project?.projectDetails?.owner.fullName);
   const handleUpdateIssueStatus = (value) => {
     dispatch(updateIssueStatus({ id: issueId, status: value }));
-    sendRefresh("refresh");
+    sendRefresh("Issue Status Updated !");
   };
 
   return (
@@ -82,11 +83,14 @@ const IssueDetails = ({ change, sendRefresh }) => {
                 </h1>
                 <Tabs defaultValue="comments" className="w-full">
                   <TabsList className="mb-5">
-                    <TabsTrigger className="hidden" value="all">
-                      All
+                    <TabsTrigger
+                      className="text-base font-semibold"
+                      value="resource"
+                    >
+                      Resources
                     </TabsTrigger>
                     <TabsTrigger
-                      className="border border-inherit text-base font-semibold"
+                      className="text-base font-semibold"
                       value="comments"
                     >
                       Comments
@@ -95,8 +99,17 @@ const IssueDetails = ({ change, sendRefresh }) => {
                       History
                     </TabsTrigger>
                   </TabsList>
-                  <TabsContent value="all">
-                    All make changes to your account here.
+                  <TabsContent value="resource">
+                    <ScrollArea className="w-full h-[28vh]">
+                      <div className="p-5 flex flex-col gap-5 items-start justify-center">
+                        {issue?.issueDetails?.labels?.map((label, index) => (
+                          <div className="flex gap-5 justify-center items-center" key={label.id || index}>
+                            <InfoCircledIcon className="text-orange-500" />
+                            <span>Learn more about <a target="_blank" rel="noreferrer" href={resourceLinks[label]} className="text-orange-500">{label}</a></span>
+                          </div>
+                        ))}
+                      </div>
+                    </ScrollArea>
                   </TabsContent>
                   <TabsContent value="comments">
                     <CreateCommentForm
@@ -216,9 +229,7 @@ const IssueDetails = ({ change, sendRefresh }) => {
                             <LockClosedIcon className="text-red-400" />
                           </TooltipTrigger>
                           <TooltipContent>
-                            <p>
-                              upgrade your plan to unlock priority support
-                            </p>
+                            <p>upgrade your plan to unlock priority support</p>
                           </TooltipContent>
                         </Tooltip>
                       </TooltipProvider>
@@ -270,22 +281,21 @@ const IssueDetails = ({ change, sendRefresh }) => {
                     </p>
                     <div className="flex gap-2 flex-col">
                       {project?.projectRoles
-                      ?.filter((role) => role?.roleType !== "EMPLOYEE")
-                      .map((role, index) => (
-                        <div
-                          className="flex items-center gap-3"
-                          key={role?.id || index}
-                        >
-                          <Avatar className="h-8 w-8 text-xs">
-                            <AvatarFallback>
-                              {role?.user?.fullName[0]}
-                            </AvatarFallback>
-                          </Avatar>
-                          <p>{`${role?.user?.fullName}(${role?.roleType})`}</p>
-                        </div>
-                      ))}
+                        ?.filter((role) => role?.roleType !== "EMPLOYEE")
+                        .map((role, index) => (
+                          <div
+                            className="flex items-center gap-3"
+                            key={role?.id || index}
+                          >
+                            <Avatar className="h-8 w-8 text-xs">
+                              <AvatarFallback>
+                                {role?.user?.fullName[0]}
+                              </AvatarFallback>
+                            </Avatar>
+                            <p>{`${role?.user?.fullName}(${role?.roleType})`}</p>
+                          </div>
+                        ))}
                     </div>
-                    
                   </div>
                 </div>
               </div>

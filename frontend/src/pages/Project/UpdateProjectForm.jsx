@@ -87,7 +87,7 @@ const UpdateProjectForm = ({ change, sendRefresh }) => {
   const onSubmit = (data) => {
     dispatch(updateProject({ updatedData: data, projectId: id }));
     console.log("update project", data);
-    sendRefresh("refresh");
+    sendRefresh("Project Updated !");
     navigate("/");
   };
 
@@ -166,6 +166,9 @@ const UpdateProjectForm = ({ change, sendRefresh }) => {
                             </SelectItem>
                             <SelectItem value="Cloud Computing">
                               Cloud Computing
+                            </SelectItem>
+                            <SelectItem value="Data Science">
+                              Data Science
                             </SelectItem>
                           </SelectContent>
                         </Select>

@@ -98,7 +98,7 @@ export const assignedUserToIssue = ({ issueId, userId, sendRefresh }) => {
           },
         }
       );
-      sendRefresh("refresh");
+      sendRefresh("Issue assigned to User !");
       //console.log("assigned issue --- ", response.data);
       dispatch({
         type: actionTypes.ASSIGNED_ISSUE_TO_USER_SUCCESS,

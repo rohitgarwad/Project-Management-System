@@ -85,7 +85,7 @@ export function CreateIssueForm({ status, labels, deadline, sendRefresh }) {
         dueDate: data.dueDate,
       })
     );
-    sendRefresh("refresh");
+    sendRefresh("Issue Created !");
   };
 
   return (

@@ -32,7 +32,7 @@ const ProjectCard = ({ item, change, sendRefresh }) => {
 
   const handleDeleteProject = () => {
     dispatch(deleteProject({ projectId: item.id }));
-    sendRefresh("refresh");
+    sendRefresh("Project Deleted !");
   };
 
   return (

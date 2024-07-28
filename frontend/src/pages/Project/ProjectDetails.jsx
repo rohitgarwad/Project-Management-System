@@ -83,7 +83,7 @@ const ProjectDetails = ({ change, sendRefresh }) => {
     // console.log("updateRoleData: ", updateRoleData);
     dispatch(updateUsersProjectRole(updateRoleData));
     setIsRoleUpdated(isRoleUpdated ? false : true);
-    sendRefresh("refresh");
+    sendRefresh("Role Changed !");
   };
 
   return (

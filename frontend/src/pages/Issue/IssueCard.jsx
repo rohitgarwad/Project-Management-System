@@ -34,7 +34,7 @@ const IssueCard = ({
   const { project, auth } = useSelector((store) => store);
   const handleDelete = () => {
     dispatch(deleteIssue(item.id));
-    sendRefresh("refresh");
+    sendRefresh("Issue Deleted !");
   };
   return (
     <Card className="rounded-md py-2 pb-2">

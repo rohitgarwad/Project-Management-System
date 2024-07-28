@@ -14,7 +14,7 @@ const AcceptInvitation = ({ sendRefresh }) => {
     const token = urlParams.get("token");
     //console.log("token ", token);
     dipatch(acceptInvitation({ invitationToken: token, navigate }));
-    sendRefresh("refresh");
+    sendRefresh("New Member Added to Project !");
   };
   return (
     <div className="h-[85vh] flex flex-col justify-center items-center absolute mt-24 w-full">

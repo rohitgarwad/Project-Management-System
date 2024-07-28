@@ -46,7 +46,7 @@ const FilterSheet = () => {
                 <h1 className="pb-3 text-gray-400 text-base border-b">
                   Category
                 </h1>
-                <div className="pt-5">
+                <ScrollArea className="pt-5 h-[25vh]">
                   <RadioGroup
                     onValueChange={(value) =>
                       handleFilterChange("category", value)
@@ -82,8 +82,12 @@ const FilterSheet = () => {
                       <RadioGroupItem value="Cloud Computing" id="r6" />
                       <Label htmlFor="r6">Cloud Computing</Label>
                     </div>
+                    <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="Data Science" id="r7" />
+                        <Label htmlFor="r7">Data Science</Label>
+                      </div>
                   </RadioGroup>
-                </div>
+                </ScrollArea>
               </div>
 
               <div className="pt-9">
@@ -91,7 +95,7 @@ const FilterSheet = () => {
                   Technologies & Tools
                 </h1>
 
-                <ScrollArea className="h-[50vh]">
+                <ScrollArea className="h-[45vh]">
                   <RadioGroup
                     onValueChange={(value) => handleFilterChange("tag", value)}
                     className="space-y-3 pt-5 text-sm"

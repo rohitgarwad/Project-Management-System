@@ -18,6 +18,8 @@ import { fetchProjects } from "./redux/Project/Project.Action";
 import AuthPage from "./pages/Auth/AuthPage";
 import SockJS from "sockjs-client/dist/sockjs";
 import Stomp from "stompjs";
+import { useToast } from "./components/ui/use-toast";
+import { Toaster } from "./components/ui/toaster";
 
 function App() {
   const dispatch = useDispatch();
@@ -26,6 +28,7 @@ function App() {
   const [change, setChange] = useState(0);
   const [stompClient, setStompClient] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
+  const { toast } = useToast();
 
   useEffect(() => {
     dispatch(getUser(auth.jwt || localStorage.getItem("jwt")));
@@ -41,7 +44,8 @@ function App() {
       client.connect({}, function () {
         client.subscribe(`/all/public`, (message) => {
           const receivedMessage = JSON.parse(message.body);
-          console.log("Received Message: ", receivedMessage);
+          toast({ description: receivedMessage });
+          //console.log("Received Message: ", receivedMessage);
           setChange(Math.random() * 100);
         });
       });
@@ -58,18 +62,20 @@ function App() {
     if (auth.user !== null) {
       connect();
     }
-    
   }, [auth.user, change]);
 
   const sendRefresh = (message) => {
     //console.log("to send message: ", message);
     if (stompClient && message.trim()) {
-      stompClient.send(`/app/refresh`, {}, JSON.stringify(`${message} at ${new Date().getSeconds().toFixed()}`));
+      stompClient.send(
+        `/app/refresh`,
+        {},
+        JSON.stringify(`${message} at ${new Date()}`)
+      );
       setChange(Math.random() * 100);
       sendRefresh("");
     }
-  };  
-
+  };
 
   return (
     <>
@@ -79,19 +85,33 @@ function App() {
         <>
           <Navbar />
           <Routes>
-            <Route path="/" element={<Home change={change} sendRefresh={sendRefresh} />}></Route>
-            <Route path="/project/:id" element={<ProjectDetails change={change} sendRefresh={sendRefresh} />}></Route>
+            <Route
+              path="/"
+              element={<Home change={change} sendRefresh={sendRefresh} />}
+            ></Route>
+            <Route
+              path="/project/:id"
+              element={
+                <ProjectDetails change={change} sendRefresh={sendRefresh} />
+              }
+            ></Route>
             <Route
               path="/project/update/:id"
-              element={<UpdateProjectForm change={change} sendRefresh={sendRefresh} />}
+              element={
+                <UpdateProjectForm change={change} sendRefresh={sendRefresh} />
+              }
             ></Route>
             <Route
               path="/project/:projectId/issue/:issueId"
-              element={<IssueDetails change={change} sendRefresh={sendRefresh}/>}
+              element={
+                <IssueDetails change={change} sendRefresh={sendRefresh} />
+              }
             ></Route>
             <Route
               path="/accept_invitation"
-              element={<AcceptInvitation change={change} sendRefresh={sendRefresh}/>}
+              element={
+                <AcceptInvitation change={change} sendRefresh={sendRefresh} />
+              }
             ></Route>
             <Route path="/upgrade_plan" element={<Subscription />}></Route>
             <Route
@@ -100,6 +120,7 @@ function App() {
             ></Route>
             <Route path="/upgrade_plan/failure" element={<UpgradeFailure />} />
           </Routes>
+          <Toaster />
         </>
       ) : (
         <AuthPage />

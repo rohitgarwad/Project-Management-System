@@ -90,7 +90,7 @@ const EditIssueForm = ({ issue, setIsEdited, isEdited, labels, deadline, change,
     //console.log("update issue data: ", updatedData);
     dispatch(updateIssue(issue.id, updatedData));
     setIsEdited(isEdited ? false : true);
-    sendRefresh("refresh");
+    sendRefresh("Issue Edited !");
   };
 
   return (

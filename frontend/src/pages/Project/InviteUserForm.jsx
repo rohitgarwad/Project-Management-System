@@ -33,7 +33,7 @@ const InviteUserForm = ({ projectId, sendRefresh }) => {
     dispatch(inviteToProject(data));
     //console.log("sent invitation", data);
     navigate(`/project/${projectId}`);
-    sendRefresh("refresh");
+    sendRefresh("Invitation Sent !");
   };
 
   return (
