@@ -264,11 +264,12 @@ const IssueDetails = ({ change, sendRefresh }) => {
                         : issue.issueDetails?.dueDate}
                     </div>
                   </div>
-                  <div className="flex gap-10 items-center">
+                  <div className="flex gap-10 items-start">
                     <p className="w-[7rem] text-gray-300 font-semibold">
                       Report To
                     </p>
-                    {project?.projectRoles
+                    <div className="flex gap-2 flex-col">
+                      {project?.projectRoles
                       ?.filter((role) => role?.roleType !== "EMPLOYEE")
                       .map((role, index) => (
                         <div
@@ -283,6 +284,8 @@ const IssueDetails = ({ change, sendRefresh }) => {
                           <p>{`${role?.user?.fullName}(${role?.roleType})`}</p>
                         </div>
                       ))}
+                    </div>
+                    
                   </div>
                 </div>
               </div>

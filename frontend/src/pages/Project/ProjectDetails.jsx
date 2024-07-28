@@ -127,6 +127,7 @@ const ProjectDetails = ({ change, sendRefresh }) => {
                       </>
                       <>
                         {subscription.userSubscription?.planType === "FREE" &&
+                        (userRole === "OWNER" || userRole === "MANAGER") &&
                         teamSize >= 3 ? (
                           <TooltipProvider>
                             <Tooltip>
