@@ -33,13 +33,15 @@ import {
 import { Button } from "@/components/ui/button";
 import { InfoCircledIcon, LockClosedIcon } from "@radix-ui/react-icons";
 import { resourceLinks } from "./resourceLinks";
+import CreateWorkUploadForm from "./CreateWorkUploadForm";
+import { fetchWorkUploads } from "@/redux/WorkUpload/workUpload.action";
+import WorkUploadCard from "./WorkUploadCard";
 
 const IssueDetails = ({ change, sendRefresh }) => {
   const { issueId, projectId } = useParams();
   const dispatch = useDispatch();
-  const { project, issue, comment, auth, subscription } = useSelector(
-    (store) => store
-  );
+  const { project, issue, comment, auth, subscription, workUpload } =
+    useSelector((store) => store);
 
   const userRole = project?.userProjectRole?.roleType;
   const authUserId = auth?.user?.id;
@@ -47,6 +49,7 @@ const IssueDetails = ({ change, sendRefresh }) => {
   useEffect(() => {
     dispatch(fetchIssueById(issueId));
     dispatch(fetchComments(issueId));
+    dispatch(fetchWorkUploads(issueId));
     dispatch(fetchProjectById(projectId));
     dispatch(fetchUserProjectRole(projectId, authUserId));
     dispatch(fetchAllUsersProjectRoles(projectId));
@@ -95,31 +98,44 @@ const IssueDetails = ({ change, sendRefresh }) => {
                     >
                       Comments
                     </TabsTrigger>
-                    <TabsTrigger className="hidden" value="history">
-                      History
+                    <TabsTrigger
+                      className="text-base font-semibold"
+                      value="workUploads"
+                    >
+                      Work Uploads
                     </TabsTrigger>
                   </TabsList>
                   <TabsContent value="resource">
-                    {
-                      subscription.userSubscription?.planType === "PAID" ? (
-                        <ScrollArea className="w-full h-[28vh]">
-                      <div className="p-5 flex flex-col gap-5 items-start justify-center">
-                        {issue?.issueDetails?.labels?.map((label, index) => (
-                          <div className="flex gap-5 justify-center items-center" key={label.id || index}>
-                            <InfoCircledIcon className="text-orange-500" />
-                            <span>Learn more about <a target="_blank" rel="noreferrer" href={resourceLinks[label]} className="text-orange-500">{label}</a></span>
-                          </div>
-                        ))}
-                      </div>
-                    </ScrollArea>
-                      ) : (
-                        <div className="flex gap-5 justify-start items-center">
-                          <LockClosedIcon className="text-red-500" />
-                          <span>upgrade your plan to unlock resources.</span>
+                    {subscription.userSubscription?.planType === "PAID" ? (
+                      <ScrollArea className="w-full h-[28vh]">
+                        <div className="p-5 flex flex-col gap-5 items-start justify-center">
+                          {issue?.issueDetails?.labels?.map((label, index) => (
+                            <div
+                              className="flex gap-5 justify-center items-center"
+                              key={label.id || index}
+                            >
+                              <InfoCircledIcon className="text-orange-500" />
+                              <span>
+                                Learn more about{" "}
+                                <a
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  href={resourceLinks[label]}
+                                  className="text-orange-500"
+                                >
+                                  {label}
+                                </a>
+                              </span>
+                            </div>
+                          ))}
                         </div>
-                      )
-                    }
-                    
+                      </ScrollArea>
+                    ) : (
+                      <div className="flex gap-5 justify-start items-center">
+                        <LockClosedIcon className="text-red-500" />
+                        <span>upgrade your plan to unlock resources.</span>
+                      </div>
+                    )}
                   </TabsContent>
                   <TabsContent value="comments">
                     <CreateCommentForm
@@ -140,8 +156,34 @@ const IssueDetails = ({ change, sendRefresh }) => {
                       </div>
                     </ScrollArea>
                   </TabsContent>
-                  <TabsContent value="history">
-                    History Change your password here.
+                  <TabsContent value="workUploads">
+                    {issue?.issueDetails?.assignee?.id === auth?.user?.id ? (
+                      <CreateWorkUploadForm
+                        issueId={issueId}
+                        change={change}
+                        sendRefresh={sendRefresh}
+                      />
+                    ) : (
+                      <div className="flex gap-5 items-center">
+                        <InfoCircledIcon className="text-orange-400" />
+                        <p>Only Assigned User can upload their work.</p>
+                      </div>
+                    )}
+
+                    <ScrollArea className="w-full h-[28vh]">
+                      <div className="w-[65%] mt-8 space-y-6">
+                        {workUpload?.workUploads
+                          ?.toReversed()
+                          .map((item, index) => (
+                            <WorkUploadCard
+                              item={item}
+                              key={index}
+                              change={change}
+                              sendRefresh={sendRefresh}
+                            />
+                          ))}
+                      </div>
+                    </ScrollArea>
                   </TabsContent>
                 </Tabs>
               </div>
@@ -303,6 +345,10 @@ const IssueDetails = ({ change, sendRefresh }) => {
                               </AvatarFallback>
                             </Avatar>
                             <p>{`${role?.user?.fullName}(${role?.roleType})`}</p>
+                            {issue?.issueDetails?.assignee?.id ===
+                              auth?.user?.id &&
+                              subscription?.userSubscription?.planType ===
+                                "FREE" && <Button>Report</Button>}
                           </div>
                         ))}
                     </div>

@@ -6,6 +6,7 @@ import issueReducer from "./Issue/Issue.reducer";
 import ChatReducer from "./Chat/Reducer";
 import commentReducer from "./Comment/comment.reducer";
 import subscriptionReducer from "./Subscription/Reducer";
+import workUploadReducer from "./WorkUpload/workUpload.reducer";
 
 
 const rootReducers=combineReducers({
@@ -15,7 +16,8 @@ const rootReducers=combineReducers({
     issue:issueReducer,
     chat:ChatReducer,
     comment:commentReducer,
-    subscription:subscriptionReducer
+    subscription:subscriptionReducer,
+    workUpload: workUploadReducer,
 
 });
 

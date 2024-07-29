@@ -34,7 +34,7 @@ const CommentCard = ({ item, sendRefresh }) => {
               variant="ghost"
               size="icon"
             >
-              <TrashIcon />
+              <TrashIcon className="text-red-600" />
             </Button>
           )}
         </div>
