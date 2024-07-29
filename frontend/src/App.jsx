@@ -28,7 +28,6 @@ function App() {
   const [change, setChange] = useState(0);
   const [stompClient, setStompClient] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
-  const { toast } = useToast();
 
   useEffect(() => {
     dispatch(getUser(auth.jwt || localStorage.getItem("jwt")));
@@ -44,7 +43,6 @@ function App() {
       client.connect({}, function () {
         client.subscribe(`/all/public`, (message) => {
           const receivedMessage = JSON.parse(message.body);
-          toast({ description: receivedMessage });
           //console.log("Received Message: ", receivedMessage);
           setChange(Math.random() * 100);
         });

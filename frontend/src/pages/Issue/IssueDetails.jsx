@@ -14,9 +14,9 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import CommentCard from "./CommentCard";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useDispatch, useSelector } from "react-redux";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { fetchIssueById, updateIssueStatus } from "@/redux/Issue/Issue.action";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { fetchComments } from "@/redux/Comment/comment.action";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -100,7 +100,9 @@ const IssueDetails = ({ change, sendRefresh }) => {
                     </TabsTrigger>
                   </TabsList>
                   <TabsContent value="resource">
-                    <ScrollArea className="w-full h-[28vh]">
+                    {
+                      subscription.userSubscription?.planType === "PAID" ? (
+                        <ScrollArea className="w-full h-[28vh]">
                       <div className="p-5 flex flex-col gap-5 items-start justify-center">
                         {issue?.issueDetails?.labels?.map((label, index) => (
                           <div className="flex gap-5 justify-center items-center" key={label.id || index}>
@@ -110,6 +112,14 @@ const IssueDetails = ({ change, sendRefresh }) => {
                         ))}
                       </div>
                     </ScrollArea>
+                      ) : (
+                        <div className="flex gap-5 justify-start items-center">
+                          <LockClosedIcon className="text-red-500" />
+                          <span>upgrade your plan to unlock resources.</span>
+                        </div>
+                      )
+                    }
+                    
                   </TabsContent>
                   <TabsContent value="comments">
                     <CreateCommentForm

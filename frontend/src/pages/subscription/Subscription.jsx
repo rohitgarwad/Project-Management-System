@@ -9,12 +9,9 @@ const paidPlan = [
   "Add unlimited team member",
   "Advanced Reporting",
   "Priority Support",
-  "Customization Options",
   "Integration Support",
-  "Advanced Security",
   "Training and Resources",
-  "Access Control",
-  "Custom Workflows",
+  "High Access Control",
 ];
 
 const annualPlan = [
@@ -23,7 +20,7 @@ const annualPlan = [
   "Add unlimited team member",
   "Advanced Reporting",
   "Priority Support",
-  "Everything which montly plan has",
+  "Everything which monthly plan has",
 ];
 
 const freePlan = [
@@ -41,7 +38,7 @@ const Subscription = () => {
 
   useEffect(() => {
     dispatch(getUserSubscription(auth.jwt || localStorage.getItem("jwt")));
-  }, []);
+  }, [auth.jwt, dispatch]);
 
   return (
     <div className="p-10 absolute mt-24 w-full">
