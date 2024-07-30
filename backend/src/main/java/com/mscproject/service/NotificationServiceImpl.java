@@ -20,5 +20,14 @@ public class NotificationServiceImpl {
         message.setText(body);
         javaMailSender.send(message);
     }
+    
+    public void sendIssueReportNotification(String from, String to, String subject, String body) {
+    	SimpleMailMessage message = new SimpleMailMessage();
+    	message.setFrom(from);
+    	message.setTo(to);
+    	message.setSubject(subject);
+    	message.setText(body);
+    	javaMailSender.send(message);
+    }
 }
 

@@ -22,8 +22,10 @@ import com.mscproject.exception.ProjectException;
 import com.mscproject.exception.UserException;
 import com.mscproject.model.Issue;
 import com.mscproject.model.User;
+import com.mscproject.request.IssueReportRequest;
 import com.mscproject.request.IssueRequest;
 import com.mscproject.response.AuthResponse;
+import com.mscproject.response.MessageResponse;
 import com.mscproject.service.IssueService;
 import com.mscproject.service.UserService;
 
@@ -31,118 +33,118 @@ import com.mscproject.service.UserService;
 @RequestMapping("/api/issues")
 public class IssueController {
 
-    @Autowired
-    private IssueService issueService;
+	@Autowired
+	private IssueService issueService;
 
-    @Autowired
-    private UserService userService;
-    
-    
-    @GetMapping("/{issueId}")
-    public ResponseEntity<Issue> getIssueById(@PathVariable Long issueId) throws IssueException {
-        return ResponseEntity.ok(issueService.getIssueById(issueId).get());
-                
-    }
+	@Autowired
+	private UserService userService;
 
-    @GetMapping("/project/{projectId}")
-    public ResponseEntity<List<Issue>> getIssueByProjectId(@PathVariable Long projectId)
-            throws ProjectException {
-        return ResponseEntity.ok(issueService.getIssueByProjectId(projectId));
+	@GetMapping("/{issueId}")
+	public ResponseEntity<Issue> getIssueById(@PathVariable Long issueId) throws IssueException {
+		return ResponseEntity.ok(issueService.getIssueById(issueId).get());
 
-    }
+	}
 
-    @PostMapping
-    public ResponseEntity<IssueDTO> createIssue(@RequestBody IssueRequest issue, @RequestHeader("Authorization") String token) throws UserException, IssueException, ProjectException {
-    	//System.out.println("issue-----"+issue);
-    	User tokenUser = userService.findUserProfileByJwt(token);
-        User user = userService.findUserById(tokenUser.getId());
+	@GetMapping("/project/{projectId}")
+	public ResponseEntity<List<Issue>> getIssueByProjectId(@PathVariable Long projectId) throws ProjectException {
+		return ResponseEntity.ok(issueService.getIssueByProjectId(projectId));
 
-        if (user != null) {
- 
-            Issue createdIssue = issueService.createIssue(issue, tokenUser.getId());
-            IssueDTO issueDTO=new IssueDTO();
-            issueDTO.setDescription(createdIssue.getDescription());
-            issueDTO.setDueDate(createdIssue.getDueDate());
-            issueDTO.setId(createdIssue.getId());
-            issueDTO.setPriority(createdIssue.getPriority());
-            issueDTO.setProject(createdIssue.getProject());
-            issueDTO.setProjectID(createdIssue.getProjectID());
-            issueDTO.setStatus(createdIssue.getStatus());
-            issueDTO.setTitle(createdIssue.getTitle());
-            issueDTO.setLabels(createdIssue.getLabels());
-            issueDTO.setAssignee(createdIssue.getAssignee());
-            
-            return ResponseEntity.ok(issueDTO);
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-    }
+	}
 
-    @PutMapping("/{issueId}")
-    public ResponseEntity<Issue> updateIssue(@PathVariable Long issueId, @RequestBody IssueRequest updatedIssue,
-                                            @RequestHeader("Authorization") String token) throws IssueException, UserException, ProjectException {
-    	User user = userService.findUserProfileByJwt(token);
-    	
-        Issue updated = issueService.updateIssue(issueId,updatedIssue, user.getId()).get();
+	@PostMapping
+	public ResponseEntity<IssueDTO> createIssue(@RequestBody IssueRequest issue,
+			@RequestHeader("Authorization") String token) throws UserException, IssueException, ProjectException {
+		// System.out.println("issue-----"+issue);
+		User tokenUser = userService.findUserProfileByJwt(token);
+		User user = userService.findUserById(tokenUser.getId());
 
-        return updated != null ?
-                ResponseEntity.ok(updated) :
-                ResponseEntity.notFound().build();
-    }
+		if (user != null) {
 
-    @DeleteMapping("/{issueId}")
-    public ResponseEntity<AuthResponse> deleteIssue(@PathVariable Long issueId, @RequestHeader("Authorization") String token) throws UserException, IssueException, ProjectException {
-        User user = userService.findUserProfileByJwt(token);
-        issueService.deleteIssue(issueId, user.getId());
+			Issue createdIssue = issueService.createIssue(issue, tokenUser.getId());
+			IssueDTO issueDTO = new IssueDTO();
+			issueDTO.setDescription(createdIssue.getDescription());
+			issueDTO.setDueDate(createdIssue.getDueDate());
+			issueDTO.setId(createdIssue.getId());
+			issueDTO.setPriority(createdIssue.getPriority());
+			issueDTO.setProject(createdIssue.getProject());
+			issueDTO.setProjectID(createdIssue.getProjectID());
+			issueDTO.setStatus(createdIssue.getStatus());
+			issueDTO.setTitle(createdIssue.getTitle());
+			issueDTO.setLabels(createdIssue.getLabels());
+			issueDTO.setAssignee(createdIssue.getAssignee());
 
-        AuthResponse res=new AuthResponse();
-        res.setMessage("Issue deleted");
-        res.setStatus(true);
+			return ResponseEntity.ok(issueDTO);
+		} else {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+	}
 
-        return ResponseEntity.ok(res);
-               
-    }
+	@PutMapping("/{issueId}")
+	public ResponseEntity<Issue> updateIssue(@PathVariable Long issueId, @RequestBody IssueRequest updatedIssue,
+			@RequestHeader("Authorization") String token) throws IssueException, UserException, ProjectException {
+		User user = userService.findUserProfileByJwt(token);
 
-    
-    @GetMapping("/search")
-    public ResponseEntity<List<Issue>> searchIssues(
-            @RequestParam(required = false) String title,
-            @RequestParam(required = false) String status,
-            @RequestParam(required = false) String priority,
-            @RequestParam(required = false) Long assigneeId
-    ) throws IssueException {
-        // You can add more parameters as needed for your filtering criteria
-        // Use the parameters to build a search query and call the service method
+		Issue updated = issueService.updateIssue(issueId, updatedIssue, user.getId()).get();
 
-        List<Issue> filteredIssues = issueService.searchIssues(title, status, priority, assigneeId);
+		return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
+	}
 
-        return ResponseEntity.ok(filteredIssues);
-    }
+	@DeleteMapping("/{issueId}")
+	public ResponseEntity<AuthResponse> deleteIssue(@PathVariable Long issueId,
+			@RequestHeader("Authorization") String token) throws UserException, IssueException, ProjectException {
+		User user = userService.findUserProfileByJwt(token);
+		issueService.deleteIssue(issueId, user.getId());
 
+		AuthResponse res = new AuthResponse();
+		res.setMessage("Issue deleted");
+		res.setStatus(true);
 
-    @PutMapping ("/{issueId}/assignee/{userId}")
-    public ResponseEntity<Issue> addUserToIssue(@PathVariable Long issueId, @PathVariable Long userId) throws UserException, IssueException {
-       
-            Issue issue = issueService.addUserToIssue(issueId, userId);
+		return ResponseEntity.ok(res);
 
-            return ResponseEntity.ok(issue);
-        
-    }
+	}
 
-    @GetMapping("/assignee/{assigneeId}")
-    public ResponseEntity<List<Issue>> getIssuesByAssigneeId(@PathVariable Long assigneeId) throws IssueException {
-        List<Issue> issues = issueService.getIssuesByAssigneeId(assigneeId);
-        return ResponseEntity.ok(issues);
-    }
+	@GetMapping("/search")
+	public ResponseEntity<List<Issue>> searchIssues(@RequestParam(required = false) String title,
+			@RequestParam(required = false) String status, @RequestParam(required = false) String priority,
+			@RequestParam(required = false) Long assigneeId) throws IssueException {
+		// You can add more parameters as needed for your filtering criteria
+		// Use the parameters to build a search query and call the service method
 
-    @PutMapping("/{issueId}/status/{status}")
-    public ResponseEntity<Issue>updateIssueStatus(
-            @PathVariable String status,
-            @PathVariable Long issueId) throws IssueException {
-        Issue issue = issueService.updateStatus(issueId,status);
-        return ResponseEntity.ok(issue);
-    }
+		List<Issue> filteredIssues = issueService.searchIssues(title, status, priority, assigneeId);
 
+		return ResponseEntity.ok(filteredIssues);
+	}
+
+	@PutMapping("/{issueId}/assignee/{userId}")
+	public ResponseEntity<Issue> addUserToIssue(@PathVariable Long issueId, @PathVariable Long userId)
+			throws UserException, IssueException {
+
+		Issue issue = issueService.addUserToIssue(issueId, userId);
+
+		return ResponseEntity.ok(issue);
+
+	}
+
+	@GetMapping("/assignee/{assigneeId}")
+	public ResponseEntity<List<Issue>> getIssuesByAssigneeId(@PathVariable Long assigneeId) throws IssueException {
+		List<Issue> issues = issueService.getIssuesByAssigneeId(assigneeId);
+		return ResponseEntity.ok(issues);
+	}
+
+	@PutMapping("/{issueId}/status/{status}")
+	public ResponseEntity<Issue> updateIssueStatus(@PathVariable String status, @PathVariable Long issueId)
+			throws IssueException {
+		Issue issue = issueService.updateStatus(issueId, status);
+		return ResponseEntity.ok(issue);
+	}
+
+	@PostMapping("/report")
+	public ResponseEntity<MessageResponse> sendIssueReport(@RequestBody IssueReportRequest issueReportData,
+			@RequestHeader("Authorization") String token) throws Exception {
+		issueService.sendIssueReport(issueReportData);
+		MessageResponse messageResponse = new MessageResponse();
+		messageResponse.setMessage("Report sent successfully !");
+		return ResponseEntity.ok(messageResponse);
+	}
 
 }
-

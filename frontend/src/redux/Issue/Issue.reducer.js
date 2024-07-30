@@ -16,6 +16,8 @@ const issueReducer = (state = initialState, action) => {
     case actionTypes.DELETE_ISSUE_REQUEST:
     case actionTypes.FETCH_ISSUES_BY_ID_REQUEST:
     case actionTypes.ASSIGNED_ISSUE_TO_USER_REQUEST:
+    case actionTypes.SEND_ISSUE_REPORT_REQUEST:
+    case actionTypes.SEND_ISSUE_REPORT_SUCCESS:
       return {
         ...state,
         loading: true,
@@ -28,7 +30,6 @@ const issueReducer = (state = initialState, action) => {
         issues: action.issues,
       };
     case actionTypes.FETCH_ISSUES_BY_ID_SUCCESS:
-      case actionTypes.UPDATE_ISSUE_STATUS_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -61,6 +62,7 @@ const issueReducer = (state = initialState, action) => {
     case actionTypes.UPDATE_ISSUE_FAILURE:
     case actionTypes.DELETE_ISSUE_FAILURE:
     case actionTypes.ASSIGNED_ISSUE_TO_USER_FAILURE:
+    case actionTypes.SEND_ISSUE_REPORT_FAILURE:
       return {
         ...state,
         loading: false,

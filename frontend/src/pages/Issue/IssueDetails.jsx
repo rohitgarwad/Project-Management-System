@@ -36,6 +36,15 @@ import { resourceLinks } from "./resourceLinks";
 import CreateWorkUploadForm from "./CreateWorkUploadForm";
 import { fetchWorkUploads } from "@/redux/WorkUpload/workUpload.action";
 import WorkUploadCard from "./WorkUploadCard";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import SendReportForm from "./SendReportForm";
 
 const IssueDetails = ({ change, sendRefresh }) => {
   const { issueId, projectId } = useParams();
@@ -347,8 +356,45 @@ const IssueDetails = ({ change, sendRefresh }) => {
                             <p>{`${role?.user?.fullName}(${role?.roleType})`}</p>
                             {issue?.issueDetails?.assignee?.id ===
                               auth?.user?.id &&
-                              subscription?.userSubscription?.planType ===
-                                "FREE" && <Button>Report</Button>}
+                            subscription?.userSubscription?.planType ===
+                              "PAID" ? (
+                              <Dialog>
+                                <DialogTrigger>
+                                  <DialogClose>
+                                    <Button>Report</Button>
+                                  </DialogClose>
+                                </DialogTrigger>
+                                <DialogContent>
+                                  <DialogHeader>
+                                    <DialogTitle>Send Report</DialogTitle>
+                                  </DialogHeader>
+                                  <SendReportForm
+                                    senderEmail={auth?.user?.email}
+                                    receiverEmail={role?.user?.email}
+                                    issueStatus={issue?.issueDetails?.status}
+                                    sendRefresh={sendRefresh}
+                                    issueTitle={issue?.issueDetails?.title}
+                                  />
+                                </DialogContent>
+                              </Dialog>
+                            ) : (
+                              issue?.issueDetails?.assignee?.id ===
+                                auth?.user?.id && (
+                                <TooltipProvider>
+                                  <Tooltip>
+                                    <TooltipTrigger asChild>
+                                      <LockClosedIcon className="text-red-400" />
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                      <p>
+                                        please upgrade your plan to unlock
+                                        Advanced Reporting.
+                                      </p>
+                                    </TooltipContent>
+                                  </Tooltip>
+                                </TooltipProvider>
+                              )
+                            )}
                           </div>
                         ))}
                     </div>

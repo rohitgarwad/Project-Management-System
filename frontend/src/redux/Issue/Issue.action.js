@@ -176,7 +176,7 @@ export const deleteIssue = (issueId) => {
       });
       dispatch({ type: actionTypes.DELETE_ISSUE_SUCCESS, issueId });
     } catch (error) {
-      console.log("delete issue error: ", error);
+      //console.log("delete issue error: ", error);
       dispatch({
         type: actionTypes.DELETE_ISSUE_FAILURE,
         error: error.message,
@@ -184,3 +184,25 @@ export const deleteIssue = (issueId) => {
     }
   };
 };
+
+// Action for sending issue report
+export const sendIssueReport = (issueReportData) => {
+  return async (dispatch) => {
+    dispatch({ type: actionTypes.SEND_ISSUE_REPORT_REQUEST });
+    try {
+      const data = await api.post(`/api/issues/report`, issueReportData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        },
+      });
+      dispatch({ type: actionTypes.SEND_ISSUE_REPORT_SUCCESS});
+      console.log("send issue report success: ", data);
+    } catch (error) {
+      console.log("send issue report error: ", error);
+      dispatch({
+        type: actionTypes.SEND_ISSUE_REPORT_FAILURE,
+        error: error.message,
+      })
+    }
+  }
+}

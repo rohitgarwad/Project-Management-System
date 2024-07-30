@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
-import { Input } from "@/components/ui/input";
-// import "./Login.css";
 import { Button } from "@/components/ui/button";
+import { DialogClose } from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -9,32 +8,40 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { useForm } from "react-hook-form";
+import { Input } from "@/components/ui/input";
+import { sendIssueReport } from "@/redux/Issue/Issue.action";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { inviteToProject } from "@/redux/Project/Project.Action";
-import { useNavigate } from "react-router-dom";
-import { DialogClose } from "@/components/ui/dialog";
+import { z } from "zod";
 
 const formSchema = z.object({
-  email: z.string().email("Invalid email address"),
+  senderEmail: z.string().email("Invalid email address"),
+  receiverEmail: z.string().email("Invalid email address"),
+  issueTitle: z.string(),
+  issueStatus: z.string(),
+  reportMessage: z.string(),
 });
-const InviteUserForm = ({ projectId, sendRefresh }) => {
+
+const SendReportForm = ({ senderEmail, receiverEmail, issueStatus, issueTitle,  sendRefresh }) => {
+
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
+      senderEmail: senderEmail,
+      receiverEmail: receiverEmail,
+      issueTitle: issueTitle,
+      issueStatus: issueStatus,
+      reportMessage: "",
     },
   });
+
   const onSubmit = (data) => {
-    data.projectId = projectId;
-    dispatch(inviteToProject(data));
-    //console.log("sent invitation", data);
-    navigate(`/project/${projectId}`);
-    sendRefresh("Invitation Sent !");
+    console.log("sendReportFormData: ", data);
+    dispatch(sendIssueReport(data));
+    sendRefresh("Report Sent !");
   };
 
   return (
@@ -43,14 +50,14 @@ const InviteUserForm = ({ projectId, sendRefresh }) => {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
             control={form.control}
-            name="email"
+            name="reportMessage"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
                   <Input
                     {...field}
                     className="border w-full border-inherit py-5 px-5"
-                    placeholder="enter user email"
+                    placeholder="enter report message..."
                   />
                 </FormControl>
                 <FormMessage />
@@ -59,7 +66,7 @@ const InviteUserForm = ({ projectId, sendRefresh }) => {
           />
           <DialogClose>
             <Button type="submit" className="w-full py-5">
-              SEND INVITATION
+              SEND REPORT
             </Button>
           </DialogClose>
         </form>
@@ -68,4 +75,4 @@ const InviteUserForm = ({ projectId, sendRefresh }) => {
   );
 };
 
-export default InviteUserForm;
+export default SendReportForm;
