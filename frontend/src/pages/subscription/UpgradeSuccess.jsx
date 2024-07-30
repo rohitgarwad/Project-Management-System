@@ -24,7 +24,7 @@ const UpgradeSuccess = () => {
   useEffect(() => {
     dispatch(upgradeSubscription({planType}))
     dispatch(getUserSubscription())
-  }, []);
+  }, [dispatch, planType]);
 
   return (
     <div className="flex justify-center absolute mt-24 w-full">

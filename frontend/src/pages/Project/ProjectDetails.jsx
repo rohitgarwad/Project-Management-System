@@ -68,7 +68,7 @@ const ProjectDetails = ({ change, sendRefresh }) => {
     // console.log("auth: ", auth);
   }, [id, issue.issues.length, isEdited, dispatch, authUserId, change]);
 
-  console.log("project team size: ", project?.projectDetails?.team?.length);
+  //console.log("project team size: ", project?.projectDetails?.team?.length);
 
   const handleRoleChange = (value, userId, oldRoleType) => {
     // console.log("newRoleType: ", value);
@@ -90,7 +90,7 @@ const ProjectDetails = ({ change, sendRefresh }) => {
     <>
       <div className="mt-20 h-[90vh] w-full py-5 px-2 lg:px-10 absolute bg-background">
         <div className="xl:flex gap-5 h-full justify-between text-sm">
-          <ScrollArea className="xl:w-[69%] pr-2 border-r bg-background">
+          <ScrollArea className="xl:w-[69%] pr-2 xl:border-r bg-background">
             <p className="pb-5 border-b text-xl tracking-wider font-bold text-gray-200">
               Project Details
             </p>
@@ -114,13 +114,21 @@ const ProjectDetails = ({ change, sendRefresh }) => {
                     <p className="w-36 font-black text-gray-300">Members </p>
                     <div className="flex items-center gap-2">
                       <>
-                        {project.projectDetails?.team.map((item, index) => (
+                        {project.projectRoles?.map((item, index) => (
                           <Avatar
-                            className={`cursor-pointer`}
+                            className={`cursor-pointer text-white`}
                             key={item?.id || index}
                           >
-                            <AvatarFallback>
-                              {item.fullName[0]?.toUpperCase()}
+                            <AvatarFallback
+                              className={`${
+                                item?.roleType === "OWNER"
+                                  ? "bg-orange-700"
+                                  : item?.roleType === "MANAGER"
+                                  ? "bg-yellow-600"
+                                  : "bg-blue-600"
+                              }`}
+                            >
+                              {item?.user?.fullName[0]?.toUpperCase()}
                             </AvatarFallback>
                           </Avatar>
                         ))}
@@ -246,7 +254,16 @@ const ProjectDetails = ({ change, sendRefresh }) => {
                                   <div className="flex items-center space-x-4">
                                     <div className="flex items-center gap-2">
                                       <Avatar className={`cursor-pointer`}>
-                                        <AvatarFallback>
+                                        <AvatarFallback
+                                          className={`${
+                                            projectRole?.roleType === "OWNER"
+                                              ? "bg-orange-700"
+                                              : projectRole?.roleType ===
+                                                "MANAGER"
+                                              ? "bg-yellow-600"
+                                              : "bg-blue-600"
+                                          }`}
+                                        >
                                           {projectRole?.user?.fullName[0]}
                                         </AvatarFallback>
                                       </Avatar>

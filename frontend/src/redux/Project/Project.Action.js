@@ -26,7 +26,7 @@ export const fetchProjects = ({ category, tag }) => {
         projects: response.data,
       });
     } catch (error) {
-      console.log("fetch project error: ", error);
+      // console.log("fetch project error: ", error);
       dispatch({
         type: actionTypes.FETCH_PROJECTS_FAILURE,
         error: error.message,
@@ -54,7 +54,7 @@ export const searchProjects = (keyword) => {
         projects: response.data,
       });
     } catch (error) {
-      console.log("search project error: ", error);
+      // console.log("search project error: ", error);
       dispatch({
         type: actionTypes.SEARCH_PROJECT_FAILURE,
         error: error.message,
@@ -83,7 +83,7 @@ export const createProject = (projectData) => {
         project: response.data,
       });
     } catch (error) {
-      console.log("create project error ", error);
+      // console.log("create project error ", error);
       dispatch({
         type: actionTypes.CREATE_PROJECT_FAILURE,
         error: error.message,
@@ -112,7 +112,7 @@ export const updateProject = ({ projectId, updatedData }) => {
         project: response.data,
       });
     } catch (error) {
-      console.log("update project error ", error);
+      // console.log("update project error ", error);
       dispatch({
         type: actionTypes.UPDATE_PROJECT_FAILURE,
         error: error.message,
@@ -137,7 +137,7 @@ export const fetchProjectById = (id) => {
         projectDetails: response.data,
       });
     } catch (error) {
-      console.log("fetch project by id error: ", error);
+      // console.log("fetch project by id error: ", error);
       dispatch({
         type: actionTypes.FETCH_PROJECT_BY_Id_FAILURE,
         error: error.message,
@@ -158,7 +158,7 @@ export const deleteProject = ({ projectId }) => {
       });
       dispatch({ type: actionTypes.DELETE_PROJECT_SUCCESS, projectId });
     } catch (error) {
-      console.log("delete project error - ", error);
+      // console.log("delete project error - ", error);
       dispatch({
         type: actionTypes.DELETE_PROJECT_FAILURE,
         error: error.message,
@@ -187,7 +187,7 @@ export const inviteToProject = ({ email, projectId }) => {
       dispatch({ type: actionTypes.INVITE_TO_PROJECT_SUCCESS });
       //console.log("invite to project ", response);
     } catch (error) {
-      console.log("invite to project error: ", error);
+      // console.log("invite to project error: ", error);
       dispatch({
         type: actionTypes.INVITE_TO_PROJECT_FAILURE,
         error: error.message,
@@ -212,7 +212,7 @@ export const acceptInvitation = ({ invitationToken, navigate }) => {
       //console.log("accept invitation",data)
       dispatch({ type: actionTypes.ACCEPT_INVITATION_SUCCESS, payload: data });
     } catch (error) {
-      console.log("accept invite error ", error);
+      // console.log("accept invite error ", error);
       dispatch({
         type: actionTypes.ACCEPT_INVITATION_FAILURE,
         error: error.message,
@@ -237,7 +237,7 @@ export const fetchAllUsersProjectRoles = (projectId) => {
         projectRoles: response.data,
       });
     } catch (error) {
-      console.log("fetch all users project roles error: ", error);
+      // console.log("fetch all users project roles error: ", error);
       dispatch({
         type: actionTypes.FETCH_ALL_USERS_PROJECT_ROLES_FAILURE,
         error: error.message,
@@ -265,7 +265,7 @@ export const fetchUserProjectRole = (projectId, userId) => {
         userProjectRole: response.data,
       });
     } catch (error) {
-      console.log("fetch user project role error: ", error);
+      // console.log("fetch user project role error: ", error);
       dispatch({
         type: actionTypes.FETCH_USER_PROJECT_ROLE_FAILURE,
         error: error.message,
@@ -298,7 +298,7 @@ export const updateUsersProjectRole = (updateRoleData) => {
         projectRole: response.data,
       });
     } catch (error) {
-      console.log("update users project role error: ", error);
+      // console.log("update users project role error: ", error);
       dispatch({
         type: actionTypes.UPDATE_USERS_PROJECT_ROLE_FAILURE,
         error: error.message,

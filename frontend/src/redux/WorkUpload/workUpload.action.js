@@ -18,7 +18,7 @@ export const createWorkUpload = (workUploadData) => {
         workUpload: response.data,
       });
     } catch (error) {
-      console.log("create workUpload error ", error);
+      // console.log("create workUpload error ", error);
       dispatch({
         type: actionTypes.CREATE_WORKUPLOAD_FAILURE,
         error: error.message,
@@ -39,7 +39,7 @@ export const deleteWorkUpload = (workUploadId) => {
       });
       dispatch({ type: actionTypes.DELETE_WORKUPLOAD_SUCCESS, workUploadId });
     } catch (error) {
-      console.log("delete workUpload error ", error);
+      // console.log("delete workUpload error ", error);
       dispatch({
         type: actionTypes.DELETE_WORKUPLOAD_FAILURE,
         error: error.message,
@@ -64,7 +64,7 @@ export const fetchWorkUploads = (issueId) => {
       });
       //console.log("fetched workUploads ",response.data)
     } catch (error) {
-      console.log("fetch workUploads error ", error);
+      //console.log("fetch workUploads error ", error);
       dispatch({
         type: actionTypes.FETCH_WORKUPLOADS_FAILURE,
         error: error.message,

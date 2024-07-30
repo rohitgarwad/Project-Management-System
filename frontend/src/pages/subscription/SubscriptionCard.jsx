@@ -7,15 +7,16 @@ import { useDispatch } from "react-redux";
 const SubscriptionCard = ({ data }) => {
   const dispatch = useDispatch();
   const handleUpgrade = () => {
-    dispatch(
-      createPayment({
-        planType: data.planType,
-        jwt: localStorage.getItem("jwt"),
-      })
-    );
+    if (data.planType !== "FREE") {
+      dispatch(
+        createPayment({
+          planType: data.planType,
+          jwt: localStorage.getItem("jwt"),
+        })
+      );
+    }
   };
 
- 
   return (
     <div className="rounded-xl bg-card shadow-[#14173b] shadow-2xl p-5 space-y-5 w-[18rem]">
       <p>{data.planName}</p>
@@ -23,9 +24,15 @@ const SubscriptionCard = ({ data }) => {
         <span className="text-xl font-semibold">₹{data.price}/</span>{" "}
         <span>{data.planType}</span>
       </p>
-      {data.planType=="ANNUALLY"&&<p className="text-green-500">30% off</p>}
+      {data.planType == "ANNUALLY" && <p className="text-green-500">30% off</p>}
       <Button
-        disabled={data.planName == "Free" ? true : false}
+        disabled={
+          data.planName === "Free" ||
+          data.buttonName === "Current Plan" ||
+          data.currentPlan === "ANNUALLY"
+            ? true
+            : false
+        }
         className="w-full"
         onClick={handleUpgrade}
       >

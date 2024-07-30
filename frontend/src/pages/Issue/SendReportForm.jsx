@@ -39,7 +39,7 @@ const SendReportForm = ({ senderEmail, receiverEmail, issueStatus, issueTitle,  
   });
 
   const onSubmit = (data) => {
-    console.log("sendReportFormData: ", data);
+    // console.log("sendReportFormData: ", data);
     dispatch(sendIssueReport(data));
     sendRefresh("Report Sent !");
   };

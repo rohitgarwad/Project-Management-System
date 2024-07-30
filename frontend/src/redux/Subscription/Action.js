@@ -16,7 +16,7 @@ export const getUserSubscription = (jwt) => {
       });
       //console.log("users subscription ",response.data)
     } catch (error) {
-      console.log("get user subscription error", error);
+      // console.log("get user subscription error", error);
       dispatch({
         type: types.GET_USER_SUBSCRIPTION_FAILURE,
         payload: error.message,
@@ -47,7 +47,7 @@ export const upgradeSubscription = ({ planType }) => {
       });
       //console.log("upgraded subscription",response.data);
     } catch (error) {
-      console.log("upgrade subscription error: ", error.response.data);
+      // console.log("upgrade subscription error: ", error.response.data);
       dispatch({
         type: types.UPGRADE_SUBSCRIPTION_FAILURE,
         payload: error.message,

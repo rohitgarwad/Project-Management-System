@@ -44,24 +44,24 @@ const UserList = ({ issueDetails, sendRefresh }) => {
                   {issueDetails.assignee?.fullName || "Unassigned"}
                 </p>
               </div>
-              {project.projectDetails?.team.map((item, index) => (
+              {project.projectRoles?.map((item, index) => (
                 <div
                   onClick={() => handleIssueAssigne(item.id || index)}
                   key={item}
                   className="py-2 group hover:bg-slate-800 cursor-pointer flex items-center space-x-4 rounded-md border px-4"
                 >
                   <Avatar className="">
-                    <AvatarFallback className="group-hover:bg-gray-400">
-                      {item.fullName[0]}
+                    <AvatarFallback className={`${ item?.roleType === "OWNER" ? "bg-orange-700 group-hover:bg-gray-400" : item?.roleType === "MANAGER" ? "bg-yellow-600 group-hover:bg-gray-400" : "bg-blue-600 group-hover:bg-gray-400" }`} >
+                      {item?.user?.fullName[0]}
                     </AvatarFallback>
                   </Avatar>
 
                   <div className=" space-y-1">
                     <p className="text-sm font-medium leading-none">
-                      {item.fullName}
+                      {item?.user?.fullName}
                     </p>
                     <p className="text-xs text-muted-foreground">
-                      @{item.fullName?.toLowerCase().split(" ").join("_")}
+                      @{item?.user?.fullName?.toLowerCase().split(" ").join("_")}
                     </p>
                   </div>
                 </div>

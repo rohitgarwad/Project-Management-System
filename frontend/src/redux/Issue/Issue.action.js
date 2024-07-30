@@ -21,7 +21,7 @@ export const fetchIssues = (id) => {
         issues: response.data,
       });
     } catch (error) {
-      console.log("fetch issues error: ", error);
+      // console.log("fetch issues error: ", error);
       dispatch({
         type: actionTypes.FETCH_ISSUES_FAILURE,
         error: error.message,
@@ -48,7 +48,7 @@ export const fetchIssueById = (id) => {
         issues: response.data,
       });
     } catch (error) {
-      console.log("fetch issue by id error: ", error);
+      // console.log("fetch issue by id error: ", error);
       dispatch({
         type: actionTypes.FETCH_ISSUES_BY_ID_FAILURE,
         error: error.message,
@@ -76,7 +76,7 @@ export const updateIssueStatus = ({ id, status }) => {
         issues: response.data,
       });
     } catch (error) {
-      console.log("update issue status error: ", error);
+      // console.log("update issue status error: ", error);
       dispatch({
         type: actionTypes.UPDATE_ISSUE_STATUS_FAILURE,
         error: error.message,
@@ -105,7 +105,7 @@ export const assignedUserToIssue = ({ issueId, userId, sendRefresh }) => {
         issue: response.data,
       });
     } catch (error) {
-      console.log("assign user to issue error: ", error);
+      // console.log("assign user to issue error: ", error);
       dispatch({
         type: actionTypes.ASSIGNED_ISSUE_TO_USER_FAILURE,
         error: error.message,
@@ -130,7 +130,7 @@ export const createIssue = (issueData) => {
         issue: response.data,
       });
     } catch (error) {
-      console.log("create issue error: ", error);
+      // console.log("create issue error: ", error);
       dispatch({
         type: actionTypes.CREATE_ISSUE_FAILURE,
         error: error.message,
@@ -155,7 +155,7 @@ export const updateIssue = (issueId, updatedData) => {
         issue: response.data,
       });
     } catch (error) {
-      console.log("update issue error: ", error);
+      // console.log("update issue error: ", error);
       dispatch({
         type: actionTypes.UPDATE_ISSUE_FAILURE,
         error: error.message,
@@ -196,9 +196,9 @@ export const sendIssueReport = (issueReportData) => {
         },
       });
       dispatch({ type: actionTypes.SEND_ISSUE_REPORT_SUCCESS});
-      console.log("send issue report success: ", data);
+      // console.log("send issue report success: ", data);
     } catch (error) {
-      console.log("send issue report error: ", error);
+      // console.log("send issue report error: ", error);
       dispatch({
         type: actionTypes.SEND_ISSUE_REPORT_FAILURE,
         error: error.message,

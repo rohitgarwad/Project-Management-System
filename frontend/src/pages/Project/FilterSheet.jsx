@@ -19,7 +19,7 @@ const FilterSheet = () => {
   const tag = searchParams.get("tag");
 
   const handleFilterChange = (section, value) => {
-    console.log(value, section);
+    // console.log(value, section);
 
     if (value === "all") {
       searchParams.delete(section);

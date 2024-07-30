@@ -50,6 +50,7 @@ const Subscription = () => {
             features: freePlan,
             planType: "FREE",
             price: 0,
+            currentPlan: subscription.userSubscription?.planType,
             buttonName:
               subscription.userSubscription?.planType == "FREE"
                 ? "Current Plan"
@@ -62,6 +63,7 @@ const Subscription = () => {
             features: paidPlan,
             planType: "MONTHLY",
             price: 799,
+            currentPlan: subscription.userSubscription?.planType,
             buttonName:
               subscription.userSubscription?.planType == "MONTHLY"
                 ? "Current Plan"
@@ -74,6 +76,7 @@ const Subscription = () => {
             features: annualPlan,
             planType: "ANNUALLY",
             price: 6711,
+            currentPlan: subscription.userSubscription?.planType,
             buttonName:
               subscription.userSubscription?.planType == "ANNUALLY"
                 ? "Current Plan"

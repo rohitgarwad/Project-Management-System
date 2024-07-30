@@ -27,7 +27,7 @@ export const register = (userData) => async (dispatch) => {
     //console.log("register success:- ",user)
     dispatch(registerSuccess(user));
   } catch (error) {
-    console.log("register error ", error);
+    // console.log("register error ", error);
     dispatch(registerFailure(error.message));
   }
 };
@@ -46,7 +46,7 @@ export const login = (userData) => async (dispatch) => {
     //console.log("login success",user)
     dispatch(loginSuccess(user));
   } catch (error) {
-    console.log("login error: ", error);
+    // console.log("login error: ", error);
     dispatch(loginFailure(error.message));
   }
 };
@@ -65,7 +65,7 @@ export const getUser = (token) => {
       dispatch({ type: GET_USER_SUCCESS, payload: user });
       //console.log("get user data ",user)
     } catch (error) {
-      console.log("get user error: ", error);
+      // console.log("get user error: ", error);
       const errorMessage = error.message;
       dispatch({ type: GET_USER_FAILURE, payload: errorMessage });
     }

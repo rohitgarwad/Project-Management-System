@@ -10,14 +10,14 @@ export const sendMessage = ({ message, sendToServer }) => {
           Authorization: `Bearer ${localStorage.getItem("jwt")}`,
         },
       });
-      console.log("send message data: ", response);
+      // console.log("send message data: ", response);
       sendToServer(response.data.content.toString());
       dispatch({
         type: actionTypes.SEND_MESSAGE_SUCCESS,
         message: response.data,
       });
     } catch (error) {
-      console.log("send message error: ", error);
+      // console.log("send message error: ", error);
       dispatch({
         type: actionTypes.SEND_MESSAGE_FAILURE,
         error: error.message,
@@ -58,7 +58,7 @@ export const fetchChatByProject = (projectId) => {
         chat: response.data,
       });
     } catch (error) {
-      console.log("fetch chat by project error -- ", error);
+      // console.log("fetch chat by project error -- ", error);
       dispatch({
         type: actionTypes.FETCH_CHAT_BY_PROJECT_FAILURE,
         error: error.message,
@@ -83,7 +83,7 @@ export const fetchChatMessages = (chatId) => {
         messages: response.data,
       });
     } catch (error) {
-      console.log("fetch chat messages error -- ", error);
+      // console.log("fetch chat messages error -- ", error);
       dispatch({
         type: actionTypes.FETCH_CHAT_MESSAGES_FAILURE,
         error: error.message,

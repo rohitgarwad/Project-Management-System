@@ -45,6 +45,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import SendReportForm from "./SendReportForm";
+import { getUserSubscription } from "@/redux/Subscription/Action";
 
 const IssueDetails = ({ change, sendRefresh }) => {
   const { issueId, projectId } = useParams();
@@ -64,7 +65,6 @@ const IssueDetails = ({ change, sendRefresh }) => {
     dispatch(fetchAllUsersProjectRoles(projectId));
   }, [dispatch, issueId, projectId, change, authUserId]);
 
-  //console.log("projectDetails----------", project?.projectDetails?.owner.fullName);
   const handleUpdateIssueStatus = (value) => {
     dispatch(updateIssueStatus({ id: issueId, status: value }));
     sendRefresh("Issue Status Updated !");
@@ -115,7 +115,7 @@ const IssueDetails = ({ change, sendRefresh }) => {
                     </TabsTrigger>
                   </TabsList>
                   <TabsContent value="resource">
-                    {subscription.userSubscription?.planType === "PAID" ? (
+                    {subscription.userSubscription?.subscriptiontype === "PAID" ? (
                       <ScrollArea className="w-full h-[28vh]">
                         <div className="p-5 flex flex-col gap-5 items-start justify-center">
                           {issue?.issueDetails?.labels?.map((label, index) => (
@@ -269,7 +269,7 @@ const IssueDetails = ({ change, sendRefresh }) => {
                     <p className="w-[7rem] text-gray-300 font-semibold">
                       Priority
                     </p>
-                    {subscription.userSubscription?.planType === "PAID" ||
+                    {subscription.userSubscription?.subscriptiontype === "PAID" ||
                     userRole === "OWNER" ||
                     userRole === "MANAGER" ? (
                       <span
@@ -356,7 +356,7 @@ const IssueDetails = ({ change, sendRefresh }) => {
                             <p>{`${role?.user?.fullName}(${role?.roleType})`}</p>
                             {issue?.issueDetails?.assignee?.id ===
                               auth?.user?.id &&
-                            subscription?.userSubscription?.planType ===
+                            subscription?.userSubscription?.subscriptiontype ===
                               "PAID" ? (
                               <Dialog>
                                 <DialogTrigger>

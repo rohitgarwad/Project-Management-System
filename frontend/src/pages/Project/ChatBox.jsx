@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -131,7 +133,7 @@ const ChatBox = ({ userRole}) => {
           <div ref={chatContainerRef}></div>
         </ScrollArea>
         <div className="relative p-0">
-          {(subscription.userSubscription?.planType === "PAID" || userRole === "OWNER" || userRole === "MANAGER") ? (
+          {(subscription.userSubscription?.subscriptiontype === "PAID" || userRole === "OWNER" || userRole === "MANAGER") ? (
             <>
               <Input
                 value={messages}

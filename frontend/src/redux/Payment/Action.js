@@ -34,7 +34,7 @@ export const createPayment =
         payload: data,
       });
     } catch (error) {
-      console.log("create payment error", error);
+      // console.log("create payment error", error);
       dispatch({
         type: CREATE_PAYMENT_FAILURE,
         payload:
