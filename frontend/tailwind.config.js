@@ -52,6 +52,9 @@ export const theme = {
         foreground: "hsl(var(--card-foreground))",
       },
     },
+    borderWidth: {
+      DEFAULT: "3px",
+    },
     borderRadius: {
       lg: "var(--radius)",
       md: "calc(var(--radius) - 2px)",

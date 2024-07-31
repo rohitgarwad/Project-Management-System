@@ -90,7 +90,7 @@ const ProjectDetails = ({ change, sendRefresh }) => {
     <>
       <div className="mt-16 h-[93vh] w-full pt-10 pb-5 px-2 lg:px-10 absolute bg-background">
         <div className="xl:flex gap-5 h-full justify-between text-sm">
-          <ScrollArea className="xl:w-[69%] pr-2 xl:border-r bg-background">
+          <ScrollArea className="xl:w-[69%] pr-2 bg-background">
             <p className="pb-5 border-b text-xl tracking-wider font-bold text-gray-200">
               Project Details
             </p>
@@ -342,11 +342,13 @@ const ProjectDetails = ({ change, sendRefresh }) => {
                                             </Button>
                                           </TooltipTrigger>
                                           <TooltipContent>
-                                            {userRole !== "OWNER" && (
+                                            {userRole !== "OWNER" ? (
                                               <p>
                                                 You are not Authorized to
                                                 perform this action.
                                               </p>
+                                            ) : (
+                                              <p>Cannot degrade OWNER role</p>
                                             )}
                                           </TooltipContent>
                                         </Tooltip>

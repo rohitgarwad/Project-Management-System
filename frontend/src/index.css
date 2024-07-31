@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
 
 
 * {
@@ -74,12 +74,13 @@ body {
 }
 
 
- 
+
 @layer base {
   * {
     @apply border-border;
   }
+
   body {
-    @apply dark bg-background  text-foreground ;
+    @apply dark bg-background text-foreground;
   }
 }
