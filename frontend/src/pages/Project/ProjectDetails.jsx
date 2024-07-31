@@ -66,7 +66,7 @@ const ProjectDetails = ({ change, sendRefresh }) => {
     // console.log("issue: ", issue);
     // console.log("project: ", project);
     // console.log("auth: ", auth);
-  }, [id, issue.issues.length, isEdited, dispatch, authUserId, change]);
+  }, [id, issue.issues.length, isEdited, dispatch, authUserId, change, teamSize]);
 
   //console.log("project team size: ", project?.projectDetails?.team?.length);
 

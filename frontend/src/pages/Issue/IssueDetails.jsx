@@ -45,7 +45,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import SendReportForm from "./SendReportForm";
-import { getUserSubscription } from "@/redux/Subscription/Action";
 
 const IssueDetails = ({ change, sendRefresh }) => {
   const { issueId, projectId } = useParams();
@@ -115,7 +114,8 @@ const IssueDetails = ({ change, sendRefresh }) => {
                     </TabsTrigger>
                   </TabsList>
                   <TabsContent value="resource">
-                    {subscription.userSubscription?.subscriptiontype === "PAID" ? (
+                    {subscription.userSubscription?.subscriptiontype ===
+                    "PAID" ? (
                       <ScrollArea className="w-full h-[28vh]">
                         <div className="p-5 flex flex-col gap-5 items-start justify-center">
                           {issue?.issueDetails?.labels?.map((label, index) => (
@@ -269,7 +269,8 @@ const IssueDetails = ({ change, sendRefresh }) => {
                     <p className="w-[7rem] text-gray-300 font-semibold">
                       Priority
                     </p>
-                    {subscription.userSubscription?.subscriptiontype === "PAID" ||
+                    {subscription.userSubscription?.subscriptiontype ===
+                      "PAID" ||
                     userRole === "OWNER" ||
                     userRole === "MANAGER" ? (
                       <span

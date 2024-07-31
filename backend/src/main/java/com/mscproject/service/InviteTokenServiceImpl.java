@@ -32,6 +32,7 @@ public class InviteTokenServiceImpl implements InvitationService {
 
 
 		String invitationLink = "http://localhost:5173/accept_invitation?token=" + invitationToken;
+		System.out.println("invite token: " + invitationLink);
 		emailService.sendEmailWithToken(email, invitationLink);
 
 	}
