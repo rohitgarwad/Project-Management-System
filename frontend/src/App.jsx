@@ -114,7 +114,7 @@ function App() {
             <Route path="/upgrade_plan" element={<Subscription />}></Route>
             <Route
               path="/upgrade_plan/success"
-              element={<UpgradeSuccess />}
+              element={<UpgradeSuccess change={change} sendRefresh={sendRefresh} />}
             ></Route>
             <Route path="/upgrade_plan/failure" element={<UpgradeFailure />} />
           </Routes>

@@ -46,8 +46,8 @@ const UserList = ({ issueDetails, sendRefresh }) => {
               </div>
               {project.projectRoles?.map((item, index) => (
                 <div
-                  onClick={() => handleIssueAssigne(item.id || index)}
-                  key={item}
+                  onClick={() => handleIssueAssigne(item?.user?.id || index)}
+                  key={item?.id || index}
                   className="py-2 group hover:bg-slate-800 cursor-pointer flex items-center space-x-4 rounded-md border px-4"
                 >
                   <Avatar className="">

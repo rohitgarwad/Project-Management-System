@@ -88,7 +88,7 @@ const ProjectDetails = ({ change, sendRefresh }) => {
 
   return (
     <>
-      <div className="mt-20 h-[90vh] w-full py-5 px-2 lg:px-10 absolute bg-background">
+      <div className="mt-16 h-[93vh] w-full pt-10 pb-5 px-2 lg:px-10 absolute bg-background">
         <div className="xl:flex gap-5 h-full justify-between text-sm">
           <ScrollArea className="xl:w-[69%] pr-2 xl:border-r bg-background">
             <p className="pb-5 border-b text-xl tracking-wider font-bold text-gray-200">

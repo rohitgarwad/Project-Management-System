@@ -72,7 +72,7 @@ const IssueDetails = ({ change, sendRefresh }) => {
 
   return (
     <>
-      <div className="px-20 py-8 text-gray-400 mt-20 w-full absolute bg-background">
+      <div className="px-20 pt-10 pb-5 text-gray-400 mt-16 h-[93vh] w-full absolute bg-background">
         <div className="flex justify-between border p-10 rounded-lg flex-col space-y-20 text-sm lg:space-y-0 lg:flex-row overflow-hidden bg-background">
           <div className="h-full w-full lg:w-[60%] lg:h-[70vh] ">
             <p className="pb-5 border-b text-xl tracking-wider font-bold text-gray-200">

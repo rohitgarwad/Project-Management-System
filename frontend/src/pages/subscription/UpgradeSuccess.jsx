@@ -1,16 +1,21 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import { Button } from "@/components/ui/button";
 import { CheckCircledIcon } from "@radix-ui/react-icons";
 import { Card } from "@/components/ui/card";
-import { useNavigate,useLocation } from "react-router-dom";
-import { useDispatch,useSelector } from "react-redux";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getUserSubscription, upgradeSubscription } from "@/redux/Subscription/Action";
+import {
+  getUserSubscription,
+  upgradeSubscription,
+} from "@/redux/Subscription/Action";
 
-const UpgradeSuccess = () => {
+const UpgradeSuccess = ({ change, sendRefresh}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const location=useLocation();
-  const {subscription}=useSelector(store=>store)
+  const location = useLocation();
+  const { subscription } = useSelector((store) => store);
 
   const queryParams = new URLSearchParams(location.search);
 
@@ -22,9 +27,11 @@ const UpgradeSuccess = () => {
   //console.log("Plan Type:", planType);
 
   useEffect(() => {
-    dispatch(upgradeSubscription({planType}))
-    dispatch(getUserSubscription())
-  }, [dispatch, planType]);
+    dispatch(upgradeSubscription({ planType }));
+    sendRefresh("Plan Upgraded");
+    dispatch(getUserSubscription());
+  }, [dispatch, planType, change]);
+  
 
   return (
     <div className="flex justify-center absolute mt-24 w-full">
@@ -34,8 +41,12 @@ const UpgradeSuccess = () => {
           <p className="text-xl">Plan Upgraded Successfully</p>
         </div>
         <div className="space-y-3">
-          <p className="text-green-500">start date: {subscription.userSubscription?.subscriptionStartDate}</p>
-          <p className="text-red-500">end date : {subscription.userSubscription?.subscriptionEndDate}</p>
+          <p className="text-green-500">
+            start date: {subscription.userSubscription?.subscriptionStartDate}
+          </p>
+          <p className="text-red-500">
+            end date : {subscription.userSubscription?.subscriptionEndDate}
+          </p>
           <p>plan type : {subscription.userSubscription?.planType}</p>
         </div>
         <Button onClick={() => navigate("/")}>Go To Home</Button>

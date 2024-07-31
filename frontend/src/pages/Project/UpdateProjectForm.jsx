@@ -93,9 +93,9 @@ const UpdateProjectForm = ({ change, sendRefresh }) => {
 
   return (
     <>
-      <div className="min-h-[85vh] flex flex-col justify-center items-center px-5 absolute mt-24 w-full bg-background">
+      <div className="min-h-[93vh] flex flex-col justify-center items-center px-5 py-10 absolute mt-16 w-full bg-background">
         {project.projectDetails ? (
-          <div className="border w-full flex flex-col justify-center lg:h-[75vh] p-10 lg:w-[30vw] bg-card">
+          <div className="border w-full flex flex-col justify-center lg:h-[83vh] p-10 lg:w-[35vw] bg-card">
             <h1 className="text-center pb-9 text-lg font-semibold">
               Update Project
             </h1>

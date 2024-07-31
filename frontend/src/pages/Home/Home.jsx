@@ -5,7 +5,7 @@ const Home = (props) => {
   const { change, sendRefresh } = props;
 
   return (
-    <div className="absolute w-full mt-20">
+    <div className="absolute w-full mt-16">
       <ProjectList change={change} sendRefresh={sendRefresh} />
     </div>
   );

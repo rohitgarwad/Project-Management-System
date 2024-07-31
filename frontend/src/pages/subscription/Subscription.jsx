@@ -20,7 +20,7 @@ const annualPlan = [
   "Add unlimited team member",
   "Advanced Reporting",
   "Priority Support",
-  "Everything which monthly plan has",
+  "Everything monthly plan has",
 ];
 
 const freePlan = [

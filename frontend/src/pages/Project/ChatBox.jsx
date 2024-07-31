@@ -106,7 +106,7 @@ const ChatBox = ({ userRole}) => {
                   <AvatarFallback>{item?.sender.fullName[0]}</AvatarFallback>
                 </Avatar>
                 <div
-                  className={`space-y-2 py-2 px-5 border rounded-ss-2xl rounded-e-xl`}
+                  className={`space-y-2 py-2 px-5 border rounded-ss-2xl rounded-e-xl bg-background`}
                 >
                   <p className="text-gray-300 font-semibold">
                     {item.sender?.fullName}
@@ -117,7 +117,7 @@ const ChatBox = ({ userRole}) => {
             ) : (
               <div key={item} className="flex mb-4 gap-2 justify-end ">
                 <div
-                  className={`space-y-2 py-2 px-5 border rounded-se-2xl rounded-s-xl`}
+                  className={`space-y-2 py-2 px-5 border rounded-se-2xl rounded-s-xl bg-background`}
                 >
                   <p className="text-gray-300 font-semibold">
                     {item.sender?.fullName}

@@ -55,9 +55,9 @@ const ProjectList = ({ change, sendRefresh }) => {
   };
   return (
     <>
-      <div className="px-5 h-[90vh] lg:px-0 lg:flex gap-5 justify-center py-5 bg-background">
+      <div className="px-5 h-[93vh] lg:px-0 lg:flex gap-5 justify-center pt-10 pb-5 bg-background">
         <section className="hidden lg:block">
-          <Card className="p-5 sticky h-full top-[100px]">
+          <Card className="p-5 sticky h-[95%] top-[100px]">
             <div className="flex justify-between lg:w-[20rem]">
               <p className="text-xl tracking-wider">filters</p>
               <Button variant="ghost" size="icon">
@@ -71,7 +71,7 @@ const ProjectList = ({ change, sendRefresh }) => {
                   <h1 className="pb-3 text-gray-400 text-base border-b">
                     Category
                   </h1>
-                  <ScrollArea className="pt-5 h-[25vh]">
+                  <ScrollArea className="pt-5 h-[20vh]">
                     <RadioGroup
                       onValueChange={(value) =>
                         handleFilterChange("category", value)
