@@ -11,7 +11,7 @@ import {
   upgradeSubscription,
 } from "@/redux/Subscription/Action";
 
-const UpgradeSuccess = ({ change, sendRefresh}) => {
+const UpgradeSuccess = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -25,33 +25,37 @@ const UpgradeSuccess = ({ change, sendRefresh}) => {
 
   //console.log("Payment ID:", paymentId);
   //console.log("Plan Type:", planType);
+  //console.log("subscription: ", subscription);
 
   useEffect(() => {
     dispatch(upgradeSubscription({ planType }));
-    sendRefresh("Plan Upgraded");
     dispatch(getUserSubscription());
-  }, [dispatch, planType, change]);
-  
+  }, [dispatch, planType]);
 
   return (
-    <div className="flex justify-center absolute mt-24 w-full">
-      <Card className="mt-20 p-5 space-y-5 flex flex-col items-center">
-        <div className="flex items-center gap-4">
-          <CheckCircledIcon className="h-9 w-9 text-green-500" />
-          <p className="text-xl">Plan Upgraded Successfully</p>
+    <>
+      {!subscription?.loading && (
+        <div className="flex justify-center absolute mt-24 w-full">
+          <Card className="mt-20 p-5 space-y-5 flex flex-col items-center">
+            <div className="flex items-center gap-4">
+              <CheckCircledIcon className="h-9 w-9 text-green-500" />
+              <p className="text-xl">Plan Upgraded Successfully</p>
+            </div>
+            <div className="space-y-3">
+              <p className="text-green-500">
+                start date:{" "}
+                {subscription.userSubscription?.subscriptionStartDate}
+              </p>
+              <p className="text-red-500">
+                end date : {subscription.userSubscription?.subscriptionEndDate}
+              </p>
+              <p>plan type : {subscription.userSubscription?.planType}</p>
+            </div>
+            <Button onClick={() => navigate("/")}>Go To Home</Button>
+          </Card>
         </div>
-        <div className="space-y-3">
-          <p className="text-green-500">
-            start date: {subscription.userSubscription?.subscriptionStartDate}
-          </p>
-          <p className="text-red-500">
-            end date : {subscription.userSubscription?.subscriptionEndDate}
-          </p>
-          <p>plan type : {subscription.userSubscription?.planType}</p>
-        </div>
-        <Button onClick={() => navigate("/")}>Go To Home</Button>
-      </Card>
-    </div>
+      )}
+    </>
   );
 };
 
