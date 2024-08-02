@@ -17,6 +17,7 @@ import {
 import {
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
 import { useNavigate } from "react-router-dom";
 import "./Navbar.css";
@@ -79,6 +80,7 @@ const Navbar = () => {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
+            <DropdownMenuLabel className="text-[gray]">{auth?.user?.fullName}</DropdownMenuLabel>
             <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
