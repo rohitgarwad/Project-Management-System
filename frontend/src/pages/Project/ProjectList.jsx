@@ -80,35 +80,67 @@ const ProjectList = ({ change, sendRefresh }) => {
                       defaultValue={category || "all"}
                     >
                       <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="all" id="r1" className="border-[1px]" />
+                        <RadioGroupItem
+                          value="all"
+                          id="r1"
+                          className="border-[1px]"
+                        />
                         <Label htmlFor="r1">All</Label>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="Fullstack" id="r1" className="border-[1px]" />
+                        <RadioGroupItem
+                          value="Fullstack"
+                          id="r1"
+                          className="border-[1px]"
+                        />
                         <Label htmlFor="r1">Fullstack</Label>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="Frontend" id="r2" className="border-[1px]" />
+                        <RadioGroupItem
+                          value="Frontend"
+                          id="r2"
+                          className="border-[1px]"
+                        />
                         <Label htmlFor="r2">Frontend</Label>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="Backend" id="r3" className="border-[1px]" />
+                        <RadioGroupItem
+                          value="Backend"
+                          id="r3"
+                          className="border-[1px]"
+                        />
                         <Label htmlFor="r3">Backend</Label>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="Desktop Application" id="r4" className="border-[1px]" />
+                        <RadioGroupItem
+                          value="Desktop Application"
+                          id="r4"
+                          className="border-[1px]"
+                        />
                         <Label htmlFor="r4">Desktop Application</Label>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="Mobile Application" id="r5" className="border-[1px]" />
+                        <RadioGroupItem
+                          value="Mobile Application"
+                          id="r5"
+                          className="border-[1px]"
+                        />
                         <Label htmlFor="r5">Mobile Application</Label>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="Cloud Computing" id="r6" className="border-[1px]" />
+                        <RadioGroupItem
+                          value="Cloud Computing"
+                          id="r6"
+                          className="border-[1px]"
+                        />
                         <Label htmlFor="r6">Cloud Computing</Label>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="Data Science" id="r7" className="border-[1px]" />
+                        <RadioGroupItem
+                          value="Data Science"
+                          id="r7"
+                          className="border-[1px]"
+                        />
                         <Label htmlFor="r7">Data Science</Label>
                       </div>
                     </RadioGroup>
@@ -129,7 +161,11 @@ const ProjectList = ({ change, sendRefresh }) => {
                       defaultValue={tag || "all"}
                     >
                       <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="all" id="r-all" className="border-[1px]" />
+                        <RadioGroupItem
+                          value="all"
+                          id="r-all"
+                          className="border-[1px]"
+                        />
                         <Label htmlFor="r-all">All</Label>
                       </div>
                       {filterData.map((item, index) => (
@@ -142,7 +178,11 @@ const ProjectList = ({ change, sendRefresh }) => {
                               key={tag?.id || index}
                               className="flex items-center space-x-2"
                             >
-                              <RadioGroupItem value={tag} id={`r-${tag}`} className="border-[1px]" />
+                              <RadioGroupItem
+                                value={tag}
+                                id={`r-${tag}`}
+                                className="border-[1px]"
+                              />
                               <Label htmlFor={`r-${tag}`}>{tag}</Label>
                             </div>
                           ))}

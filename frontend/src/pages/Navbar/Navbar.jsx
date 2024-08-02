@@ -41,7 +41,7 @@ const Navbar = () => {
             </h1>
           </div>
         </div>
-        
+
         <Dialog>
           <DialogTrigger>
             <Button
@@ -80,7 +80,9 @@ const Navbar = () => {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuLabel className="text-[gray]">{auth?.user?.fullName}</DropdownMenuLabel>
+            <DropdownMenuLabel className="text-[gray]">
+              {auth?.user?.fullName}
+            </DropdownMenuLabel>
             <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

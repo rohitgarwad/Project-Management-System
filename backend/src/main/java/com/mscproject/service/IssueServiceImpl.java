@@ -52,7 +52,6 @@ public class IssueServiceImpl implements IssueService {
 
 		// Check if the project exists
 		Project project = projectService.getProjectById(issueRequest.getProjectId());
-		// System.out.println("projid---------->"+issueRequest.getProjectId());
 		if (project == null) {
 			throw new IssueException("Project not found with ID: " + issueRequest.getProjectId());
 		}
@@ -64,7 +63,7 @@ public class IssueServiceImpl implements IssueService {
 		issue.setStatus(issueRequest.getStatus());
 		issue.setProjectID(issueRequest.getProjectId());
 		issue.setPriority(issueRequest.getPriority());
-		issue.setDueDate(issueRequest.getDueDate().plusDays(1));
+		issue.setDueDate(issueRequest.getDueDate().plusHours(5).plusMinutes(30));
 		issue.setLabels(issueRequest.getLabels());
 
 		// Set the project for the issue
@@ -80,11 +79,7 @@ public class IssueServiceImpl implements IssueService {
 
 		getUserOrThrow(userId);
 
-//		System.out.println("projid---------->"+updatedIssue.getProjectId());
-
 		Optional<Issue> existingIssue = getIssueById(issueId);
-
-		// System.out.println("existing issue: "+existingIssue.get().toString());
 
 		if (existingIssue.isPresent()) {
 			// Check if the project exists
@@ -93,11 +88,6 @@ public class IssueServiceImpl implements IssueService {
 				throw new IssueException("Project not found with ID: " + updatedIssue.getProjectId());
 			}
 
-//			User assignee = userService.findUserById(updatedIssue.getUserId());
-//			if (assignee == null) {
-//				throw new UserException("Assignee not found with ID: " + updatedIssue.getUserId());
-//			}
-
 			Issue issueToUpdate = existingIssue.get();
 
 			if (updatedIssue.getDescription() != null) {
@@ -105,7 +95,7 @@ public class IssueServiceImpl implements IssueService {
 			}
 
 			if (updatedIssue.getDueDate() != null) {
-				issueToUpdate.setDueDate(updatedIssue.getDueDate().plusDays(1));
+				issueToUpdate.setDueDate(updatedIssue.getDueDate().plusHours(5).plusMinutes(30));
 			}
 
 			if (updatedIssue.getPriority() != null) {
@@ -209,12 +199,16 @@ public class IssueServiceImpl implements IssueService {
 
 	@Override
 	public void sendIssueReport(IssueReportRequest issueReportData) throws Exception {
-		
+
 		String subject = "Issue Report from " + issueReportData.getSenderEmail();
-		
-		String body = "Issue Report From: " + issueReportData.getSenderEmail() + ".\nIssue Report To: " + issueReportData.getReceiverEmail() + ".\nIssue Title: " + issueReportData.getIssueTitle() + ".\nIssue Status: " + issueReportData.getIssueStatus() + ".\nReport Message: " + issueReportData.getReportMessage() + "." ;
-		
-		notificationServiceImpl.sendIssueReportNotification(issueReportData.getSenderEmail(), issueReportData.getReceiverEmail(), subject, body);
+
+		String body = "Issue Report From: " + issueReportData.getSenderEmail() + ".\nIssue Report To: "
+				+ issueReportData.getReceiverEmail() + ".\nIssue Title: " + issueReportData.getIssueTitle()
+				+ ".\nIssue Status: " + issueReportData.getIssueStatus() + ".\nReport Message: "
+				+ issueReportData.getReportMessage() + ".";
+
+		notificationServiceImpl.sendIssueReportNotification(issueReportData.getSenderEmail(),
+				issueReportData.getReceiverEmail(), subject, body);
 	}
 
 }

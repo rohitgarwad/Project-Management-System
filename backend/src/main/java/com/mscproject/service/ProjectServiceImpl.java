@@ -30,7 +30,7 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private ProjectRoleService projectRoleService;
 
@@ -44,7 +44,7 @@ public class ProjectServiceImpl implements ProjectService {
 		createdProject.setName(project.getName());
 		createdProject.setCategory(project.getCategory());
 		createdProject.setDescription(project.getDescription());
-		createdProject.setDeadline(project.getDeadline().plusDays(1));
+		createdProject.setDeadline(project.getDeadline().plusHours(5).plusMinutes(30));
 		createdProject.setStatus("in-progress");
 
 		// System.out.println(createdProject);
@@ -56,8 +56,8 @@ public class ProjectServiceImpl implements ProjectService {
 		chat.setProject(savedProject);
 		Chat projectChat = chatService.createChat(chat);
 		savedProject.setChat(projectChat);
-		
-		//assign role to user in project
+
+		// assign role to user in project
 		projectRoleService.assignRoleToUserInProject(id, RoleType.OWNER, savedProject.getId());
 
 		return savedProject;
@@ -124,7 +124,7 @@ public class ProjectServiceImpl implements ProjectService {
 			}
 
 			if (updatedProject.getDeadline() != null) {
-				project.setDeadline(updatedProject.getDeadline().plusDays(1));
+				project.setDeadline(updatedProject.getDeadline().plusHours(5).plusMinutes(30));
 			}
 
 			// Save the updated project once

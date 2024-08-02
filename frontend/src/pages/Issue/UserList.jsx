@@ -7,7 +7,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Loader from "../Loader/Loader";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const UserList = ({ issueDetails, sendRefresh }) => {
   const { id } = useParams();
@@ -51,7 +56,15 @@ const UserList = ({ issueDetails, sendRefresh }) => {
                   className="py-2 group hover:bg-slate-800 cursor-pointer flex items-center space-x-4 rounded-md border px-4"
                 >
                   <Avatar className="">
-                    <AvatarFallback className={`${ item?.roleType === "OWNER" ? "bg-orange-700 group-hover:bg-gray-400" : item?.roleType === "MANAGER" ? "bg-yellow-600 group-hover:bg-gray-400" : "bg-blue-600 group-hover:bg-gray-400" }`} >
+                    <AvatarFallback
+                      className={`${
+                        item?.roleType === "OWNER"
+                          ? "bg-orange-700 group-hover:bg-gray-400"
+                          : item?.roleType === "MANAGER"
+                          ? "bg-yellow-600 group-hover:bg-gray-400"
+                          : "bg-blue-600 group-hover:bg-gray-400"
+                      }`}
+                    >
                       {item?.user?.fullName[0]}
                     </AvatarFallback>
                   </Avatar>
@@ -61,7 +74,8 @@ const UserList = ({ issueDetails, sendRefresh }) => {
                       {item?.user?.fullName}
                     </p>
                     <p className="text-xs text-muted-foreground">
-                      @{item?.user?.fullName?.toLowerCase().split(" ").join("_")}
+                      @
+                      {item?.user?.fullName?.toLowerCase().split(" ").join("_")}
                     </p>
                   </div>
                 </div>

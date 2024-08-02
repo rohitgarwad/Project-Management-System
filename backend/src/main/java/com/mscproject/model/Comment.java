@@ -1,4 +1,5 @@
 package com.mscproject.model;
+
 import java.time.LocalDateTime;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,18 +18,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Comment {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    private String content;
+	private String content;
 
-    private LocalDateTime createdDateTime;
+	private LocalDateTime createdDateTime;
 
-    @ManyToOne
-    private User user;
+	@ManyToOne
+	private User user;
 
-    @ManyToOne
-    private Issue issue;
+	@ManyToOne
+	private Issue issue;
 
 }

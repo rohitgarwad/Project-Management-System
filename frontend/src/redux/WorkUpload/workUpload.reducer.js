@@ -1,10 +1,10 @@
 // reducer.js
-import * as actionTypes from './workUpload.actionTypes';
+import * as actionTypes from "./workUpload.actionTypes";
 
 const initialState = {
   workUploads: [],
   loading: false,
-  error: null
+  error: null,
 };
 
 const workUploadReducer = (state = initialState, action) => {
@@ -15,25 +15,27 @@ const workUploadReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
-        error: null
+        error: null,
       };
     case actionTypes.CREATE_WORKUPLOAD_SUCCESS:
       return {
         ...state,
         loading: false,
-        workUploads: [...state.workUploads, action.workUpload]
+        workUploads: [...state.workUploads, action.workUpload],
       };
     case actionTypes.DELETE_WORKUPLOAD_SUCCESS:
       return {
         ...state,
         loading: false,
-        workUploads: state.workUploads.filter(workUpload => workUpload.id !== action.workUploadId)
+        workUploads: state.workUploads.filter(
+          (workUpload) => workUpload.id !== action.workUploadId
+        ),
       };
     case actionTypes.FETCH_WORKUPLOADS_SUCCESS:
       return {
         ...state,
         loading: false,
-        workUploads: action.workUploads
+        workUploads: action.workUploads,
       };
     case actionTypes.CREATE_WORKUPLOAD_FAILURE:
     case actionTypes.DELETE_WORKUPLOAD_FAILURE:
@@ -41,7 +43,7 @@ const workUploadReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        error: action.error
+        error: action.error,
       };
     default:
       return state;

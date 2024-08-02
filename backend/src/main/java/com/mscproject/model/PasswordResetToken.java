@@ -20,26 +20,22 @@ import lombok.RequiredArgsConstructor;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class PasswordResetToken {
-	
+public class PasswordResetToken {	//NOT USED YET
+
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
 	private Integer id;
-	
-	
+
 	private @NonNull String token;
-	
+
 	@OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
 	@JoinColumn(nullable = false, name = "user_id")
 	private @NonNull User user;
-	
-	
-	
 
-	private @NonNull  Date expiryDate;
-	
+	private @NonNull Date expiryDate;
+
 	public boolean isExpired() {
-        return expiryDate.before(new Date());
-    }
+		return expiryDate.before(new Date());
+	}
 
 }

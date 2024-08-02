@@ -2,7 +2,7 @@ package com.mscproject.service;
 
 import com.mscproject.model.PasswordResetToken;
 
-public interface PasswordResetTokenService {
+public interface PasswordResetTokenService {	//NOT USED YET
 
 	public PasswordResetToken findByToken(String token);
 

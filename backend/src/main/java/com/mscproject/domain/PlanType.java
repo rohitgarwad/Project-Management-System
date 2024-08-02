@@ -1,7 +1,5 @@
 package com.mscproject.domain;
 
 public enum PlanType {
-    MONTHLY,
-    ANNUALLY,
-    FREE
+	MONTHLY, ANNUALLY, FREE
 }

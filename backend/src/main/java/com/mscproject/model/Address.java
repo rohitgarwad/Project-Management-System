@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Address {
+public class Address {	//NOT USED YET
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

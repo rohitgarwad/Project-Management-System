@@ -1,6 +1,6 @@
 package com.mscproject.exception;
 
-public class MailsException extends Exception{
+public class MailsException extends Exception {
 
 	/**
 	 * 
@@ -9,7 +9,7 @@ public class MailsException extends Exception{
 
 	public MailsException(String message) {
 		super(message);
-		
+
 	}
-  
+
 }

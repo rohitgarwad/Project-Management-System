@@ -14,27 +14,24 @@ import jakarta.mail.internet.MimeMessage;
 @Service
 public class EmailService {
 
-    @Autowired
-    private JavaMailSender javaMailSender;
+	@Autowired
+	private JavaMailSender javaMailSender;
 
+	public void sendEmailWithToken(String userEmail, String link) throws MessagingException, MailsException {
+		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
 
-    public void sendEmailWithToken(String userEmail, String link) throws MessagingException, MailsException {
-        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
-        
+		String subject = "Join Project Team Invitation";
+		String text = "Click the link to join the project team: " + link;
 
-        String subject = "Join Project Team Invitation";
-        String text = "Click the link to join the project team: " + link;
+		helper.setSubject(subject);
+		helper.setText(text, true);
+		helper.setTo(userEmail);
 
-        helper.setSubject(subject);
-        helper.setText(text, true);
-        helper.setTo(userEmail);
-
-        try {
-            javaMailSender.send(mimeMessage);
-        } catch (MailException e) {
-            throw new MailsException("Failed to send email");
-        }
-    }
+		try {
+			javaMailSender.send(mimeMessage);
+		} catch (MailException e) {
+			throw new MailsException("Failed to send email");
+		}
+	}
 }
-

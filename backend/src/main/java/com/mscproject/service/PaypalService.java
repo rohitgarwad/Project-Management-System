@@ -5,6 +5,5 @@ import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
 
 public interface PaypalService {
-	public Payment createPayment(PlanType planType)
-			throws PayPalRESTException;
+	public Payment createPayment(PlanType planType) throws PayPalRESTException;
 }

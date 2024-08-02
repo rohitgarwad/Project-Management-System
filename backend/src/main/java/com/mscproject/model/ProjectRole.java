@@ -19,20 +19,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProjectRole {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @ManyToOne 
-    @JoinColumn (name = "user_id")
-    private User user;
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
 
-    @Enumerated(EnumType.STRING)
-    private RoleType roleType;
+	@Enumerated(EnumType.STRING)
+	private RoleType roleType;
 
-    @ManyToOne
-    @JoinColumn(name = "project_id")
-    private Project project;
+	@ManyToOne
+	@JoinColumn(name = "project_id")
+	private Project project;
 
-    // Getters and Setters
+	// Getters and Setters
 }

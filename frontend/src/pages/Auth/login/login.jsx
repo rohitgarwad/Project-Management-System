@@ -32,7 +32,7 @@ const LoginForm = () => {
     // Handle form submission here
     dispatch(login(data));
     //console.log("login form", data);
-    navigate('/');
+    navigate("/");
   };
   return (
     <div className="space-y-5">

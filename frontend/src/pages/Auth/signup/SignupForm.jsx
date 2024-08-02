@@ -24,7 +24,7 @@ const formSchema = z.object({
 });
 const SignupForm = () => {
   const navigate = useNavigate();
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -35,7 +35,7 @@ const SignupForm = () => {
   });
   const onSubmit = (data) => {
     // Handle form submission here
-    dispatch(register(data))
+    dispatch(register(data));
     //console.log("signup form", data);
     navigate("/");
   };

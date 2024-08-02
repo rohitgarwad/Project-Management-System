@@ -1,6 +1,6 @@
 package com.mscproject.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,42 +24,38 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Project {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    private String name;
-    
-    private String description;
-    
-    private String category;
-    
-    private String status;
-    
-    private LocalDate deadline;
-    
-    private List<String> tags = new ArrayList<>();
-   
-    @JsonIgnore
-    @OneToOne(mappedBy = "project", cascade = CascadeType.ALL,orphanRemoval = true)
-    private Chat chat;
+	private String name;
 
-    @ManyToOne
-    private User owner;
+	private String description;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<Issue> issues = new ArrayList<>();
+	private String category;
 
+	private String status;
 
-    @ManyToMany
-    private List<User> team = new ArrayList<>();
-    
-    @JsonIgnore
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<ProjectRole> projectRoles = new ArrayList<>();
+	private LocalDateTime deadline;
 
+	private List<String> tags = new ArrayList<>();
 
+	@JsonIgnore
+	@OneToOne(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Chat chat;
+
+	@ManyToOne
+	private User owner;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Issue> issues = new ArrayList<>();
+
+	@ManyToMany
+	private List<User> team = new ArrayList<>();
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<ProjectRole> projectRoles = new ArrayList<>();
 
 }
-

@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class CreateChat {
 
 	private Long projectId;
-	
+
 	private List<Long> userIds;
 }

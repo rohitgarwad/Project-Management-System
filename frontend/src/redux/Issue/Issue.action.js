@@ -7,14 +7,11 @@ export const fetchIssues = (id) => {
   return async (dispatch) => {
     dispatch({ type: actionTypes.FETCH_ISSUES_REQUEST });
     try {
-      const response = await api.get(
-        `/api/issues/project/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-          },
-        }
-      );
+      const response = await api.get(`/api/issues/project/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        },
+      });
       //console.log("fetch issues", response.data);
       dispatch({
         type: actionTypes.FETCH_ISSUES_SUCCESS,
@@ -34,14 +31,11 @@ export const fetchIssueById = (id) => {
   return async (dispatch) => {
     dispatch({ type: actionTypes.FETCH_ISSUES_BY_ID_REQUEST });
     try {
-      const response = await api.get(
-        `/api/issues/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-          },
-        }
-      );
+      const response = await api.get(`/api/issues/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        },
+      });
       //console.log("fetch issue by id", response.data);
       dispatch({
         type: actionTypes.FETCH_ISSUES_BY_ID_SUCCESS,
@@ -195,14 +189,14 @@ export const sendIssueReport = (issueReportData) => {
           Authorization: `Bearer ${localStorage.getItem("jwt")}`,
         },
       });
-      dispatch({ type: actionTypes.SEND_ISSUE_REPORT_SUCCESS});
+      dispatch({ type: actionTypes.SEND_ISSUE_REPORT_SUCCESS });
       // console.log("send issue report success: ", data);
     } catch (error) {
       // console.log("send issue report error: ", error);
       dispatch({
         type: actionTypes.SEND_ISSUE_REPORT_FAILURE,
         error: error.message,
-      })
+      });
     }
-  }
-}
+  };
+};

@@ -21,10 +21,7 @@ export const createPayment =
         },
       };
 
-      const { data } = await api.post(
-        `/api/payments/${planType}`, {}, 
-        config
-      );
+      const { data } = await api.post(`/api/payments/${planType}`, {}, config);
       //console.log("create payment data", data);
       if (data.payment_link_url) {
         window.location.href = data.payment_link_url;

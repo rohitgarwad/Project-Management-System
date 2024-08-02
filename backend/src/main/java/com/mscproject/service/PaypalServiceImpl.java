@@ -22,8 +22,7 @@ public class PaypalServiceImpl implements PaypalService {
 
 	private final APIContext apiContext;
 
-	public Payment createPayment(PlanType planType)
-			throws PayPalRESTException {
+	public Payment createPayment(PlanType planType) throws PayPalRESTException {
 
 		String cancelUrl = "http://localhost:5173/upgrade_plan";
 		String successUrl = "http://localhost:5173/upgrade_plan/success?planType=" + planType;
@@ -31,7 +30,7 @@ public class PaypalServiceImpl implements PaypalService {
 		String currency = "USD";
 		String intent = "sale";
 		String method = "paypal";
-		
+
 		double total = 10.0;
 
 		if (planType.equals(PlanType.ANNUALLY)) {
@@ -41,9 +40,10 @@ public class PaypalServiceImpl implements PaypalService {
 
 		Amount amount = new Amount();
 		amount.setCurrency(currency);
-		//amount.setTotal(String.format(Locale.forLanguageTag(currency), "%.2f", total));
+		// amount.setTotal(String.format(Locale.forLanguageTag(currency), "%.2f",
+		// total));
 		amount.setTotal("" + total);
-		
+
 		Transaction transaction = new Transaction();
 		transaction.setDescription(description);
 		transaction.setAmount(amount);

@@ -37,7 +37,7 @@ public class PaymentController {
 		try {
 
 			Payment payment = paypalService.createPayment(planType);
-			//System.out.println("payment object: " + payment);
+			// System.out.println("payment object: " + payment);
 
 			for (Links links : payment.getLinks()) {
 				if (links.getRel().equals("approval_url")) {

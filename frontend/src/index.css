@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 * {
   font-family: monospace;
 }
@@ -72,8 +70,6 @@ body {
     --ring: 20.5 90.2% 48.2%;
   }
 }
-
-
 
 @layer base {
   * {

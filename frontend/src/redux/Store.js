@@ -1,5 +1,5 @@
-import {applyMiddleware, combineReducers, legacy_createStore} from "redux"
-import {thunk} from "redux-thunk";
+import { applyMiddleware, combineReducers, legacy_createStore } from "redux";
+import { thunk } from "redux-thunk";
 import authReducer from "./Auth/Reducer";
 import ProjectReducer from "./Project/Project.Reducer";
 import issueReducer from "./Issue/Issue.reducer";
@@ -8,17 +8,14 @@ import commentReducer from "./Comment/comment.reducer";
 import subscriptionReducer from "./Subscription/Reducer";
 import workUploadReducer from "./WorkUpload/workUpload.reducer";
 
-
-const rootReducers=combineReducers({
-
-    auth:authReducer,
-    project:ProjectReducer,
-    issue:issueReducer,
-    chat:ChatReducer,
-    comment:commentReducer,
-    subscription:subscriptionReducer,
-    workUpload: workUploadReducer,
-
+const rootReducers = combineReducers({
+  auth: authReducer,
+  project: ProjectReducer,
+  issue: issueReducer,
+  chat: ChatReducer,
+  comment: commentReducer,
+  subscription: subscriptionReducer,
+  workUpload: workUploadReducer,
 });
 
-export const store = legacy_createStore(rootReducers,applyMiddleware(thunk))
+export const store = legacy_createStore(rootReducers, applyMiddleware(thunk));

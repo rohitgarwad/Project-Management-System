@@ -16,7 +16,7 @@ import { useParams } from "react-router-dom";
 import SockJS from "sockjs-client/dist/sockjs";
 import Stomp from "stompjs";
 
-const ChatBox = ({ userRole}) => {
+const ChatBox = ({ userRole }) => {
   const [messages, setMessages] = useState("");
   const [change, setChange] = useState([]);
   const [stompClient, setStompClient] = useState(null);
@@ -133,7 +133,9 @@ const ChatBox = ({ userRole}) => {
           <div ref={chatContainerRef}></div>
         </ScrollArea>
         <div className="relative p-0">
-          {(subscription.userSubscription?.subscriptiontype === "PAID" || userRole === "OWNER" || userRole === "MANAGER") ? (
+          {subscription.userSubscription?.subscriptiontype === "PAID" ||
+          userRole === "OWNER" ||
+          userRole === "MANAGER" ? (
             <>
               <Input
                 value={messages}

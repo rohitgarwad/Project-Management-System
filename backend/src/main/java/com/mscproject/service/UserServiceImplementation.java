@@ -30,17 +30,11 @@ public class UserServiceImplementation implements UserService {
 	@Autowired
 	private JavaMailSender javaMailSender;
 
-//	@Autowired
-//	private ProjectService projectService;
-
 	@Override
 	public User findUserProfileByJwt(String jwt) throws UserException, ProjectException {
 		String email = JwtProvider.getEmailFromJwtToken(jwt);
 
 		User user = userRepository.findByEmail(email);
-
-//		int projectSize=projectService.getProjectsByTeam(user,null,null).size();
-//		user.setProjectSize(projectSize);
 
 		userRepository.save(user);
 
@@ -75,8 +69,8 @@ public class UserServiceImplementation implements UserService {
 
 	@Override
 	public User updateUsersProjectSize(User user, int number) {
-		user.setProjectSize(user.getProjectSize()+number);
-		if(user.getProjectSize()==-1){
+		user.setProjectSize(user.getProjectSize() + number);
+		if (user.getProjectSize() == -1) {
 			return user;
 		}
 		return userRepository.save(user);

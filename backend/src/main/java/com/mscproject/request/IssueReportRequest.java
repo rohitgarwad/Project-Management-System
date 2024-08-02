@@ -14,5 +14,5 @@ public class IssueReportRequest {
 	private String issueTitle;
 	private String issueStatus;
 	private String reportMessage;
-	
+
 }

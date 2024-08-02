@@ -9,7 +9,7 @@ const AuthPage = () => {
           <span className="fast-flicker">P</span>roject
           <span className="flicker">M</span>anagement
         </div>
-        <Auth/>
+        <Auth />
       </div>
     </>
   );

@@ -4,7 +4,10 @@ const Loader = () => {
   return (
     <div className="space-y-2 p-5 lg:p-20">
       {[1, 1, 1, 1, 1, 1, 1, 1, 1].map((item, index) => (
-        <Skeleton key={item.id || index} className="h-[10vh] w-full rounded-xl" />
+        <Skeleton
+          key={item.id || index}
+          className="h-[10vh] w-full rounded-xl"
+        />
       ))}
     </div>
   );

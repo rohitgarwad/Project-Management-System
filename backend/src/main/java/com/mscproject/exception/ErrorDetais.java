@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ErrorDetais {
-	
+
 	private String error;
 	private String message;
 	private LocalDateTime timestamp;

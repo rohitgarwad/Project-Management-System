@@ -140,9 +140,7 @@ const CreateProjectForm = () => {
                       <SelectItem value="Cloud Computing">
                         Cloud Computing
                       </SelectItem>
-                      <SelectItem value="Data Science">
-                        Data Science
-                      </SelectItem>
+                      <SelectItem value="Data Science">Data Science</SelectItem>
                     </SelectContent>
                   </Select>
                 </FormControl>

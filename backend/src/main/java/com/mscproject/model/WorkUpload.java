@@ -18,19 +18,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class WorkUpload {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	private String content;
-	
+
 	private LocalDateTime createdDateTime;
-	
+
 	@ManyToOne
 	private User user;
-	
+
 	@ManyToOne
 	private Issue issue;
-	
+
 }

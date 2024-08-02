@@ -44,29 +44,31 @@ public class ProjectRoleServiceImpl implements ProjectRoleService {
 	public ProjectRole getRolesForUserInProject(Long userId, Long projectId) {
 		return projectRoleRepository.findByUserIdAndProjectId(userId, projectId);
 	}
-	
+
 	@Override
 	public List<ProjectRole> getRolesForAllUsersInProject(Long projectId) {
-		
+
 		return projectRoleRepository.findByProjectId(projectId);
 	}
-	
-	@Override
-	public ProjectRole updateRoleForUserInProject(Long userId, Long projectId, RoleType oldRoleType, RoleType newRoleType) {
-        
-        ProjectRole projectRole = projectRoleRepository.findByUserIdAndRoleTypeAndProjectId(userId, oldRoleType, projectId)
-                .orElseThrow(() -> new RuntimeException("Project role not found"));
-
-        projectRole.setRoleType(newRoleType);
-        return projectRoleRepository.save(projectRole);
-    }
 
 	@Override
-    public void deleteRoleForUserInProject(Long userId, Long projectId, RoleType roleType) {
+	public ProjectRole updateRoleForUserInProject(Long userId, Long projectId, RoleType oldRoleType,
+			RoleType newRoleType) {
+
+		ProjectRole projectRole = projectRoleRepository
+				.findByUserIdAndRoleTypeAndProjectId(userId, oldRoleType, projectId)
+				.orElseThrow(() -> new RuntimeException("Project role not found"));
+
+		projectRole.setRoleType(newRoleType);
+		return projectRoleRepository.save(projectRole);
+	}
+
+	@Override
+	public void deleteRoleForUserInProject(Long userId, Long projectId, RoleType roleType) {
 
 		ProjectRole projectRole = projectRoleRepository.findByUserIdAndRoleTypeAndProjectId(userId, roleType, projectId)
-                .orElseThrow(() -> new RuntimeException("Project role not found"));
+				.orElseThrow(() -> new RuntimeException("Project role not found"));
 
-        projectRoleRepository.delete(projectRole);
-    }
+		projectRoleRepository.delete(projectRole);
+	}
 }

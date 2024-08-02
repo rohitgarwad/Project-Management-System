@@ -71,16 +71,14 @@ export function IssueList({
           </CardContent>
           <CardFooter className="px-2">
             <DialogTrigger disabled={userRole === "EMPLOYEE"}>
-              {
-                userRole !== "EMPLOYEE" && (
-                  <Button
-                className="w-full border-inherit flex items-center gap-2"
-                variant="outline"
-              >
-                <PlusIcon /> <span>Create Issue</span>
-              </Button>
-                )
-              }
+              {userRole !== "EMPLOYEE" && (
+                <Button
+                  className="w-full border-inherit flex items-center gap-2"
+                  variant="outline"
+                >
+                  <PlusIcon /> <span>Create Issue</span>
+                </Button>
+              )}
             </DialogTrigger>
           </CardFooter>
         </Card>

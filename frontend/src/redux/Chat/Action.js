@@ -26,23 +26,6 @@ export const sendMessage = ({ message, sendToServer }) => {
   };
 };
 
-// export const messageReceived = (message) => {
-//   return async (dispatch) => {
-//     try {
-//       dispatch({
-//         type: actionTypes.SEND_MESSAGE_SUCCESS,
-//         message: message,
-//       });
-//     } catch (error) {
-//       console.log("message received error: ", error);
-//       dispatch({
-//         type: actionTypes.SEND_MESSAGE_FAILURE,
-//         error: error.message,
-//       });
-//     }
-//   };
-// };
-
 export const fetchChatByProject = (projectId) => {
   return async (dispatch) => {
     dispatch({ type: actionTypes.FETCH_CHAT_BY_PROJECT_REQUEST });

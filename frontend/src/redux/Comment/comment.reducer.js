@@ -1,10 +1,10 @@
 // reducer.js
-import * as actionTypes from './comment.actionTypes';
+import * as actionTypes from "./comment.actionTypes";
 
 const initialState = {
   comments: [],
   loading: false,
-  error: null
+  error: null,
 };
 
 const commentReducer = (state = initialState, action) => {
@@ -15,25 +15,27 @@ const commentReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
-        error: null
+        error: null,
       };
     case actionTypes.CREATE_COMMENT_SUCCESS:
       return {
         ...state,
         loading: false,
-        comments: [...state.comments, action.comment]
+        comments: [...state.comments, action.comment],
       };
     case actionTypes.DELETE_COMMENT_SUCCESS:
       return {
         ...state,
         loading: false,
-        comments: state.comments.filter(comment => comment.id !== action.commentId)
+        comments: state.comments.filter(
+          (comment) => comment.id !== action.commentId
+        ),
       };
     case actionTypes.FETCH_COMMENTS_SUCCESS:
       return {
         ...state,
         loading: false,
-        comments: action.comments
+        comments: action.comments,
       };
     case actionTypes.CREATE_COMMENT_FAILURE:
     case actionTypes.DELETE_COMMENT_FAILURE:
@@ -41,7 +43,7 @@ const commentReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        error: action.error
+        error: action.error,
       };
     default:
       return state;

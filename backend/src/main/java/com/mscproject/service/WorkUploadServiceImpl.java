@@ -57,31 +57,31 @@ public class WorkUploadServiceImpl implements WorkUploadService {
 
 	@Override
 	public void deleteWorkUpload(Long workUploadId, Long userId) throws Exception {
-		
+
 		Optional<WorkUpload> workUploadOptional = workUploadRepository.findById(workUploadId);
-        Optional<User> userOptional = userRepository.findById(userId);
+		Optional<User> userOptional = userRepository.findById(userId);
 
-        if (workUploadOptional.isEmpty()){
-            throw new IssueException("comment not found with id "+workUploadId);
-        }
-        if(userOptional.isEmpty()){
-            throw new UserException("user not found with id "+userId);
-        }
+		if (workUploadOptional.isEmpty()) {
+			throw new IssueException("comment not found with id " + workUploadId);
+		}
+		if (userOptional.isEmpty()) {
+			throw new UserException("user not found with id " + userId);
+		}
 
-        WorkUpload workUpload = workUploadOptional.get();
-        User user = userOptional.get();
+		WorkUpload workUpload = workUploadOptional.get();
+		User user = userOptional.get();
 
-        if (workUpload.getUser().equals(user)) {
-        	workUploadRepository.delete(workUpload);
-        } else {
-            throw new UserException("User does not have permission to delete this comment!");
-        }
+		if (workUpload.getUser().equals(user)) {
+			workUploadRepository.delete(workUpload);
+		} else {
+			throw new UserException("User does not have permission to delete this comment!");
+		}
 
 	}
 
 	@Override
 	public List<WorkUpload> findWorkUploadByIssueId(Long issueId) {
-		
+
 		return workUploadRepository.findByIssueId(issueId);
 	}
 

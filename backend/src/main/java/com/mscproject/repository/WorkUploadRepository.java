@@ -9,5 +9,5 @@ import com.mscproject.model.WorkUpload;
 public interface WorkUploadRepository extends JpaRepository<WorkUpload, Long> {
 
 	List<WorkUpload> findByIssueId(Long issueId);
-	
+
 }

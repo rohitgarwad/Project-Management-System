@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserProfile {
+public class UserProfile {	//NOT USED YET
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

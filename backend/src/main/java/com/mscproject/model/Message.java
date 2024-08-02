@@ -19,22 +19,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Message {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    private String content;
+	private String content;
 
-    private LocalDateTime createdAt;
+	private LocalDateTime createdAt;
 
-    @ManyToOne
-    @JoinColumn(name = "chat_id")
-    private Chat chat;
+	@ManyToOne
+	@JoinColumn(name = "chat_id")
+	private Chat chat;
 
-    @ManyToOne
-    @JoinColumn(name = "sender_id")
-    private User sender;
+	@ManyToOne
+	@JoinColumn(name = "sender_id")
+	private User sender;
 
-    
 }
-

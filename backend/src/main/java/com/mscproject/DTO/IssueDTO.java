@@ -1,6 +1,6 @@
 package com.mscproject.DTO;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,19 +17,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class IssueDTO {
 
- private Long id;
- private String title;
- private String description;
- private String status;
- private Long projectID;
- private String priority;
- private LocalDate dueDate;
- private List<String> labels = new ArrayList<>();
- private Project project;
+	private Long id;
+	private String title;
+	private String description;
+	private String status;
+	private Long projectID;
+	private String priority;
+	private LocalDateTime dueDate;
+	private List<String> labels = new ArrayList<>();
+	private Project project;
 
- // Exclude assignee during serialization
+	// Exclude assignee during serialization
 
- private User assignee;
-
+	private User assignee;
 
 }

@@ -16,29 +16,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Chat {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    private String name;
+	private String name;
 
-    @OneToOne
-    @JoinColumn(name = "project_id")
-    private Project project;
+	@OneToOne
+	@JoinColumn(name = "project_id")
+	private Project project;
 
-    @JsonIgnore
-    @OneToMany(mappedBy ="chat" ,cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<Message> messages;
-    
+	@JsonIgnore
+	@OneToMany(mappedBy = "chat", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Message> messages;
 
-    // Users participating in the chat
-    @ManyToMany
-    @JoinTable(
-            name = "chat_users",
-            joinColumns = @JoinColumn(name = "chat_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    private List<User> users=new ArrayList<User>();
+	// Users participating in the chat
+	@ManyToMany
+	@JoinTable(name = "chat_users", joinColumns = @JoinColumn(name = "chat_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+	private List<User> users = new ArrayList<User>();
 
 }
-

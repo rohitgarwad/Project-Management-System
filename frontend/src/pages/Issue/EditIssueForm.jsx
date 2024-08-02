@@ -46,7 +46,15 @@ const formSchema = z.object({
   status: z.string().min(2),
 });
 
-const EditIssueForm = ({ issue, setIsEdited, isEdited, labels, deadline, change, sendRefresh }) => {
+const EditIssueForm = ({
+  issue,
+  setIsEdited,
+  isEdited,
+  labels,
+  deadline,
+  change,
+  sendRefresh,
+}) => {
   //console.log("existing issue details: ", issue);
   const dispatch = useDispatch();
 
@@ -233,7 +241,10 @@ const EditIssueForm = ({ issue, setIsEdited, isEdited, labels, deadline, change,
                         mode="single"
                         selected={field.value}
                         onSelect={field.onChange}
-                        disabled={(date) => (addDays(date, 1) < new Date()) || date > new Date(deadline)}
+                        disabled={(date) =>
+                          addDays(date, 1) < new Date() ||
+                          date > new Date(deadline)
+                        }
                       />
                     </div>
                   </PopoverContent>

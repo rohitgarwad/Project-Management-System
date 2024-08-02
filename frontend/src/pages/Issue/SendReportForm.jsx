@@ -23,8 +23,13 @@ const formSchema = z.object({
   reportMessage: z.string(),
 });
 
-const SendReportForm = ({ senderEmail, receiverEmail, issueStatus, issueTitle,  sendRefresh }) => {
-
+const SendReportForm = ({
+  senderEmail,
+  receiverEmail,
+  issueStatus,
+  issueTitle,
+  sendRefresh,
+}) => {
   const dispatch = useDispatch();
 
   const form = useForm({

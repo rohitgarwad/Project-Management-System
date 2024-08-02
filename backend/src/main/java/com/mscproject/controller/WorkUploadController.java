@@ -24,7 +24,7 @@ import com.mscproject.service.WorkUploadService;
 @RestController
 @RequestMapping("/api/workUploads")
 public class WorkUploadController {
-	
+
 	@Autowired
 	private WorkUploadService workUploadService;
 	@Autowired
@@ -33,10 +33,10 @@ public class WorkUploadController {
 	@PostMapping()
 	public ResponseEntity<WorkUpload> createWorkUpload(
 
-			@RequestBody CreateWorkUploadRequest req, @RequestHeader("Authorization") String jwt)
-			throws Exception {
+			@RequestBody CreateWorkUploadRequest req, @RequestHeader("Authorization") String jwt) throws Exception {
 		User user = userService.findUserProfileByJwt(jwt);
-		WorkUpload createdWorkUpload = workUploadService.createWorkUpload(req.getIssueId(), user.getId(), req.getContent());
+		WorkUpload createdWorkUpload = workUploadService.createWorkUpload(req.getIssueId(), user.getId(),
+				req.getContent());
 		return new ResponseEntity<>(createdWorkUpload, HttpStatus.CREATED);
 	}
 

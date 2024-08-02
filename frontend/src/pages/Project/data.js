@@ -149,7 +149,7 @@ export const data = {
     "Atom",
     "NetBeans",
     "Code::Blocks",
-    "Eclipse"
+    "Eclipse",
   ],
   "API protocols": ["SOAP", "REST", "JSON-RPC", "gRPC", "GraphQL", "Thrift"],
 };

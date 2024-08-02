@@ -9,8 +9,8 @@ import com.mscproject.model.Message;
 
 public interface MessageService {
 
-    Message sendMessage(Long senderId, Long chatId, String content) throws UserException, ChatException, ProjectException;
+	Message sendMessage(Long senderId, Long chatId, String content)
+			throws UserException, ChatException, ProjectException;
 
-    List<Message> getMessagesByProjectId(Long projectId) throws ProjectException, ChatException;
+	List<Message> getMessagesByProjectId(Long projectId) throws ProjectException, ChatException;
 }
-

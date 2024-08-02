@@ -1,6 +1,5 @@
 package com.mscproject.model;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,15 +25,15 @@ public class User {
 	private String password;
 
 	private String role;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "assignee", cascade = CascadeType.ALL)
-    private List<Issue> assignedIssues = new ArrayList<>();
+	private List<Issue> assignedIssues = new ArrayList<>();
 
-	private int projectSize=0;
-	
+	private int projectSize = 0;
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
-    private List<ProjectRole> projectRoles = new ArrayList<>();
-	
+	private List<ProjectRole> projectRoles = new ArrayList<>();
+
 }

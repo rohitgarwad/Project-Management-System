@@ -14,8 +14,7 @@ import com.mscproject.service.UserService;
 
 @RestController
 public class UserController {
-	
-	
+
 	private UserService userService;
 
 	public UserController(UserService userService) {
@@ -23,19 +22,18 @@ public class UserController {
 	}
 
 	@GetMapping("/api/users/profile")
-	public ResponseEntity<User> getUserProfileHandler(
-			@RequestHeader("Authorization") String jwt) throws UserException, ProjectException {
+	public ResponseEntity<User> getUserProfileHandler(@RequestHeader("Authorization") String jwt)
+			throws UserException, ProjectException {
 
 		User user = userService.findUserProfileByJwt(jwt);
 		user.setPassword(null);
 
 		return new ResponseEntity<>(user, HttpStatus.ACCEPTED);
 	}
-	
+
 	@GetMapping("/api/users/{userId}")
-	public ResponseEntity<User> findUserById(
-			@PathVariable Long userId,
-			@RequestHeader("Authorization") String jwt) throws UserException {
+	public ResponseEntity<User> findUserById(@PathVariable Long userId, @RequestHeader("Authorization") String jwt)
+			throws UserException {
 
 		User user = userService.findUserById(userId);
 		user.setPassword(null);

@@ -18,7 +18,6 @@ public class InviteTokenServiceImpl implements InvitationService {
 	@Autowired
 	private EmailService emailService;
 
-
 	public void sendInvitation(String email, Long projectId) throws MailsException, MessagingException {
 		// Generate unique invitation token
 		String invitationToken = UUID.randomUUID().toString();
@@ -30,7 +29,6 @@ public class InviteTokenServiceImpl implements InvitationService {
 		invitation.setToken(invitationToken);
 		invitationRepository.save(invitation);
 
-
 		String invitationLink = "http://localhost:5173/accept_invitation?token=" + invitationToken;
 		System.out.println("invite token: " + invitationLink);
 		emailService.sendEmailWithToken(email, invitationLink);
@@ -38,11 +36,11 @@ public class InviteTokenServiceImpl implements InvitationService {
 	}
 
 	@Override
-	public Invitation acceptInvitation(String token,Long userId) throws Exception {
+	public Invitation acceptInvitation(String token, Long userId) throws Exception {
 		Invitation invitation = invitationRepository.findByToken(token);
 
 		if (invitation == null) {
-			throw new Exception("Invalid invitation token") ;
+			throw new Exception("Invalid invitation token");
 		}
 
 		return invitation;
@@ -57,7 +55,7 @@ public class InviteTokenServiceImpl implements InvitationService {
 
 	@Override
 	public String getTokenByUserMail(String userEmail) {
-	    Invitation token= invitationRepository.findByEmail(userEmail);
+		Invitation token = invitationRepository.findByEmail(userEmail);
 		return token.getToken();
 	}
 

@@ -24,7 +24,9 @@ const WorkUploadCard = ({ item, sendRefresh }) => {
           </Avatar>
           <div className="space-y-1">
             <p className="text-gray-300">{item.user.fullName}</p>
-            <a href={item.content} target="blank">{item.content}</a>
+            <a href={item.content} target="blank">
+              {item.content}
+            </a>
           </div>
         </div>
         {auth?.user?.id === item?.user?.id && (

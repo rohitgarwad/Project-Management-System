@@ -83,7 +83,9 @@ const ProjectReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         projectRoles: state.projectRoles.map((projectRole) =>
-          projectRole.id === action.projectRole.id ? action.projectRole : projectRole
+          projectRole.id === action.projectRole.id
+            ? action.projectRole
+            : projectRole
         ),
       };
     case actionTypes.FETCH_PROJECTS_FAILURE:

@@ -11,22 +11,22 @@ import java.time.LocalDate;
 @Entity
 @Data
 public class Subscription {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
-    private LocalDate subscriptionStartDate;
-    private LocalDate subscriptionEndDate;
+	private LocalDate subscriptionStartDate;
+	private LocalDate subscriptionEndDate;
 
-    @Enumerated(EnumType.STRING)
-    private SubscriptionType subscriptiontype;
+	@Enumerated(EnumType.STRING)
+	private SubscriptionType subscriptiontype;
 
-    @Enumerated(EnumType.STRING)
-    private PlanType planType;
+	@Enumerated(EnumType.STRING)
+	private PlanType planType;
 
-    private boolean isValid;
+	private boolean isValid;
 
-    @OneToOne
-    private User user;
+	@OneToOne
+	private User user;
 
 }
