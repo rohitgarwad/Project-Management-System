@@ -97,7 +97,7 @@ public class UserServiceImplementation implements UserService {
 
 		// Send an email containing the reset link
 		sendEmail(user.getEmail(), "Password Reset",
-				"Click the following link to reset your password: http://localhost:5054/reset-password?token="
+				"Click the following link to reset your password: https://pms-client-project.vercel.app/reset-password?token="
 						+ resetToken);
 	}
 

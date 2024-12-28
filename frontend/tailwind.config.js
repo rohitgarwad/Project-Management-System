@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+import tailwindcssAnimate from 'tailwindcss-animate'
 /** @type {import('tailwindcss').Config} */
 export const darkMode = ["class"];
 export const content = [
@@ -76,4 +76,4 @@ export const theme = {
     },
   },
 };
-export const plugins = [require("tailwindcss-animate")];
+export const plugins = [tailwindcssAnimate];

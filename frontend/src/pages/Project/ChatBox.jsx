@@ -59,7 +59,7 @@ const ChatBox = ({ userRole }) => {
 
   useEffect(() => {
     const connect = () => {
-      const sock = new SockJS("http://localhost:5054/ws");
+      const sock = new SockJS("https://pms-server-production.up.railway.app/ws");
       const client = Stomp.over(sock);
 
       client.connect({}, function () {

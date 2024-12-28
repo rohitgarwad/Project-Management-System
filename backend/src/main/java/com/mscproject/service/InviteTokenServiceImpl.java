@@ -29,7 +29,7 @@ public class InviteTokenServiceImpl implements InvitationService {
 		invitation.setToken(invitationToken);
 		invitationRepository.save(invitation);
 
-		String invitationLink = "http://localhost:5173/accept_invitation?token=" + invitationToken;
+		String invitationLink = "https://pms-client-project.vercel.app/accept_invitation?token=" + invitationToken;
 		System.out.println("invite token: " + invitationLink);
 		emailService.sendEmailWithToken(email, invitationLink);
 

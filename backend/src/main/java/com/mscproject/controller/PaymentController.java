@@ -47,7 +47,7 @@ public class PaymentController {
 
 		} catch (PayPalRESTException e) {
 			log.error("Error occurred: ", e);
-			res.setPayment_link_url("http://localhost:5173/upgrade_plan/failure");
+			res.setPayment_link_url("https://pms-client-project.vercel.app/upgrade_plan/failure");
 			return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
 //				throw new Exception("payment failed.");
 		}

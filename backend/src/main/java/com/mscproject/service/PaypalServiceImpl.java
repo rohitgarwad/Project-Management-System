@@ -24,8 +24,8 @@ public class PaypalServiceImpl implements PaypalService {
 
 	public Payment createPayment(PlanType planType) throws PayPalRESTException {
 
-		String cancelUrl = "http://localhost:5173/upgrade_plan";
-		String successUrl = "http://localhost:5173/upgrade_plan/success?planType=" + planType;
+		String cancelUrl = "https://pms-client-project.vercel.app/upgrade_plan";
+		String successUrl = "https://pms-client-project.vercel.app/upgrade_plan/success?planType=" + planType;
 		String description = "Payment description";
 		String currency = "USD";
 		String intent = "sale";
