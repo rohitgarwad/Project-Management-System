@@ -1,4 +1,4 @@
-// blue theme
+/* blue theme */
 @layer base {
   :root {
     --background: 0 0% 100%;
